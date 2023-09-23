@@ -57,6 +57,38 @@
 
 
   <style>
+    /* 在这里粘贴您的CSS样式 */
+    /* 分界线样式 */
+.divider {
+    border-top: 1px dashed #ccc;
+    margin: 20px 0;
+}
+
+/* 图片容器样式 */
+.gallery {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.image-container {
+    display: inline-block;
+    margin: 10px;
+    height: 200px; /* 控制图片容器的高度 */
+    vertical-align: top; /* 垂直对齐以保持高度相同 */
+}
+
+.image-container img {
+    max-width: 100%;
+    height: 100%; /* 图片高度与容器相同 */
+    border: 2px solid #ccc;
+    transition: transform 0.3s;
+}
+
+.image-container a:hover img {
+    transform: scale(1.1);
+}
+
+
     body {
         color: #004122;
         background: #fff;
@@ -185,6 +217,27 @@
     .content p strong {
         font-weight: 600;
     }
+
+    nav {
+        position: fixed; /* 使用固定定位 */
+        bottom: 20px; /* 将目录定位在屏幕底部 */
+        left: 50px; /* 将目录定位在屏幕左侧 */
+        background: linear-gradient(to right, #2c1e37, #004122); /* 添加渐变背景色 */
+        padding: 20px; /* 内边距，可根据需要修改 */
+        box-shadow: 0 50px 50px rgba(0, 0, 0, 0.1); /* 阴影效果，可根据需要修改 */
+    }
+
+    /* 样式化目录链接 */
+    nav ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    nav ul li {
+        margin-bottom: 10px;
+    }
+
+
 </style>
 
 
@@ -204,15 +257,28 @@
    <nav> 
     <ul> 
      <!-- <li><a href="https://drive.google.com/file/d/1mBJ14ZlqIxVOYjJxZRQlTpHOiclSnYRE/view?usp=sharing">CV</a></li> --> 
-     <li><a href="https://github.com/evelinehong">Github</a></li> 
-     <li><a href="https://scholar.google.com/citations?user=PTYxORcAAAAJ">Google Scholar</a></li> 
-     <li><a href="mailto:yninghong@gmail.com">yninghong AT gmail DOT com</a></li> 
+     <li><a href="https://github.com/CharmingZh">Github</a></li> 
+     <li><a href="https://scholar.google.com.hk/citations?user=kEJINEIAAAAJ&hl=zh-CN">Google Scholar</a></li> 
+     <li><a href="mailto:yninghong@gmail.com">Jmzhang AT bjfu DOT edu DOT cn</a></li> 
      <!-- <li><a href="https://evelinehong.github.io/photos.html">Gallery</a></li> --> 
     </ul> 
-   </nav>  
+   
+   <h2>Contents</h2>
+    <ul>
+        <li><a href="#About me">About me</a></li>
+        <li><a href="#Publications">Publications</a></li>
+        <li><a href="#Work In Progress">Work In Progress</a></li>
+        <li><a href="#Talks">Invited Talks</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="#Research Experience">Publications</a></li>
+        <li><a href="#Community Service">Community Service</a></li>
+    </ul>
+</nav>  
   </header> 
+
   <section class="content"> 
    <p> </p>
+   <div id="About me">
    <h2>About Me</h2> 
    I am currently a third-year master's student at <strong>Beijing Forestry University</strong>. 
    My mentor is <strong>Prof. Kan Jiangming</strong> from BFU-Key Laboratory of State Forestry Administration on Forestry Equipment and Automation Labs. 
@@ -222,10 +288,13 @@
    <br />My main focus lies in 
    <strong>Computer Vision</strong>, especially in environment perception in complex forest spaces. I try to optimize the pipeline of 3D representations of forests generated based on images and extract structural information of trees in that representation for automated forest inventory.
    My research work also involves the development of automated forestry and agricultural equipment using RGB or RGB-D as sensors.
+</div>
+
 
    <br /> 
    <p></p> 
    <p> </p>
+   <div id="Publications">
    <h2>Publications</h2> 
 
    Junquan Meng; Prof. Yaxiong Wang; <strong>Jiaming Zhang</strong>; et al.
@@ -246,7 +315,9 @@
    <a href="https://doi.org/10.16660/j.cnki.1674-098X.2020.03.105">&quot;Numerical simulation based on the CIR model and positive comparative analysis of set-up participation&quot;</a>, Science and Technology Innovation Herald, 2020
    <br />
    <br /> 
+</div>
 
+    <div id="Work In Progress">
    <h2>Work In Progress</h2> 
 
    Prof. Shun Yao; <strong>Jiaming Zhang</strong>; Prof. Jiangming Kan*; et al.
@@ -293,7 +364,9 @@
     <strong>Under review</strong> in Forests, 2023
    <br />
    <br /> 
+</div>
 
+<div id="Talks"></div>
    <h2>Invited talks</h2> 
 
    &quot;Efficient forestry information-collecting system based on multi-modal mobile robot and its application&quot;
@@ -304,43 +377,175 @@
     Northeast Forestry University, Harbin
    <br />
    <br /> 
-  
+</div>
+
+<div id="awards">
+   <p></p> 
+   <p> </p>
+   <h2>Awards</h2> 
    
+   <strong>Excellent Freshman Scholarship</strong>, China University of Mining and Technology (Beijing), <strong>2016</strong>.
+   <br />
+   <br /> 
    
+   <strong>Merit Postgraduate Scholarship</strong>, Beijing Forestry University, <strong>2021, 2022, 2023</strong>.
    <br />
+   <br /> 
+</div>
+   
+
+
+   <!-- <h2>Research Experience</h2> 
+   <h3>Backend Server Development for Multi-user Platform</h3>
+   <strong>System Software Engineer</strong> Information Technology Co., Ltd., Wuhan, China, 03/2020 - 04/2021
+    <br>- Designed and implemented a robust server backend using I/O multiplexing and thread pooling models to support multiple user logins simultaneously;
+    <br>- Developed a socket-based networking module with features like "Broken-point Continuingly-transferring" and incorporated Reactor architecture for efficient request handling;
+    <br>- Integrated MySQL database for user data storage and retrieval, ensuring data integrity and security;
+    <br>- Led the development of a command-line interface for system components, enhancing user interaction and system control;
+    <br>- Collaborated closely with task delegates for system co-tuning, ensuring optimal performance and timely business maintenance.
+
+    <h3>Dunhuang Gobi Wind-Sand Jumping Study Based on 3D Gravel Morphology</h3>
+    <strong>Collaboration project with the <a href="http://kldd.nieer.ac.cn/index.action">Key Laboratory of Desert and Desertification (Chinese Academy of Sciences), Dunhuang, China</a></strong>, 09/2021 - 06/2022
+    <br>This research was funded by the National Natural Science Foundation of China (Grant No. 42071014)
+     <br>- Engineered a bespoke photogrammetric apparatus specifically for intricate three-dimensional analysis of gravelly terrains, facilitating accurate digital modeling and extraction of their morphological characteristics;
+     <br>- Introduced a point cloud segmentation methodology tailored for gravel, enabling the extraction of gravel point clouds across varied scales from irregular terrains and densely packed scenarios;
+     <br>- Upon extracting a high-resolution three-dimensional model of gravel surfaces, I conducted comprehensive analyses on its granular morphological features, including shape, roundness, and sphericity. This analysis was pivotal in determining the gravel's fractal dimension and computing the Hurst coefficient.
+     
+     <h3>Intelligent Defect Detection Based on Computer Vision</h3>
+     <strong>Research Intern</strong> Bohr Intelligent Manufacturing Co., Ltd., Shenzhen, China, 05/2022 - 07/2022
+      <br>- By analyzing the frequency domain features of the image to be tested, an image preprocessing algorithm is added to filter out stray light in order to improve the detection rate of the detection algorithm;
+      <br>- Through the lens of the pinhole camera model, the imaging quality is optimized prior to inspection, resulting in improved image performance in all other commonly used metrics such as NIQE and information entropy.
+      
+      <h3>Deep Learning & RGB-D in Apple Tree Pruning</h3>
+      <strong>Key Lab of State Forestry and Grassland Administration for Forestry Equipment and Automation, Beijing, China</strong> This research was financially supported by the NingXia key research and development program (Grant No. 2019BBF02009), 10/2021 - Present
+       <br>- Devised a robust algorithm, integrating deep learning with RGB-D, to pinpoint pruning locations on dormant tall spindle apple trees. Specifically, the Cascade Mask R-CNN SW-T was employed for precise segmentation tasks;
+       <br>- After segmentation, devised an image post-processing method to determine junction points, potential pruning points, and branch diameter endpoints. Achieved good accuracy for branch diameter and distance gauging;
+       <br>- Combining actual pruning rules from orchardists with the operational characteristics of robotic arms, I designed an optimized pruning strategy for robotic arms, laying a solid foundation for future automated pruning tasks.
+       
+       <h3>Automatic Measurement of Tree Diameter at Breast Height based on Computer Vision</h3>
+       <strong>Key Laboratory of State Forestry Administration on Forestry Equipment and Automation, Beijing, China</strong> This work was supported by the National Natural Science Foundation of China under (Grant No. 32071680), 06/2022 - Present
+        <br>- Developed and validated an efficient method for measuring tree diameter at breast height (DBH) using Structure from Motion (SfM) photogrammetry;
+        <br>- Designed and implemented a comprehensive software suite for SfM-based reconstruction, facilitating automated DBH estimation;
+        <br>- Engineered a multi-modal robotic platform tailored for enhanced precision in forest resource data acquisition, effectively circumventing the limitations of conventional methodologies;
+        <br>- Instituted a real-time forest metric capture system, harnessing the capabilities of an RGB-D camera, amalgamated with onboard computational processes and wireless transmission, ensuring cost-efficient and high-fidelity tree data aggregation. -->
+
+<div id="Research Experience">
+        <h2>Research Experience</h2>
+
+        <div class="experience">
+            <h3>Backend Server Development for Multi-user Platform</h3>
+            <p><strong>System Software Engineer</strong> | Information Technology Co., Ltd., Wuhan, China | 03/2020 - 04/2021</p>
+            <ul>
+                <li>Designed and implemented a robust server backend using I/O multiplexing and thread pooling models to support multiple user logins simultaneously;</li>
+                <li>Developed a socket-based networking module with features like "Broken-point Continuingly-transferring" and incorporated Reactor architecture for efficient request handling;</li>
+                <li>Integrated MySQL database for user data storage and retrieval, ensuring data integrity and security;</li>
+                <li>Led the development of a command-line interface for system components, enhancing user interaction and system control;</li>
+                <li>Collaborated closely with task delegates for system co-tuning, ensuring optimal performance and timely business maintenance.</li>
+            </ul>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="experience">
+            <h3>Dunhuang Gobi Wind-Sand Jumping Study Based on 3D Gravel Morphology</h3>
+            <p>
+                <strong>Collaboration project with the <a href="http://kldd.nieer.ac.cn/index.action">Key Laboratory of Desert and Desertification (Chinese Academy of Sciences), Dunhuang, China</a></strong> | 09/2021 - 06/2022
+            </p>
+            <p>This research was funded by the National Natural Science Foundation of China (Grant No. 42071014)</p>
+            <ul>
+                <li>Engineered a bespoke photogrammetric apparatus specifically for intricate three-dimensional analysis of gravelly terrains, facilitating accurate digital modeling and extraction of their morphological characteristics;</li>
+                <li>Introduced a point cloud segmentation methodology tailored for gravel, enabling the extraction of gravel point clouds across varied scales from irregular terrains and densely packed scenarios;</li>
+                <li>Conducted comprehensive analyses on the high-resolution three-dimensional model of gravel surfaces, including shape, roundness, and sphericity, leading to the determination of the gravel's fractal dimension and computation of the Hurst coefficient.</li>
+            </ul>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="experience">
+            <h3>Intelligent Defect Detection Based on Computer Vision</h3>
+            <p><strong>Research Intern</strong> | Bohr Intelligent Manufacturing Co., Ltd., Shenzhen, China | 05/2022 - 07/2022</p>
+            <ul>
+                <li>Implemented an image preprocessing algorithm to filter out stray light, enhancing the detection rate of the algorithm;</li>
+                <li>Optimized imaging quality using the pinhole camera model, improving image performance metrics such as NIQE and information entropy.</li>
+            </ul>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="experience">
+            <h3>Deep Learning & RGB-D in Apple Tree Pruning</h3>
+            <p><strong>Key Lab of State Forestry and Grassland Administration for Forestry Equipment and Automation, Beijing, China</strong> | This research was financially supported by the NingXia key research and development program (Grant No. 2019BBF02009) | 10/2021 - Present</p>
+            <ul>
+                <li>Devised a robust algorithm, integrating deep learning with RGB-D, to pinpoint pruning locations on dormant tall spindle apple trees using Cascade Mask R-CNN SW-T;</li>
+                <li>Developed an image post-processing method to determine junction points, potential pruning points, and branch diameter endpoints;</li>
+                <li>Designed an optimized pruning strategy for robotic arms based on actual pruning rules and robotic arm characteristics.</li>
+            </ul>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="experience">
+            <h3>Automatic Measurement of Tree Diameter at Breast Height based on Computer Vision</h3>
+            <p><strong>Key Laboratory of State Forestry Administration on Forestry Equipment and Automation, Beijing, China</strong> | This work was supported by the National Natural Science Foundation of China under (Grant No. 32071680) | 06/2022 - Present</p>
+            <div class="gallery">
+                <div class="image-container">
+                    <a href="https://github.com/CharmingZh/CharmingZh.github.io/assets/82874862/0f04f8fa-0bab-426c-808b-74ef00b71e85" target="_blank">
+                        <img src="https://github.com/CharmingZh/CharmingZh.github.io/assets/82874862/0f04f8fa-0bab-426c-808b-74ef00b71e85" alt="Image 1">
+                    </a>
+                </div>
+                <div class="image-container">
+                    <a href="https://github.com/CharmingZh/CharmingZh.github.io/assets/82874862/b1494c4d-998f-4bbc-9e2a-d5c6832adbd8" target="_blank">
+                        <img src="https://github.com/CharmingZh/CharmingZh.github.io/assets/82874862/b1494c4d-998f-4bbc-9e2a-d5c6832adbd8" alt="Image 2">
+                    </a>
+                </div>
+                <div class="image-container">
+                    <a href="https://github.com/CharmingZh/CharmingZh.github.io/assets/82874862/0cc55a41-874c-4074-b805-274c4f5d550a" target="_blank">
+                        <img src="https://github.com/CharmingZh/CharmingZh.github.io/assets/82874862/0cc55a41-874c-4074-b805-274c4f5d550a" alt="Image 3">
+                    </a>
+                </div>
+            </div>
+            <ul>
+                <li>Developed and validated an efficient method for measuring tree diameter at breast height (DBH) using Structure from Motion (SfM) photogrammetry;</li>
+                <li>Implemented a comprehensive software suite for SfM-based reconstruction and a multi-modal robotic platform for forest resource data acquisition;</li>
+                <li>Instituted a real-time forest metric capture system using an RGB-D camera and wireless transmission.</li>
+            </ul>
+        </div>
+        <div class="divider"></div>
+        
+
+   <br />
+   <br /> <strong>Teaching Assistant.</strong> Machine Vision(For MS / PhD), BFU#Tech. 
+   <br>Supervisors: 
+   <strong>Prof. Jiangming Kan</strong>. Fall 2022
+   <br>- As a high-performing student who has taken the course, I was invited to share my learning with students by organizing workshops.
+   <br>- Assist the instructor in guiding the environment setup, code debugging, algorithm design and other issues.
+   <div class="divider"></div>
+
+   <br />
+   <br /> <strong>Teaching Assistant.</strong> Digital Electronics(B.Eng), BFU#Tech. 
+   <br>Supervisors: 
+   <strong>Prof. Xixuan Zhao</strong>. Fall/Spring 2021
+   <br>- Reviewed and analyzed class homework after each lesson, highlighting main errors to the teacher.
+   <br>- Addressed student queries post-class and provided feedback on key issues to the teacher.
+
    <br /> 
    <p></p> 
    <p> </p>
-   <h2>Awards</h2> Baidu Scholarship (10 recipients worldwide), 2022.
-   <br />
-   <br /> Snap Fellowship Honorable Mention, 2022.
-   <br />
-   <br /> China National Scholarship (Top 0.2%), 2018.
-   <br />
-   <br /> 
+   <div class="divider"></div>
+   <div class="divider"></div>
+</div>
+
+<div id="Community Service">
+   <h2>Community Service.</h2>
+   <h3><a href="https://chinesementalwellness.org/">The Chinese Mental Wellness and Suicide Prevention Society</a><br>2019 - Present</h3>
+   This is a non-profit organisation registered in New York, dedicated to the development, application and promotion of multimedia tools for self-management of mental health. We have established a humanistic mental health care network system, including a cloud-based platform and a community assistance platform, to support and facilitate interactions with other research and education public interest platforms, organisations and enterprises serving the community.
+   <h3>Community Support Volunteer during COVID-19 Blockdown Times<br>02/2021 - 06/2021</h3>
+   During the peak of a major outbreak in my hometown, I dedicated myself as a Community Support Volunteer. I actively contributed to resource mobilization efforts by transporting and distributing food, assisting elderly residents in need, and ensuring the timely delivery of vital medications. In this challenging environment, I seized the opportunity to make a difference by empowering individuals and fostering community solidarity. This experience not only showcased the resilience and determination of the human spirit but also reinforced my belief in the power of collective support during times of crisis.
    <p></p> 
    <p> </p>
-   <h2>Research Experience</h2> Research Intern. MIT-IBM Watson AI Lab. Supervisor: 
-   <a href="https://people.csail.mit.edu/ganchuang/">Chuang Gan</a>. 2021.3 - present
-   <br />
-   <br /> Research Assistant. VCLA, UCLA. Supervisor: 
-   <a href="http://www.stat.ucla.edu/~sczhu/">Song-Chun Zhu</a>. 2019.9 - present
-   <br />
-   <br /> Research Intern. Tencent AI Lab. Supervisor: 
-   <a href="http://lipiji.com/">Piji Li</a>. 2019.3-2019.7
-   <br />
-   <br /> Research Assitant. IIoT, SJTU. Supervisors: 
-   <a href="https://www.cs.sjtu.edu.cn/~wang-xb/">Xinbing Wang</a>, 
-   <a href="http://wnzhang.net/">Weinan Zhang</a>. 2016-2019
-   <br /> 
-   <p></p> 
-   <p> </p>
-   <h2>Misc.</h2> I dedicate almost all my spare time to music. I play the piano, pipa (a Chinese instrument), organ, and harpsichord in an orchestra; the keyboard and guitar in a rock band. I also occasionally play the saxophone for some jazz bands. (Favorite music genres: metal, rock, jazz, classic. 
+   <!-- <h2>Misc.</h2> I dedicate almost all my spare time to music. I play the piano, pipa (a Chinese instrument), organ, and harpsichord in an orchestra; the keyboard and guitar in a rock band. I also occasionally play the saxophone for some jazz bands. (Favorite music genres: metal, rock, jazz, classic. 
    <a href="https://pleasekillme.com/">Favorite book.</a>)
    <br />
    <br /> I've been playing the piano since I was five, and I was the president of the piano association in Shanghai Jiao Tong University. I really enjoy playing double-piano works with others (In fact I held a double-piano concert when I was an undergraduate!). 
-   <!-- I love water sports. I am an advanced scuba diver and a free diver. --> 
-   <p></p> 
+ I love water sports. I am an advanced scuba diver and a free diver. --> 
+   <p></p>
+</div>
   </section>  
  </body>
 </html>
