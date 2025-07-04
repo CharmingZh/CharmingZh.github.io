@@ -4,11 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
-  <title>Jiaming Zhang (张家铭)</title>
+  <title>Jiaming Zhang (张家铭) - 最终玻璃效果</title>
   <style>
-    /* ======================================= */
-    /* ===   颜色变量 (暗色模式为默认)   === */
-    /* ======================================= */
     :root {
       --bg-color: #020205;
       --text-color: #EAEAEA;
@@ -17,399 +14,118 @@
       --border-color: rgba(0, 191, 255, 0.3);
       --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
       --navbar-bg: rgba(13, 13, 13, 0.6);
-      --card-bg-color-fallback: rgba(18, 18, 22, 0.6);
-      --card-bg-color: rgba(18, 18, 22, 0.15);
-      --orb-opacity: 0.4;
+      --card-bg-color: rgba(18, 18, 22, 0.2);
     }
 
-    /* ======================================= */
-    /* ===     亮色模式下的颜色变量      === */
-    /* ======================================= */
     [data-theme="light"] {
       --bg-color: #F5F5F7;
       --text-color: #1D1D1F;
       --text-secondary-color: #515154;
-      --accent-color: #0071E3; /* 苹果蓝 */
+      --accent-color: #0071E3;
       --border-color: rgba(0, 113, 227, 0.3);
       --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
       --navbar-bg: rgba(245, 245, 247, 0.7);
-      --card-bg-color-fallback: rgba(255, 255, 255, 0.6);
       --card-bg-color: rgba(255, 255, 255, 0.25);
-      --orb-opacity: 0.6;
     }
 
-    /* --- 字体引入 --- */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box; } html { scroll-behavior: smooth; }
 
-    /* --- 基础样式重置与过渡 --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
-      font-family: var(--font-main);
+      font-family: 'Inter', sans-serif;
       line-height: 1.7;
       overflow-x: hidden;
       transition: background-color 0.3s ease, color 0.3s ease;
+      background-image: url('https://images.unsplash.com/photo-1542401886-65d6c61db217?q=80&w=2940&auto=format&fit=crop');
+      background-size: cover;
+      background-attachment: fixed;
     }
 
-    /* --- 动态背景 (保持不变) --- */
-    #dynamic-background {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden;
-    }
-    #dynamic-background::after {
-      content: ''; position: absolute; width: 100%; height: 100%;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
-      opacity: 0.025; z-index: -1;
-    }
-    .bg-blur-orb {
-      position: absolute; border-radius: 50%; filter: blur(100px);
-      opacity: var(--orb-opacity); /* 使用变量控制不透明度 */
-      animation: move-orb 25s infinite alternate;
-      transition: opacity 0.3s ease;
-    }
-    .orb-1 { width: 500px; height: 500px; top: -100px; left: -200px; background-color: #00BFFF; animation-duration: 20s; }
-    .orb-2 { width: 400px; height: 400px; bottom: -150px; right: -150px; background-color: #8A2BE2; animation-duration: 30s; animation-direction: reverse; }
-    .orb-3 { width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #FF1493; animation-duration: 25s; }
-    @keyframes move-orb {
-      from { transform: translate(calc(var(--x-start, 0) * 1px), calc(var(--y-start, 0) * 1px)) scale(1); }
-      to { transform: translate(calc(var(--x-end, 0) * 1px), calc(var(--y-end, 0) * 1px)) scale(1.5); }
-    }
+    #dynamic-background { display: none; }
 
-    /* --- 导航栏 --- */
-    .navbar {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 20px 50px;
-      display: flex; justify-content: space-between; align-items: center; z-index: 100;
-      background: var(--navbar-bg);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(128, 128, 128, 0.2);
-      transition: background-color 0.3s ease;
-    }
-    .nav-left { display: flex; align-items: center; gap: 30px; }
-    .nav-logo { font-size: 1.2rem; font-weight: 700; color: var(--text-color); text-decoration: none; }
-    .nav-links { list-style: none; display: flex; gap: 30px; }
-    .nav-links a { color: var(--text-secondary-color); text-decoration: none; font-size: 0.9rem; font-weight: 500; position: relative; transition: color 0.3s ease; }
-    .nav-links a:hover { color: var(--text-color); }
-    .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 50%; transform: translateX(-50%); background-color: var(--accent-color); transition: width 0.3s ease, background-color 0.3s ease; }
-    .nav-links a:hover::after { width: 100%; }
-
-    /* --- 主题切换按钮 --- */
-    .theme-switcher {
-      background: none; border: none; cursor: pointer; color: var(--text-secondary-color);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .theme-switcher svg { width: 22px; height: 22px; transition: transform 0.3s ease, color 0.3s ease; }
-    .theme-switcher:hover svg { color: var(--text-color); transform: scale(1.1) rotate(15deg); }
-    .theme-switcher .icon-sun { display: none; }
-    [data-theme="light"] .theme-switcher .icon-sun { display: block; }
-    [data-theme="light"] .theme-switcher .icon-moon { display: none; }
-
-    /* --- 玻璃卡片样式 (保持不变) --- */
     .glass-card {
-      border-radius: 15px; border: 1px solid rgba(128, 128, 128, 0.2); padding: 30px;
-      box-shadow: var(--card-shadow); position: relative; overflow: hidden;
+      border-radius: 15px;
+      border: 1px solid rgba(128, 128, 128, 0.2);
+      padding: 30px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
       transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease, background-color 0.3s ease;
-      background-color: var(--card-bg-color-fallback);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      background-color: var(--card-bg-color);
+      -webkit-backdrop-filter: url(#original-style-glass-filter);
+      backdrop-filter: url(#original-style-glass-filter);
     }
-    @supports (backdrop-filter: url(#displacementFilter4)) or (-webkit-backdrop-filter: url(#displacementFilter4)) {
-      .glass-card {
-        background-color: var(--card-bg-color);
-        -webkit-backdrop-filter: url(#displacementFilter4);
-        backdrop-filter: url(#displacementFilter4);
-      }
-    }
-    .glass-card:hover { transform: translateY(-8px); box-shadow: 0 16px 50px var(--card-shadow); }
 
-    /* --- 其他组件样式适配 --- */
-    .profile-pic { border: 3px solid var(--border-color); box-shadow: 0 0 20px var(--border-color); }
-    .keywords span { background: var(--accent-color); color: var(--bg-color); padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-family: var(--font-mono); border: none; font-weight: 500; }
-    [data-theme="light"] .keywords span { color: #fff; }
-    .section-title::after { background: var(--accent-color); box-shadow: 0 0 10px var(--accent-color); }
-    #publications li { border-left: 3px solid var(--accent-color); background-color: transparent; }
-    a { color: var(--accent-color); }
-    .footer { border-top: 1px solid rgba(128, 128, 128, 0.2); }
-    .social-links svg { fill: var(--text-secondary-color); }
-    .social-links a:hover svg { fill: var(--accent-color); }
-
-    /* (此处省略其他未变的基础布局CSS，如 .container, .section-title 等，以保持代码简洁) */
-    .container { max-width: 900px; margin: 0 auto; padding: 120px 20px 50px; } .content-section { margin-bottom: 80px; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; } .content-section.visible { opacity: 1; transform: translateY(0); } .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 30px; color: var(--text-color); display: inline-block; position: relative; } #hero { display: flex; align-items: center; gap: 40px; margin-top: 50px; } .profile-pic { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; flex-shrink: 0; } .hero-text h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 10px; } .hero-text h2 { font-size: 1.2rem; font-weight: 400; color: var(--text-secondary-color); margin-bottom: 15px; } .keywords { display: flex; flex-wrap: wrap; gap: 10px; } #about p { font-size: 1.1rem; color: var(--text-secondary-color); } .research-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; } .research-card h3 { color: var(--accent-color); margin-bottom: 15px; font-size: 1.2rem; } .research-card p { color: var(--text-secondary-color); font-size: 0.95rem; } #publications ul { list-style: none; } #publications p { font-size: 1rem; color: var(--text-secondary-color); margin-bottom: 5px; } #publications .authors { font-weight: 500; color: var(--text-color); } .footer p { color: var(--text-secondary-color); font-size: 0.9rem; margin-bottom: 15px; } .social-links a { margin: 0 15px; display: inline-block; } @media (max-width: 768px) { .navbar { flex-direction: column; padding: 15px; gap: 10px; } .nav-left { width: 100%; justify-content: space-between; } #hero { flex-direction: column; text-align: center; } .profile-pic { width: 120px; height: 120px; } .hero-text h1 { font-size: 2.2rem; } .bg-blur-orb { filter: blur(60px); } }
+    .glass-card:hover { transform: translateY(-8px); box-shadow: 0 16px 50px var(--card-shadow); } .profile-pic { border: 3px solid var(--border-color); box-shadow: 0 0 20px var(--border-color); } .keywords span { background: var(--accent-color); color: var(--bg-color); padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; border: none; font-weight: 500; } [data-theme="light"] .keywords span { color: #fff; } .section-title::after { background: var(--accent-color); box-shadow: 0 0 10px var(--accent-color); } #publications li { border-left: 3px solid var(--accent-color); background-color: transparent; } a { color: var(--accent-color); } .footer { border-top: 1px solid rgba(128, 128, 128, 0.2); } .social-links svg { fill: var(--text-secondary-color); } .social-links a:hover svg { fill: var(--accent-color); } .container { max-width: 900px; margin: 0 auto; padding: 120px 20px 50px; } .content-section { margin-bottom: 80px; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; } .content-section.visible { opacity: 1; transform: translateY(0); } .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 30px; color: var(--text-color); display: inline-block; position: relative; } #hero { display: flex; align-items: center; gap: 40px; margin-top: 50px; } .profile-pic { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; flex-shrink: 0; } .hero-text h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 10px; } .hero-text h2 { font-size: 1.2rem; font-weight: 400; color: var(--text-secondary-color); margin-bottom: 15px; } .keywords { display: flex; flex-wrap: wrap; gap: 10px; } #about p { font-size: 1.1rem; color: var(--text-secondary-color); } .research-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; } .research-card h3 { color: var(--accent-color); margin-bottom: 15px; font-size: 1.2rem; } .research-card p { color: var(--text-secondary-color); font-size: 0.95rem; } #publications ul { list-style: none; } #publications p { font-size: 1rem; color: var(--text-secondary-color); margin-bottom: 5px; } #publications .authors { font-weight: 500; color: var(--text-color); } .footer p { color: var(--text-secondary-color); font-size: 0.9rem; margin-bottom: 15px; } .social-links a { margin: 0 15px; display: inline-block; } .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 100; background: var(--navbar-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(128, 128, 128, 0.2); transition: background-color 0.3s ease; } .nav-left { display: flex; align-items: center; gap: 30px; } .nav-logo { font-size: 1.2rem; font-weight: 700; color: var(--text-color); text-decoration: none; } .nav-links { list-style: none; display: flex; gap: 30px; } .nav-links a { color: var(--text-secondary-color); text-decoration: none; font-size: 0.9rem; font-weight: 500; position: relative; transition: color 0.3s ease; } .nav-links a:hover { color: var(--text-color); } .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 50%; transform: translateX(-50%); background-color: var(--accent-color); transition: width 0.3s ease, background-color 0.3s ease; } .nav-links a:hover::after { width: 100%; } .theme-switcher { background: none; border: none; cursor: pointer; color: var(--text-secondary-color); display: flex; align-items: center; justify-content: center; } .theme-switcher svg { width: 22px; height: 22px; transition: transform 0.3s ease, color 0.3s ease; } .theme-switcher:hover svg { color: var(--text-color); transform: scale(1.1) rotate(15deg); } .theme-switcher .icon-sun { display: none; } [data-theme="light"] .theme-switcher .icon-sun { display: block; } [data-theme="light"] .theme-switcher .icon-moon { display: none; } @media (max-width: 768px) { .navbar { flex-direction: column; padding: 15px; gap: 10px; } .nav-left { width: 100%; justify-content: space-between; } #hero { flex-direction: column; text-align: center; } .profile-pic { width: 120px; height: 120px; } .hero-text h1 { font-size: 2.2rem; } .bg-blur-orb { filter: blur(60px); } }
 
   </style>
 </head>
 <body>
 
-<svg id="svg-filters"
-     aria-hidden="true"
-     style="position: absolute; width: 0; height: 0; overflow: hidden;">
+<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;">
   <defs>
-    <filter id="displacementFilter4">
-      <feImage xlink:href="data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='50' y='50' width='100' height='100' rx='25' fill='%230001' /%3E%3Crect x='50' y='50' width='100' height='100' rx='25' fill='%23FFF' style='filter:blur(5px)' /%3E%3C/svg%3E"
-               x="0%"
-               y="0%"
-               width="100%"
-               height="100%"
-               result="thing9" />
-      <feImage xlink:href="data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='50' y='50' width='100' height='100' rx='25' fill='%23FFF1' style='filter:blur(15px)' /%3E%3C/svg%3E"
-               x="0%"
-               y="0%"
-               width="100%"
-               height="100%"
-               result="thing0" />
-      <feImage xlink:href="data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='50' y='50' width='100' height='100' rx='25' fill='%23000' /%3E%3C/svg%3E"
-               x="0%"
-               y="0%"
-               width="100%"
-               height="100%"
-               result="thing1" />
-      <feImage xlink:href="data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='gradient1' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23000'/%3E%3Cstop offset='100%25' stop-color='%2300F'/%3E%3C/linearGradient%3E%3ClinearGradient id='gradient2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23000'/%3E%3Cstop offset='100%25' stop-color='%230F0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='0' width='200' height='200' rx='25' fill='%237F7F7F' /%3E%3Crect x='50' y='50' width='100' height='100' rx='25' fill='%23000' /%3E%3Crect x='50' y='50' width='100' height='100' rx='25' fill='url(%23gradient1)' style='mix-blend-mode: screen' /%3E%3Crect x='50' y='50' width='100' height='100' rx='25' fill='url(%23gradient2)' style='mix-blend-mode: screen' /%3E%3Crect x='50' y='50' width='100' height='100' rx='25' fill='%237F7F7FBB' style='filter:blur(5px)' /%3E%3C/svg%3E"
-               x="0%"
-               y="0%"
-               width="100%"
-               height="100%"
-               result="thing2" />
-      <feGaussianBlur stdDeviation="0.7"
-                      in="SourceGraphic"
-                      result="preblur" />
-      <feDisplacementMap in2="thing2"
-                         in="preblur"
-                         scale="-148"
-                         xChannelSelector="B"
-                         yChannelSelector="G" />
-      <feColorMatrix type="matrix"
-                     values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"
-                     result="disp1" />
-      <feDisplacementMap in2="thing2"
-                         in="preblur"
-                         scale="-150"
-                         xChannelSelector="B"
-                         yChannelSelector="G" />
-      <feColorMatrix type="matrix"
-                     values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"
-                     result="disp2" />
-      <feDisplacementMap in2="thing2"
-                         in="preblur"
-                         scale="-152"
-                         xChannelSelector="B"
-                         yChannelSelector="G" />
-      <feColorMatrix type="matrix"
-                     values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"
-                     result="disp3" />
-      <feBlend in2="disp2"
-               mode="screen" />
-      <feBlend in2="disp1"
-               mode="screen" />
-      <feGaussianBlur stdDeviation="0.0" />
-      <feBlend in2="thing0"
-               mode="screen" />
-      <feBlend in2="thing9"
-               mode="multiply" />
-      <feComposite in2="thing1"
-                   operator="in" />
-      <feOffset dx="43"
-                dy="43" />
+    <filter id="original-style-glass-filter">
+      <feFlood flood-color="#00f" result="floodBlue"/>
+      <feFlood flood-color="#0f0" result="floodGreen"/>
+
+      <feImage xlink:href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%23000'/%3E%3Cstop offset='100%25' stop-color='%23fff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1' height='1' fill='url(%23g)'/%3E%3C/svg%3E"
+               width="100%" height="100%" preserveAspectRatio="none" result="horizontal-gradient"/>
+      <feImage xlink:href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23000'/%3E%3Cstop offset='100%25' stop-color='%23fff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1' height='1' fill='url(%23g)'/%3E%3C/svg%3E"
+               width="100%" height="100%" preserveAspectRatio="none" result="vertical-gradient"/>
+
+      <feComposite in="floodBlue" in2="horizontal-gradient" operator="in" result="blueGrad"/>
+      <feComposite in="floodGreen" in2="vertical-gradient" operator="in" result="greenGrad"/>
+
+      <feMorphology in="SourceAlpha" operator="erode" radius="8" result="eroded"/>
+      <feGaussianBlur in="eroded" stdDeviation="5" result="centerBlur"/>
+      <feColorMatrix in="centerBlur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.7 0" result="centerBlurTransparent"/>
+
+      <feBlend in="blueGrad" in2="greenGrad" mode="screen" result="gradBlend"/>
+      <feBlend in="gradBlend" in2="centerBlurTransparent" mode="screen" result="thing2"/>
+
+      <feMorphology in="SourceAlpha" operator="erode" radius="2" result="erodedHighlight"/>
+      <feGaussianBlur in="erodedHighlight" stdDeviation="15" result="thing0"/>
+
+      <feMorphology in="SourceAlpha" operator="erode" radius="1" result="erodedShadow"/>
+      <feGaussianBlur in="erodedShadow" stdDeviation="5" result="thing9_blur"/>
+      <feColorMatrix in="thing9_blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.1 0" result="thing9"/>
+
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="preblur"/>
+
+      <feDisplacementMap in2="thing2" in="preblur" scale="-30" xChannelSelector="B" yChannelSelector="G" result="dispR"/>
+      <feDisplacementMap in2="thing2" in="preblur" scale="-28" xChannelSelector="B" yChannelSelector="G" result="dispG"/>
+      <feDisplacementMap in2="thing2" in="preblur" scale="-26" xChannelSelector="B" yChannelSelector="G" result="dispB"/>
+
+      <feColorMatrix in="dispR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="R" />
+      <feColorMatrix in="dispG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="G" />
+      <feColorMatrix in="dispB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="B" />
+      <feBlend in="R" in2="G" mode="screen" result="RG" />
+      <feBlend in="RG" in2="B" mode="screen" result="blended_colors"/>
+
+      <feBlend in="blended_colors" in2="thing0" mode="screen"/>
+      <feBlend in2="thing9" mode="multiply"/>
+
+      <feComposite in2="SourceAlpha" operator="in"/>
     </filter>
   </defs>
 </svg>
 
-<div id="dynamic-background">
-  <div class="bg-blur-orb orb-1"></div>
-  <div class="bg-blur-orb orb-2"></div>
-  <div class="bg-blur-orb orb-3"></div>
-</div>
 
-<nav class="navbar">
-  <div class="nav-left">
-    <a href="#hero"
-       class="nav-logo">J. Zhang</a>
-    <ul class="nav-links">
-      <li>
-        <a href="#about">About</a>
-      </li>
-      <li>
-        <a href="#research">Research</a>
-      </li>
-      <li>
-        <a href="#publications">Publications</a>
-      </li>
-    </ul>
-  </div>
-  <button class="theme-switcher"
-          id="theme-toggle"
-          title="切换主题">
-    <svg class="icon-moon"
-         xmlns="http://www.w3.org/2000/svg"
-         viewBox="0 0 24 24"
-         fill="currentColor">
-      <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 11-1.06-1.06l1.59-1.59a.75.75 0 011.061 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.836 17.894a.75.75 0 011.06 0l1.591 1.591a.75.75 0 11-1.06 1.06l-1.591-1.59a.75.75 0 010-1.06zM12 21.75a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75.75zM5.106 17.836a.75.75 0 010-1.06l1.591-1.591a.75.75 0 111.06 1.06l-1.59 1.591a.75.75 0 01-1.061 0zM3 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3.75A.75.75 0 013 12zM6.106 5.106a.75.75 0 011.06 0l1.591 1.591a.75.75 0 01-1.06 1.06L6.106 6.167a.75.75 0 010-1.06z"></path>
-    </svg>
-    <svg class="icon-sun"
-         xmlns="http://www.w3.org/2000/svg"
-         viewBox="0 0 24 24"
-         fill="currentColor">
-      <path fill-rule="evenodd"
-            d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.472-.528.75.75 0 01.818.162.75.75 0 01.162.819A10.5 10.5 0 119.528 1.718zM16.5 9a.75.75 0 01.75.75 1.5 1.5 0 001.5 1.5.75.75 0 010 1.5 1.5 1.5 0 00-1.5 1.5.75.75 0 01-1.5 0 1.5 1.5 0 00-1.5-1.5.75.75 0 010-1.5 1.5 1.5 0 001.5-1.5.75.75 0 01.75-.75z"
-            clip-rule="evenodd"></path>
-    </svg>
-  </button>
-</nav>
-
-<div class="container">
-  <section id="hero"
-           class="content-section">
-    <img src="https://via.placeholder.com/150"
-         alt="您的照片"
-         class="profile-pic">
-    <div class="hero-text">
-      <h1>Jiaming Zhang 张家铭</h1>
-      <h2>Ph.D. Student / Research Assistant @ Michigan State
-        University</h2>
-      <div class="keywords">
-        <span>Optical Sensing</span>
-        <span>Smart Agriculture</span>
-        <span>Computer Vision</span>
-        <span>3D Sensing</span>
-      </div>
-    </div>
-  </section>
-  <section id="about"
-           class="content-section">
-    <h2 class="section-title">About me.</h2>
-    <div class="glass-card">
-      <p> 在这里写下您的个人简介，介绍您的学术背景、研究兴趣和职业目标。例如：我是一名专注于 [您的领域]
-        的博士后研究员，在 [您的大学] 获得博士学位。
-        我的研究主要集中在利用 [技术A] 来解决 [问题B]。我对探索 [某个前沿话题]
-        充满热情，并致力于通过跨学科合作推动科学边界。 </p>
-    </div>
-  </section>
-  <section id="research"
-           class="content-section">
-    <h2 class="section-title">研究项目</h2>
-    <div class="research-grid">
-      <div class="glass-card research-card">
-        <h3>项目标题一：高效算法的开发</h3>
-        <p>本项目旨在设计和实现一种新的算法，用于解决大规模数据集下的优化问题，相比现有方法效率提升了XX%。</p>
-      </div>
-      <div class="glass-card research-card">
-        <h3>项目标题二：物理现象的计算模拟</h3>
-        <p>通过高性能计算平台，我们对 [某种物理现象] 进行了精细的数值模拟，揭示了其背后的微观机制。</p>
-      </div>
-      <div class="glass-card research-card">
-        <h3>项目标题三：交互式数据探索工具</h3>
-        <p>开发了一款基于Web的交互式可视化工具，帮助研究人员直观地探索和理解复杂的高维数据。</p>
-      </div>
-    </div>
-  </section>
-  <section id="publications"
-           class="content-section">
-    <h2 class="section-title">主要出版物</h2>
-    <ul>
-      <li>
-        <p class="authors">
-          <strong>您的姓名</strong>, 合作者A, 合作者B. (年份).
-        </p>
-        <p>
-          <em>论文标题放在这里，可以加粗或斜体.</em>
-        </p>
-        <p>期刊或会议名称, 卷(期), 页码.</p>
-        <p>
-          <a href="#"
-             target="_blank">[DOI链接]</a>
-          <a href="#"
-             target="_blank">[PDF]</a>
-          <a href="#"
-             target="_blank">[代码]</a>
-        </p>
-      </li>
-      <li>
-        <p class="authors">合作者C, <strong>您的姓名</strong>, 合作者D.
-          (年份).</p>
-        <p>
-          <em>另一篇非常重要的论文标题.</em>
-        </p>
-        <p>顶级会议名称 (例如, NeurIPS, CVPR).</p>
-        <p>
-          <a href="#"
-             target="_blank">[DOI链接]</a>
-          <a href="#"
-             target="_blank">[PDF]</a>
-        </p>
-      </li>
-    </ul>
-  </section>
-</div>
-<footer class="footer">
-  <div class="social-links">
-    <a href="#"
-       title="Email">
-      <svg viewBox="0 0 24 24">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 2l8 5 8-5v2l-8 5-8-5V6z"></path>
-      </svg>
-    </a>
-    <a href="#"
-       target="_blank"
-       title="GitHub">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.69c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.69 0 3.84-2.34 4.68-4.57 4.94.36.31.68.92.68 1.85v2.72c0 .27.18.58.69.48C19.13 20.17 22 16.42 22 12c0-5.52-4.48-10-10-10z"></path>
-      </svg>
-    </a>
-    <a href="#"
-       target="_blank"
-       title="Google Scholar">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-4.75-5.5l4.75-3.8 4.75 3.8L12 17l-4.75-2.5zM12 4l-6 4.5 1.5 1.13L12 6.25l4.5 3.38L18 8.5 12 4z"></path>
-      </svg>
-    </a>
-    <a href="#"
-       target="_blank"
-       title="LinkedIn">
-      <svg viewBox="0 0 24 24">
-        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zm-12 5v9h3v-4.5c0-1.93 1.57-3.5 3.5-3.5s3.5 1.57 3.5 3.5V17h3V8h-3v1.49c-.64-1.13-1.96-1.99-3.5-1.99-2.48 0-4.5 2.02-4.5 4.5zM6.5 6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"></path>
-      </svg>
-    </a>
-  </div>
-  <p>&copy; 2025 您的姓名. All Rights Reserved.</p>
-</footer>
+<div id="dynamic-background"></div>
+<nav class="navbar"> <div class="nav-left"> <a href="#hero" class="nav-logo">J. Zhang</a> <ul class="nav-links"> <li><a href="#about">About</a></li> <li><a href="#research">Research</a></li> <li><a href="#publications">Publications</a></li> </ul> </div> <button class="theme-switcher" id="theme-toggle" title="切换主题"> <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 11-1.06-1.06l1.59-1.59a.75.75 0 011.061 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.836 17.894a.75.75 0 011.06 0l1.591 1.591a.75.75 0 11-1.06 1.06l-1.591-1.59a.75.75 0 010-1.06zM12 21.75a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75-.75zM5.106 17.836a.75.75 0 010-1.06l1.591-1.591a.75.75 0 111.06 1.06l-1.59 1.591a.75.75 0 01-1.061 0zM3 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3.75A.75.75 0 013 12zM6.106 5.106a.75.75 0 011.06 0l1.591 1.591a.75.75 0 01-1.06 1.06L6.106 6.167a.75.75 0 010-1.06z"></path></svg> <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.472-.528.75.75 0 01.818.162.75.75 0 01.162.819A10.5 10.5 0 119.528 1.718zM16.5 9a.75.75 0 01.75.75 1.5 1.5 0 001.5 1.5.75.75 0 010 1.5 1.5 1.5 0 00-1.5 1.5.75.75 0 01-1.5 0 1.5 1.5 0 00-1.5-1.5.75.75 0 010-1.5 1.5 1.5 0 001.5-1.5.75.75 0 01.75-.75z" clip-rule="evenodd"></path></svg> </button> </nav>
+<div class="container"> <section id="hero" class="content-section"> <img src="https://via.placeholder.com/150" alt="您的照片" class="profile-pic"> <div class="hero-text"> <h1>Jiaming Zhang 张家铭</h1> <h2>Ph.D. Student / Research Assistant @ Michigan State University</h2> <div class="keywords"> <span>Optical Sensing</span> <span>Smart Agriculture</span> <span>Computer Vision</span> <span>3D Sensing</span> </div> </div> </section> <section id="about" class="content-section"> <h2 class="section-title">About me.</h2> <div class="glass-card"> <p> I am a Ph.D. student in the Department of Biosystems and Agricultural Engineering at Michigan State University, advised by Dr. Zhaojian Li. My research focuses on developing advanced optical sensing systems and computer vision algorithms to address challenges in smart agriculture. </p> </div> </section> <section id="research" class="content-section"> <h2 class="section-title">Research</h2> <div class="research-grid"> <div class="glass-card research-card"> <h3>High-throughput Plant Phenotyping</h3> <p>Developing 3D sensing and computer vision techniques for automated measurement of plant traits.</p> </div> <div class="glass-card research-card"> <h3>Robotic Fruit Harvesting</h3> <p>Designing perception systems for robotic platforms to detect and localize fruits in complex orchard environments.</p> </div> <div class="glass-card research-card"> <h3>Hyperspectral Imaging for Quality Assessment</h3> <p>Utilizing hyperspectral and multispectral imaging to assess the internal and external quality of agricultural products.</p> </div> </div> </section> <section id="publications" class="content-section"> <h2 class="section-title">Publications</h2> <ul id="publications-list"> <li>Loading publications...</li> </ul> </section> </div>
+<footer class="footer"> <div class="social-links"> <a href="mailto:zhang927@msu.edu" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 2l8 5 8-5v2l-8 5-8-5V6z"></path></svg></a> <a href="https://github.com/jiaming-zhang" target="_blank" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.69c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.69 0 3.84-2.34 4.68-4.57 4.94.36.31.68.92.68 1.85v2.72c0 .27.18.58.69.48C19.13 20.17 22 16.42 22 12c0-5.52-4.48-10-10-10z"></path></svg></a> <a href="https://scholar.google.com/citations?user=your_scholar_id" target="_blank" title="Google Scholar"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-4.75-5.5l4.75-3.8 4.75 3.8L12 17l-4.75-2.5zM12 4l-6 4.5 1.5 1.13L12 6.25l4.5 3.38L18 8.5 12 4z"></path></svg></a> <a href="https://www.linkedin.com/in/jiaming-zhang-msu" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zm-12 5v9h3v-4.5c0-1.93 1.57-3.5 3.5-3.5s3.5 1.57 3.5 3.5V17h3V8h-3v1.49c-.64-1.13-1.96-1.99-3.5-1.99-2.48 0-4.5 2.02-4.5 4.5zM6.5 6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"></path></svg></a> </div> <p>&copy; 2025 Jiaming Zhang. All Rights Reserved.</p> </footer>
 
 <script>
-  // --- 简单的入场动画脚本 ---
-  const sections = document.querySelectorAll('.content-section');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.1 });
-  sections.forEach(section => observer.observe(section));
-
-  // --- 动态背景球体随机移动 ---
-  const orbs = document.querySelectorAll('.bg-blur-orb');
-  orbs.forEach(orb => {
-    orb.style.setProperty('--x-start', `${Math.random() * 400 - 200}`);
-    orb.style.setProperty('--y-start', `${Math.random() * 400 - 200}`);
-    orb.style.setProperty('--x-end', `${Math.random() * 400 - 200}`);
-    orb.style.setProperty('--y-end', `${Math.random() * 400 - 200}`);
-  });
-
-  // --- 主题切换逻辑 ---
-  const themeToggle = document.getElementById('theme-toggle');
-  const htmlElement = document.documentElement;
-
-  // 检查并应用保存的主题
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    htmlElement.setAttribute('data-theme', savedTheme);
-  } else {
-    // 如果没有保存的主题，则根据系统偏好设置
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    htmlElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-  }
-
-  themeToggle.addEventListener('click', () => {
-    const currentTheme = htmlElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    htmlElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme); // 保存新主题
-  });
+  // JavaScript部分保持不变
+  const themeToggle = document.getElementById('theme-toggle'); const htmlElement = document.documentElement; const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); htmlElement.setAttribute('data-theme', savedTheme); themeToggle.addEventListener('click', () => { const newTheme = htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; htmlElement.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); }); const sections = document.querySelectorAll('.content-section'); const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1 }); sections.forEach(section => observer.observe(section)); const orbs = document.querySelectorAll('.bg-blur-orb'); orbs.forEach(orb => { orb.style.setProperty('--x-start', `${Math.random() * 400 - 200}`); orb.style.setProperty('--y-start', `${Math.random() * 400 - 200}`); orb.style.setProperty('--x-end', `${Math.random() * 400 - 200}`); orb.style.setProperty('--y-end', `${Math.random() * 400 - 200}`); }); async function fetchPublications() { const scholarId = 'kEJINEIAAAAJ'; const publicationsList = document.getElementById('publications-list'); if (scholarId === 'kEJINEIAAAAJ' || scholarId === 'your_scholar_id') { publicationsList.innerHTML = '<li>Please set your Google Scholar ID in the script.</li>'; return; } const proxyUrl = 'https://api.allorigins.win/raw?url='; const scholarUrl = `https://scholar.google.com/citations?hl=en&user=${scholarId}&view_op=list_works&sortby=pubdate`; try { const response = await fetch(proxyUrl + encodeURIComponent(scholarUrl)); if (!response.ok) throw new Error('Network response was not ok.'); const text = await response.text(); const parser = new DOMParser(); const doc = parser.parseFromString(text, 'text/html'); const publicationRows = doc.querySelectorAll('.gsc_a_tr'); if (publicationRows.length === 0) { publicationsList.innerHTML = '<li>Could not retrieve publications. Please check Google Scholar ID or try again later.</li>'; return; } let html = ''; publicationRows.forEach(row => { const titleElement = row.querySelector('.gsc_a_at'); const title = titleElement ? titleElement.textContent : 'No Title'; const link = titleElement ? 'https://scholar.google.com' + titleElement.getAttribute('href') : '#'; const authors = row.querySelector('.gsc_a_a').textContent; const journalInfo = row.querySelector('.gsc_a_j').textContent; const year = row.querySelector('.gsc_a_y'); html += `
+                    <li style="margin-bottom: 1.2em;">
+                        <p class="authors">${authors} (${year}).</p>
+                        <p style="font-size: 1.05em;"><em><a href="${link}" target="_blank" rel="noopener noreferrer">${title}</a></em></p>
+                        <p style="font-size: 0.9em; opacity: 0.8;">${journalInfo}</p>
+                    </li>
+                `; }); publicationsList.innerHTML = html; } catch (error) { console.error('Failed to fetch publications:', error); publicationsList.innerHTML = '<li>Error loading publications.</li>'; } } fetchPublications();
 </script>
 </body>
 </html>
