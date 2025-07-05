@@ -990,3 +990,59 @@ a:hover { opacity: 0.8; }
         font-size: 0.85rem;
     }
 }
+
+/* ============================================= */
+/* ===== Research Section Enhancement        ===== */
+/* ============================================= */
+
+.research-grid {
+    display: grid;
+    /* Create a responsive grid that shows 1 column on small screens and up to 3 on large screens */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px; /* Space between cards */
+}
+
+.research-card {
+    display: flex;
+    flex-direction: column; /* Stack image on top of text content */
+    padding: 0; /* Remove parent padding to allow image to be flush with the card edges */
+    overflow: hidden; /* Ensures the child elements conform to the card's border radius */
+}
+
+.research-card-img {
+    width: 100%;
+    height: 200px; /* A fixed height creates a uniform look across all cards */
+    object-fit: cover; /* This will crop the image to fit the container without distortion */
+    border-top-left-radius: 15px;  /* Match the parent glass-card's border-radius */
+    border-top-right-radius: 15px;
+    border-bottom: 1px solid var(--border-color); /* A subtle line to separate image from text */
+}
+
+.research-card-content {
+    padding: 25px; /* Add padding back to the text content area */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allows the content area to fill the remaining space */
+}
+
+.research-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.research-card-meta {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary-color);
+    margin-bottom: 15px;
+}
+
+.research-card-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary-color);
+    line-height: 1.6;
+    margin-bottom: 0;
+}
