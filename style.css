@@ -1,5 +1,5 @@
 /* ============================================= */
-/* ===== 1. CORE, THEME, AND BODY STYLES   ===== */
+/* ===== 1. CORE, THEME, AND BODY STYLES     ===== */
 /* ============================================= */
 
 /* CSS Variables for theming and consistency */
@@ -29,6 +29,9 @@
     /* Animated background colors */
     --cool-color-1: rgba(0, 255, 100, 0.3);
     --cool-color-2: rgba(255, 0, 150, 0.3);
+
+    /* --- Define a separate overlay color for glass cards --- */
+    --glass-card-overlay-color: rgba(74, 74, 74, 0.4);
 }
 
 [data-theme="light"] {
@@ -56,6 +59,9 @@
     /* Animated background colors for light theme */
     --cool-color-1: rgba(0, 191, 255, 0.7);
     --cool-color-2: rgba(255, 0, 150, 0.7);
+
+    /* --- Define a separate overlay color for glass cards --- */
+    --glass-card-overlay-color: rgba(189, 189, 189, 0.5);
 }
 
 /* Basic document setup */
@@ -241,13 +247,13 @@ a:hover {
 .glass-card {
     border-radius: 15px;
     border: 1px solid var(--border-color);
-    padding: 30px;
+    padding: 15px;
     box-shadow: var(--card-shadow);
     position: relative;
     overflow: hidden;
-    background-color: var(--card-bg-color);
-    backdrop-filter: blur(12px) url(#glass-card-filter) saturate(1.2);
-    -webkit-backdrop-filter: blur(12px) url(#glass-card-filter) saturate(1.2);
+    background-color: var(--glass-card-overlay-color); /* Use the dedicated overlay color */
+    backdrop-filter: blur(15px) url(#glass-card-filter) saturate(1.5);
+    -webkit-backdrop-filter: blur(15px) url(#glass-card-filter) saturate(1.5);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .glass-card:hover {
@@ -345,7 +351,7 @@ h2 {
     display: flex;
     align-items: center;
     gap: 20px;
-    background-color: var(--card-bg-color);
+    background-color: var(--glass-card-overlay-color);
     border-radius: 15px;
     padding: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -393,9 +399,10 @@ h2 {
 .scroller-container {
     overflow: hidden;
     padding: 20px 0;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+    -webkit-mask: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+    mask: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
 }
+
 .scroller {
     display: flex;
     gap: 20px;
@@ -452,97 +459,200 @@ h2 {
 .tag-personal { background-color: #6f42c1; }
 
 /* Publications Section */
-.pub-years {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-    flex-wrap: wrap;
+#publications .section-title,
+#publications .pub-lists-container {
+    text-align: left;
 }
+
+.pub-years {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: auto;
+    width: 60%;
+    padding: 5px;
+    border-radius: 50em;
+    margin: 5px auto 15px;
+    z-index: 1;
+    --pub-slider-width: 80px;
+    --pub-slider-translate-x: 0px;
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    backdrop-filter: blur(8px) url(#glass-nav-filter) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(8px) url(#glass-nav-filter) saturate(var(--saturation));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 1.8px 3px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -2px -2px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -0.3px -1px 4px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), inset -1.5px 2.5px 0 -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 1px 5px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 6px 16px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+}
+
+.pub-years::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px; /* Adjusted to match padding */
+    display: block;
+    height: calc(100% - 10px); /* Adjusted to match padding */
+    border-radius: 99em;
+    background-color: color-mix(in srgb, var(--c-glass) 36%, transparent);
+    z-index: -1;
+    width: var(--pub-slider-width, 80px);
+    translate: var(--pub-slider-translate-x, 0px) 0;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 2px 1px 0 -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -1.5px -1px 0 -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 3px 6px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+    transition: translate 400ms cubic-bezier(0.65, 0, 0.35, 1), width 400ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
 .pub-year-btn {
+    font-family: 'Bruno Ace SC', monospace;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--c-content);
     background: none;
     border: none;
-    color: var(--text-secondary-color);
+    border-radius: 99em;
     padding: 8px 16px;
-    font-size: 1rem;
     cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s, color 0.3s;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
 }
-.pub-year-btn.active, .pub-year-btn:hover {
-    color: var(--text-color);
-    background-color: rgba(128, 128, 128, 0.2);
+
+.pub-year-btn:hover {
+    color: var(--c-action);
 }
-.pub-list { display: none; }
-.pub-list.active { display: block; }
-.year-heading { display: none; }
-.pub-card {
+
+.pub-year-btn.active {
+    color: var(--c-action);
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* Container for publication lists with smooth height transition */
+.pub-lists-container {
+    display: grid;
+    padding: 15px 30px;
+    position: relative;
+    overflow: hidden;
+    /*transition: height 1.9s ease-in-out;*/
+}
+
+.pub-list {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translateY(15px);
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+.pub-list.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition-delay: 0.2s;
+}
+
+.pub-list ul {
+    margin: 0;
+    padding: 0;
     list-style: none;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--border-color);
 }
-.pub-card:last-child { border-bottom: none; }
+
+.pub-card {
+    padding: 15px 5px;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.3s ease-in-out;
+}
+
+.pub-card:last-child {
+    border-bottom: none;
+    padding-bottom: 5px; /* Keep some padding */
+}
+
+.pub-card:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+    transform: scale(1.02);
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
 .pub-meta {
     display: flex;
     gap: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     flex-wrap: wrap;
 }
+
 .pub-tag {
-    padding: 3px 8px;
+    padding: 3px 10px;
     font-size: 0.8rem;
-    border-radius: 5px;
+    border-radius: 8px;
     color: #fff;
 }
 .tag-journal { background-color: #007bff; }
 .tag-conference { background-color: #6f42c1; }
 .tag-review { background-color: #fd7e14; }
 .tag-drafting { background-color: #6c757d; }
+
 .pub-title {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: bold;
-    margin: 0 0 5px;
+    margin: 0 0 8px;
 }
+
 .authors {
-    margin: 5px 0;
+    margin: 8px 0;
     color: var(--text-secondary-color);
+    line-height: 1.6;
 }
+
 .authors .me {
     color: var(--text-color);
+    font-weight: bold;
 }
+
 .corr-author::after {
     content: '*';
     color: var(--accent-color-original);
+    margin-left: 2px;
 }
+
 .pub-venue {
     font-style: italic;
     color: var(--text-secondary-color);
+    font-size: 0.95rem;
 }
+
 .pub-links {
     display: flex;
     gap: 15px;
     margin-top: 15px;
     flex-wrap: wrap;
 }
+
 .pub-action-tag {
     display: flex;
     align-items: center;
     gap: 5px;
     color: var(--text-secondary-color);
     background-color: rgba(128,128,128,0.1);
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
 }
+
 .pub-action-tag:hover {
-    background-color: rgba(128,128,128,0.3);
-    color: var(--text-color);
+    background-color: var(--accent-color-original);
+    color: var(--bg-color);
 }
+
+[data-theme="light"] .pub-action-tag:hover {
+    color: #FFFFFF;
+}
+
 .co-first-author-symbol {
     vertical-align: super;
     font-size: smaller;
 }
+
 
 /* Gallery Carousel */
 .carousel-container.glass-card {

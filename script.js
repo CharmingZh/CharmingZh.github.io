@@ -3,11 +3,12 @@
  *
  * This script handles the following functionalities:
  * 1. Liquid Glass Navigation: Controls the sliding effect and active state.
- * 2. Publication Year Filtering: Shows/hides publications based on the selected year.
+ * 2. Publication Year Filtering: Shows/hides publications based on the selected year and smoothly animates the container height.
  * 3. Gallery Carousel: Manages the image slider functionality.
  * 4. Infinite Scroller: Duplicates research cards for a seamless loop.
  * 5. Theme Switcher: Toggles between light and dark modes.
  * 6. Fade-in on Scroll: Animates content sections as they enter the viewport.
+ * 7. Sliding Pill for Publication Tabs: Controls the sliding "pill" background for the year selector.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -95,24 +96,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- 2. PUBLICATION YEAR FILTERING ---
+    // --- 2. PUBLICATION YEAR FILTERING (WITH DYNAMIC HEIGHT) ---
     const yearButtonsContainer = document.querySelector('.pub-years');
-    if (yearButtonsContainer) {
+    const pubListsContainer = document.querySelector('.pub-lists-container'); // Get the container
+
+    if (yearButtonsContainer && pubListsContainer) {
         const publicationLists = document.querySelectorAll('.pub-list');
+
+        // Function to set the container's height based on the active list's content
+        const setActiveListHeight = () => {
+            const activeList = document.querySelector('.pub-list.active');
+            if (activeList) {
+                // Set the container's height to match the natural height of its content
+                pubListsContainer.style.height = `${activeList.scrollHeight}px`;
+            }
+        };
+
+        // Set the correct height when the page first loads
+        setActiveListHeight();
+
         yearButtonsContainer.addEventListener('click', (e) => {
             if (e.target.matches('.pub-year-btn')) {
                 const selectedYear = e.target.dataset.year;
+
                 // Update button styles
                 yearButtonsContainer.querySelector('.active')?.classList.remove('active');
                 e.target.classList.add('active');
-                // Toggle list visibility
-                publicationLists.forEach(list => list.classList.toggle('active', list.dataset.year === selectedYear));
+
+                // Toggle list visibility by toggling the 'active' class
+                publicationLists.forEach(list => {
+                    list.classList.toggle('active', list.dataset.year === selectedYear)
+                });
+
+                // Update the container's height to match the new active list
+                setActiveListHeight();
             }
         });
+
+        // Recalculate height on window resize to ensure it's always correct
+        window.addEventListener('resize', setActiveListHeight);
     }
 
 
-// --- 3. GALLERY CAROUSEL LOGIC (已修正) ---
+    // --- 3. GALLERY CAROUSEL LOGIC ---
     const carousel = document.querySelector('.carousel');
     if (carousel) {
         const track = carousel.querySelector('.carousel-track');
@@ -122,24 +148,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const dotsNav = carousel.querySelector('.carousel-nav');
         const dots = Array.from(dotsNav.children);
 
-        // 此函数计算正确的位置并移动轨道
         const moveToSlide = (track, currentSlide, targetSlide) => {
-            // 获取目标幻灯片在flex容器中的自然偏移位置
             const amountToMove = targetSlide.offsetLeft;
             track.style.transform = `translateX(-${amountToMove}px)`;
-
-            // 更新当前幻灯片的class
             currentSlide.classList.remove('current-slide');
             targetSlide.classList.add('current-slide');
         };
 
-        // 此函数更新导航点的激活状态
         const updateDots = (currentDot, targetDot) => {
             currentDot.classList.remove('current-slide');
             targetDot.classList.add('current-slide');
         };
 
-        // 为“下一个”按钮绑定点击事件
         nextButton.addEventListener('click', () => {
             const currentSlide = track.querySelector('.current-slide');
             const nextSlide = currentSlide.nextElementSibling || slides[0];
@@ -150,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDots(currentDot, nextDot);
         });
 
-        // 为“上一个”按钮绑定点击事件
         prevButton.addEventListener('click', () => {
             const currentSlide = track.querySelector('.current-slide');
             const prevSlide = currentSlide.previousElementSibling || slides[slides.length - 1];
@@ -161,7 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDots(currentDot, prevDot);
         });
 
-        // 为导航点绑定点击事件
         dotsNav.addEventListener('click', e => {
             const targetDot = e.target.closest('button.carousel-indicator');
             if (!targetDot) return;
@@ -210,8 +228,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.1 });
 
-    // Observe all elements with the .content-section class
     document.querySelectorAll('.content-section').forEach(section => {
         fadeInObserver.observe(section);
     });
+
+
+    // --- 7. SLIDING PILL FOR PUBLICATION TABS ---
+    const pubNavContainer = document.querySelector('.pub-years');
+    if (pubNavContainer) {
+        const updatePubSlider = () => {
+            const activeButton = pubNavContainer.querySelector('.pub-year-btn.active');
+            if (activeButton) {
+                const width = activeButton.offsetWidth;
+                const translateX = activeButton.offsetLeft;
+                pubNavContainer.style.setProperty('--pub-slider-width', `${width}px`);
+                pubNavContainer.style.setProperty('--pub-slider-translate-x', `${translateX}px`);
+            }
+        };
+
+        // Initial setup for the slider
+        updatePubSlider();
+
+        pubNavContainer.addEventListener('click', (e) => {
+            // The filtering logic above already handles the 'active' class change.
+            // We just need to update the slider's position after the click.
+            if (e.target.matches('.pub-year-btn')) {
+                // Use a tiny delay to ensure the .active class has been updated before calculating position
+                setTimeout(updatePubSlider, 0);
+            }
+        });
+
+        // Update slider on window resize
+        window.addEventListener('resize', updatePubSlider);
+    }
+
 });
