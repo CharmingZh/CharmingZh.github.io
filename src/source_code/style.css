@@ -407,7 +407,13 @@ h2 {
 /* ============================================= */
 /* ===== 4. SPECIFIC COMPONENT STYLES        ===== */
 /* ============================================= */
-
+/* --- 全新响应式 "Education" 区域样式 --- */
+.education-entries-container {
+    display: grid;
+    /* 桌面端默认为两列网格 */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
 /* Education Section */
 .education-container {
     display: flex;
@@ -957,13 +963,7 @@ h2 {
         padding: 4px 10px;
     }
 
-    /* --- 全新响应式 "Education" 区域样式 --- */
-    .education-entries-container {
-        display: grid;
-        /* 桌面端默认为两列网格 */
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
+
 
     .edu-entry {
         padding: 25px;
@@ -1412,6 +1412,14 @@ body.no-scroll {
     /* 在移动端，将教育背景区域的网格改为单列 */
     .education-entries-container {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .edu-entry {
+        /* 2. 调整【卡片内容和底部】的空间 */
+        /* 这里使用 `padding` 属性控制卡片内部的留白。*/
+        /* 顺序为：[上] [左右] [下]。我将底部的留白从 25px 增加到了 30px。*/
+        /* 您可以只修改最后一个数值来精确控制底部空间。*/
+        padding: 10px 25px 0;
     }
 
 }
