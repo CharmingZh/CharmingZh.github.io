@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import HeroSection from './components/HeroSection.vue';
 import AboutSection from './components/AboutSection.vue';
 import EducationSection from './components/EducationSection.vue';
@@ -10,6 +10,29 @@ import GallerySection from './components/GallerySection.vue';
 import Footer from './components/Footer.vue';
 
 onMounted(() => {
+  // ===================================================================
+  // 1. 全局玻璃效果配置 (方便统一管理)
+  // ===================================================================
+  const glassProps = {
+    displacementScale: 200,
+    blurAmount: 0.2,
+    aberrationIntensity: 6,
+    elasticity: 0.25,
+    cornerRadius: 25,
+    mode: 'standard', // <--- 确保这一行是 'standard'
+  };
+
+  // ===================================================================
+  // 2. 动态主题管理
+  // ===================================================================
+    const currentTheme = ref('dark');
+    const isLightTheme = computed(() => currentTheme.value === 'light');
+
+    const toggleTheme = () => {
+      currentTheme.value = currentTheme.value === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', currentTheme.value);
+    };
+
   // --- 1. 3D 倾斜特效 (无光晕) ---
   const apply3DTiltEffect = (selector) => {
     const cards = document.querySelectorAll(selector);
@@ -242,6 +265,26 @@ onMounted(() => {
 </script>
 
 <template>
+
+  <LiquidGlass
+    class="glass-nav"
+    :displacement-scale="100"
+    :blur-amount="0.1"
+    :elasticity="0.1"
+    :corner-radius="999"
+    padding="8px"
+    :over-light="isLightTheme"
+  >
+<!--    <div class="glass-nav-content">-->
+<!--      <a href="#about">About</a>-->
+<!--      <a href="#education">Education</a>-->
+<!--      <a href="#work">Work</a>-->
+<!--      <a href="#research">Research</a>-->
+<!--      <a href="#publications">Publications</a>-->
+<!--      <a href="#gallery">Gallery</a>-->
+<!--    </div>-->
+  </LiquidGlass>
+
   <fieldset class="glass-nav" id="glass-nav-container">
     <legend class="glass-nav__legend">Main Navigation</legend>
     <label class="glass-nav__option" for="nav-1"><input class="glass-nav__input" type="radio" name="nav" value="about" c-option="1" id="nav-1" checked><a href="#about">About</a></label>
