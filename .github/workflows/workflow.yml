@@ -1,4 +1,4 @@
-# 部署到 GitHub Pages 的正确工作流程 (适用于子目录项目)
+# 部署到 GitHub Pages 的最终工作流程 (适用于子目录项目)
 name: Deploy GitHub Pages
 
 on:
@@ -25,21 +25,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 注意：下面的所有步骤都在 'working-directory' 中执行
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
+          # 关键修改：移除了 cache: 'npm'，因为它无法在子目录中正确找到锁文件
 
       - name: Install dependencies
         run: npm install
-        # 关键修改 1：指定工作目录
         working-directory: ./archive/vue_liquid_glass
 
       - name: Build
         run: npm run build
-        # 关键修改 1：指定工作目录
         working-directory: ./archive/vue_liquid_glass
 
       - name: Setup Pages
@@ -48,7 +45,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 关键修改 2：上传正确路径下的 dist 文件夹
           path: './archive/vue_liquid_glass/dist'
 
       - name: Deploy to GitHub Pages
