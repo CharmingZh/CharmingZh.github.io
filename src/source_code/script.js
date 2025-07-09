@@ -262,4 +262,29 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', updatePubSlider);
     }
 
+    /* PASTE THE NEW CODE BLOCK HERE */
+    // --- 8. MOBILE NAVIGATION MENU TOGGLE ---
+    const navToggle = document.getElementById('mobile-nav-toggle');
+    const navMenu = document.getElementById('mobile-nav-menu');
+    const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            const isOpened = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !isOpened);
+            navMenu.classList.toggle('is-open');
+            document.body.classList.toggle('no-scroll');
+        });
+    }
+
+    // Close menu when a link is clicked
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navToggle.setAttribute('aria-expanded', 'false');
+            navMenu.classList.remove('is-open');
+            document.body.classList.remove('no-scroll');
+        });
+    });
+
 });
+
