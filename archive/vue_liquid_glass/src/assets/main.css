@@ -42,10 +42,10 @@ html { scroll-behavior: smooth; }
 
 body {
 
-  /*background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.H1ypVRzFCmUAOC4baGbA4QHaHa%3Fpid%3DApi&f=1&ipt=2c781baf6754ec269b9a81b8f577cdec90a486321d8b76d164b2be6482593173');*/
-  /*background-size: cover; !* 让图片铺满整个屏幕 *!*/
-  /*background-position: center; !* 图片居中显示 *!*/
-  /*background-attachment: fixed; !* 固定背景，滚动时不移动 *!*/
+  background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.H1ypVRzFCmUAOC4baGbA4QHaHa%3Fpid%3DApi&f=1&ipt=2c781baf6754ec269b9a81b8f577cdec90a486321d8b76d164b2be6482593173');
+  background-size: cover; /* 让图片铺满整个屏幕 */
+  background-position: center; /* 图片居中显示 */
+  background-attachment: fixed; /* 固定背景，滚动时不移动 */
 
   background-color: var(--bg-color);
   color: var(--text-color);
