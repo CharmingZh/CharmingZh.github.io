@@ -1,27 +1,21 @@
-# 部署到 GitHub Pages 的简单工作流程
+# 部署到 GitHub Pages 的正确工作流程 (适用于子目录项目)
 name: Deploy GitHub Pages
 
 on:
-  # 在推送到 `main` 分支时触发
   push:
     branches: ["main"]
-
-  # 允许您在 Actions 选项卡中手动运行此工作流程
   workflow_dispatch:
 
-# 设置 GITHUB_TOKEN 的权限以允许部署到 GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# 只允许一个并发部署，跳过在进行中运行的排队。
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
-  # 构建和部署任务
   deploy:
     environment:
       name: github-pages
@@ -30,22 +24,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # 注意：下面的所有步骤都在 'working-directory' 中执行
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
+
       - name: Install dependencies
         run: npm install
+        # 关键修改 1：指定工作目录
+        working-directory: ./archive/vue_liquid_glass
+
       - name: Build
         run: npm run build
+        # 关键修改 1：指定工作目录
+        working-directory: ./archive/vue_liquid_glass
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 上传 `dist` 目录
-          path: './dist'
+          # 关键修改 2：上传正确路径下的 dist 文件夹
+          path: './archive/vue_liquid_glass/dist'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
