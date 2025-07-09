@@ -901,14 +901,15 @@ h2 {
 }
 
 
-/* ============================================= */
-/* ===== 7. MOBILE NAVIGATION & RESPONSIVE   ===== */
-/* ============================================= */
-
 body.no-scroll {
     overflow: hidden;
 }
 
+/* ============================================= */
+/* ===== 7. MOBILE NAVIGATION & RESPONSIVE   ===== */
+/* ============================================= */
+
+/* --- The Main Toggle Button (FINAL, ROBUST Liquid Lens Effect) --- */
 .mobile-nav-toggle {
     display: none;
     justify-content: center;
@@ -920,15 +921,69 @@ body.no-scroll {
     width: 50px;
     height: 50px;
     padding: 0;
-    border: none;
     border-radius: 50%;
     cursor: pointer;
-    background: rgba(255, 255, 255, .08);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, .6), 0 16px 32px rgba(0, 0, 0, .12);
-    transition: background-color 0.3s, box-shadow 0.3s;
+    border: none; /* 移除所有边框 */
+
+    /* 1. 按钮主体：背景色几乎完全透明，专注于背景滤镜 */
+    background-color: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(20px) contrast(120%) brightness(110%);
+    backdrop-filter: blur(20px) contrast(120%) brightness(110%);
+
+    /* 3. 阴影负责立体感和锋利边缘 */
+    box-shadow:
+        /* 模拟液滴外圈的锋利亮边 */
+            inset 0 0 1.5px rgba(255, 255, 255, 0.9),
+                /* 外部悬浮阴影 */
+            0 8px 30px rgba(0, 0, 0, 0.2);
+
+    transition: transform 0.2s ease-out;
 }
+
+/* 2. 伪元素 ::before 负责独立绘制液滴高光 */
+.mobile-nav-toggle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+
+    /* 用径向渐变画出从左上角照射来的高光 */
+    background: radial-gradient(
+            circle at 30% 30%,
+            rgba(255, 255, 255, 0.2),
+            rgba(255, 255, 255, 0.05) 30%,
+            transparent 60%
+    );
+
+    /* 混合模式让高光和背景滤镜效果更好地融合 */
+    mix-blend-mode: overlay;
+    opacity: 0.8;
+}
+
+/* 亮色主题下的调整 */
+html[data-theme="light"] .mobile-nav-toggle {
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow:
+            inset 0 0 1.5px rgba(255, 255, 255, 1),
+            0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+html[data-theme="light"] .mobile-nav-toggle::before {
+    background: radial-gradient(
+            circle at 30% 30%,
+            rgba(255, 255, 255, 0.9),
+            rgba(255, 255, 255, 0.4) 35%,
+            transparent 65%
+    );
+}
+
+.mobile-nav-toggle:active {
+    transform: scale(0.94);
+}
+
 
 .hamburger-box {
     width: 24px;
@@ -981,7 +1036,6 @@ body.no-scroll {
     z-index: 1000;
     transform: translateX(100%);
 
-    /* iOS Compatible Glass Effect */
     background-color: var(--glass-card-overlay-color);
     -webkit-backdrop-filter: blur(20px) saturate(1.8);
     backdrop-filter: blur(20px) saturate(1.8);
@@ -1011,6 +1065,7 @@ body.no-scroll {
 .mobile-nav-link:hover {
     opacity: 0.7;
 }
+
 
 
 @media (max-width: 768px) {

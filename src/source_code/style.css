@@ -407,39 +407,75 @@ h2 {
 /* ============================================= */
 /* ===== 4. SPECIFIC COMPONENT STYLES        ===== */
 /* ============================================= */
-/* --- 全新响应式 "Education" 区域样式 --- */
 .education-entries-container {
     display: grid;
-    /* 桌面端默认为两列网格 */
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
-/* Education Section */
-.education-container {
+.edu-entry {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    height: 100%;
 }
-.edu-card {
+.edu-entry-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.edu-title-group {
+    display: flex;
+    flex-direction: column;
+}
+.edu-degree {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+}
+.edu-university {
+    font-size: 0.95rem;
+    color: var(--text-secondary-color);
+    margin: 0;
+}
+.edu-entry-body {
+    padding-top: 15px;
+    margin-top: 15px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.edu-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 25px;
-}
-.edu-left {
-    flex: 1 1 200px;
+    gap: 10px 20px;
+    font-size: 0.85rem;
     color: var(--text-secondary-color);
+    margin-bottom: 15px;
 }
-.edu-right {
-    flex: 2 1 300px;
+.edu-meta > span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
-.edu-university, .edu-degree {
-    margin: 0 0 5px;
-    color: var(--text-color);
+.edu-meta svg {
+    stroke: var(--accent-color-original);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
 }
-.edu-location, .edu-dates, .edu-details {
-    margin: 0;
-    font-size: 0.95rem;
+.edu-details {
+    font-size: 0.9rem;
+    color: var(--text-secondary-color);
+    line-height: 1.6;
+    flex-grow: 1;
+}
+.edu-details p {
+    margin: 0 0 8px 0;
+}
+.edu-details p:last-child {
+    margin-bottom: 0;
 }
 
 /* Work / Experience Section */
