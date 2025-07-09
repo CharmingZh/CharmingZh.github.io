@@ -10,9 +10,43 @@ import GallerySection from './components/GallerySection.vue';
 import Footer from './components/Footer.vue';
 
 onMounted(() => {
-  // All interactive JavaScript logic goes here to ensure DOM is ready.
+  // --- 1. 3D 倾斜特效 (无光晕) ---
+  const apply3DTiltEffect = (selector) => {
+    const cards = document.querySelectorAll(selector);
+    const maxRotation = 6; // 倾斜角度
 
-  // --- 1. LIQUID GLASS NAVIGATION (DESKTOP) ---
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const { left, top, width, height } = card.getBoundingClientRect();
+        const mouseX = e.clientX - left;
+        const mouseY = e.clientY - top;
+
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+
+        const rotateY = maxRotation * xPct * 2;
+        const rotateX = -maxRotation * yPct * 2;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.04, 1.04, 1.04)`;
+      });
+
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'transform 0.1s ease';
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+      });
+    });
+  };
+
+  // 为所有卡片应用 3D 倾斜特效
+  apply3DTiltEffect('.glass-card');
+  apply3DTiltEffect('.research-card-scroll');
+
+
+  // --- 2. 桌面液态玻璃导航栏 ---
   const navContainer = document.getElementById("glass-nav-container");
   if (navContainer) {
     const updateSlider = () => {
@@ -69,7 +103,7 @@ onMounted(() => {
     sections.forEach(section => scrollObserver.observe(section));
   }
 
-  // --- 2. MOBILE NAVIGATION TOGGLE ---
+  // --- 3. 移动端导航栏开关 ---
   const navToggle = document.getElementById('mobile-nav-toggle');
   const navMenu = document.getElementById('mobile-nav-menu');
   if (navToggle && navMenu) {
@@ -88,7 +122,7 @@ onMounted(() => {
     });
   }
 
-  // --- 3. PUBLICATION YEAR FILTERING & SLIDER ---
+  // --- 4. 出版物年份筛选器 ---
   const pubNavContainer = document.querySelector('.pub-years');
   const pubListsContainer = document.querySelector('.pub-lists-container');
   if (pubNavContainer && pubListsContainer) {
@@ -124,7 +158,7 @@ onMounted(() => {
     });
   }
 
-  // --- 4. GALLERY CAROUSEL ---
+  // --- 5. 作品集图片轮播 ---
   const carousel = document.querySelector('.carousel');
   if (carousel) {
     const track = carousel.querySelector('.carousel-track');
@@ -134,14 +168,16 @@ onMounted(() => {
     const dotsNav = carousel.querySelector('.carousel-nav');
     const dots = Array.from(dotsNav.children);
     const moveToSlide = (targetSlide) => {
-      if(!track.querySelector('.current-slide')) return;
+      const currentSlide = track.querySelector('.current-slide');
+      if(!currentSlide) return;
       track.style.transform = `translateX(-${targetSlide.offsetLeft}px)`;
-      track.querySelector('.current-slide').classList.remove('current-slide');
+      currentSlide.classList.remove('current-slide');
       targetSlide.classList.add('current-slide');
     };
     const updateDots = (targetDot) => {
-      if(!dotsNav.querySelector('.current-slide')) return;
-      dotsNav.querySelector('.current-slide').classList.remove('current-slide');
+      const currentDot = dotsNav.querySelector('.current-slide');
+      if(!currentDot) return;
+      currentDot.classList.remove('current-slide');
       targetDot.classList.add('current-slide');
     };
     nextButton.addEventListener('click', () => {
@@ -167,7 +203,7 @@ onMounted(() => {
     });
   }
 
-  // --- 5. INFINITE RESEARCH SCROLLER ---
+  // --- 6. 研究项目无限滚动 ---
   const scroller = document.querySelector(".scroller");
   if (scroller && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const scrollerContent = scroller.querySelector('.scroller-content');
@@ -181,7 +217,7 @@ onMounted(() => {
     }
   }
 
-  // --- 6. THEME SWITCHER ---
+  // --- 7. 主题切换 (亮/暗) ---
   const themeToggle = document.getElementById('theme-toggle');
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
@@ -191,7 +227,7 @@ onMounted(() => {
     });
   }
 
-  // --- 7. FADE-IN ON SCROLL ---
+  // --- 8. 页面元素滚动淡入 ---
   const fadeInObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -202,15 +238,6 @@ onMounted(() => {
   }, { threshold: 0.1 });
   document.querySelectorAll('.content-section').forEach(section => fadeInObserver.observe(section));
 
-  // --- 8. PARTICLE EFFECT on Profile Pic ---
-  // This assumes particle-effect.js is loaded via index.html and creates a global function or object.
-  // If that script exists and is correctly set up, it should work.
-  const profilePic = document.querySelector('.profile-pic');
-  if(profilePic && typeof ParticleEffect !== 'undefined') {
-    profilePic.addEventListener('click', () => {
-      new ParticleEffect(profilePic);
-    });
-  }
 });
 </script>
 
