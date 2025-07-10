@@ -1,15 +1,15 @@
 name: Deploy vue_liquid_glass to Pages
 
 permissions:
-  contents: write
+  contents: write          # 允许向仓库推送 docs/ 目录
 
 on:
   push:
     branches: [ main ]
     paths:
-      - 'archive/vue_liquid_glass/**'
-      - '.github/workflows/workflow.yml'
-  workflow_dispatch:
+      - 'archive/vue_liquid_glass/**'        # 子项目有变动时触发
+      - '.github/workflows/workflow.yml'     # 或者工作流文件本身改动
+  workflow_dispatch:                         # 手动触发
 
 jobs:
   build-and-deploy:
@@ -18,16 +18,16 @@ jobs:
 
     defaults:
       run:
-        working-directory: archive/vue_liquid_glass
+        working-directory: archive/vue_liquid_glass   # 只在子目录里操作
 
     steps:
-      # 1) Checkout
+      # ───── 1. Checkout 源码 ─────
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 2) Node
+      # ───── 2. 设置 Node 环境 ─────
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -35,31 +35,42 @@ jobs:
           cache: npm
           cache-dependency-path: archive/vue_liquid_glass/package-lock.json
 
-      # 3) Install & build
+      # ───── 3. 安装依赖 & 构建 ─────
       - name: Install dependencies
         run: npm ci
 
       - name: Build project
         run: npm run build
 
-      # 4) Move dist → docs/archive/vue_liquid_glass
-      - name: Move build to docs
+      # （可选）简要输出 dist 体积，方便排错
+      - name: Debug dist listing
+        run: |
+          echo "== dist listing =="
+          ls -l dist
+          echo "index.html size:"
+          stat -c%s dist/index.html || true
+
+      # ───── 4. 复制 dist → docs/archive/vue_liquid_glass ─────
+      - name: Copy build to docs
         run: |
           DEST="../../docs/archive/vue_liquid_glass"
           rm -rf "$DEST"
           mkdir -p "$DEST"
-          mv dist/* "$DEST"
+          # -a 复制所有文件（含隐藏文件），保留权限/时间戳
+          cp -a dist/. "$DEST/"
+          # 关闭 GitHub Pages 的 Jekyll 处理
           touch ../../docs/.nojekyll
 
-      # 5) Commit & push if docs changed
-      - name: Commit & push
+      # ───── 5. 提交并推送（仅当 docs 有变动） ─────
+      - name: Commit & push docs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd ../..
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs
+          # -f 强制添加，避免 .gitignore 把构建产物过滤掉
+          git add -f docs
           if git diff --cached --quiet; then
             echo "No docs changes."
           else
