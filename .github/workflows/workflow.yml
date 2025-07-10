@@ -6,6 +6,7 @@ on:
     branches: [ main ]
     paths:
       - 'archive/vue_liquid_glass/**'
+      - '.github/workflows/workflow.yml'
   # ❷ 允许手动触发
   workflow_dispatch:
 
