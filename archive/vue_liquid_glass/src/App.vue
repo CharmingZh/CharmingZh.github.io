@@ -266,24 +266,24 @@ onMounted(() => {
 
 <template>
 
-  <LiquidGlass
-    class="glass-nav"
-    :displacement-scale="100"
-    :blur-amount="0.1"
-    :elasticity="0.1"
-    :corner-radius="999"
-    padding="8px"
-    :over-light="isLightTheme"
-  >
-<!--    <div class="glass-nav-content">-->
-<!--      <a href="#about">About</a>-->
-<!--      <a href="#education">Education</a>-->
-<!--      <a href="#work">Work</a>-->
-<!--      <a href="#research">Research</a>-->
-<!--      <a href="#publications">Publications</a>-->
-<!--      <a href="#gallery">Gallery</a>-->
-<!--    </div>-->
-  </LiquidGlass>
+<!--  <LiquidGlass-->
+<!--    class="glass-nav"-->
+<!--    :displacement-scale="100"-->
+<!--    :blur-amount="0.1"-->
+<!--    :elasticity="0.1"-->
+<!--    :corner-radius="999"-->
+<!--    padding="8px"-->
+<!--    :over-light="isLightTheme"-->
+<!--  >-->
+<!--&lt;!&ndash;    <div class="glass-nav-content">&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#about">About</a>&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#education">Education</a>&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#work">Work</a>&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#research">Research</a>&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#publications">Publications</a>&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#gallery">Gallery</a>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </LiquidGlass>-->
 
   <fieldset class="glass-nav" id="glass-nav-container">
     <legend class="glass-nav__legend">Main Navigation</legend>
