@@ -53,7 +53,7 @@ jobs:
       # ───── 4. 复制 dist → docs/archive/vue_liquid_glass ─────
       - name: Copy build to docs
         run: |
-          DEST="../../docs/"
+          DEST="../../docs/archive/vue_liquid_glass"
           rm -rf "$DEST"
           mkdir -p "$DEST"
           # -a 复制所有文件（含隐藏文件），保留权限/时间戳
