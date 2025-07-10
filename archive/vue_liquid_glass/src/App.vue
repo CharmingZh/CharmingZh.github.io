@@ -285,6 +285,7 @@ onMounted(() => {
 <!--&lt;!&ndash;    </div>&ndash;&gt;-->
 <!--  </LiquidGlass>-->
 
+
   <fieldset class="glass-nav" id="glass-nav-container">
     <legend class="glass-nav__legend">Main Navigation</legend>
     <label class="glass-nav__option" for="nav-1"><input class="glass-nav__input" type="radio" name="nav" value="about" c-option="1" id="nav-1" checked><a href="#about">About</a></label>
