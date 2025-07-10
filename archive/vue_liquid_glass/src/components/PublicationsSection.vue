@@ -37,18 +37,8 @@
       </div>
       <div id="publications-list-2024" class="pub-list" data-year="2024">
         <ul>
-          <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
-            <p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2024.112133" target="_blank" rel="noopener noreferrer">"Online sorting of surface defective walnuts based on deep learning"</a></p>
-            <p class="authors">Jingwei Wang, <span class="corr-author">Xiaopeng Bai</span>, <span class="corr-author">Daochun Xu</span>, Wenbin Li, Siyuan Tong, <span class="me"><b>Jiaming Zhang</b></span></p>
-            <p class="pub-venue">Journal of Food Engineering</p>
-          </li>
-          <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
-            <p class="pub-title"><a href="https://doi.org/10.1016/j.jclepro.2024.142038" target="_blank" rel="noopener noreferrer">"Development of a 3D Point Cloud Reconstruction-Based Apple Canopy Liquid Sedimentation Model"</a></p>
-            <p class="authors">Chongchong Chen, Yalan Jia, <span class="me"><b>Jiaming Zhang</b></span>, Linsen Yang, Feng Kang, <span class="corr-author">Yaxiong Wang</span></p>
-            <p class="pub-venue">Journal of Cleaner Production</p>
-          </li>
+          <li class="pub-card"><div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div><p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2024.112133" target="_blank" rel="noopener noreferrer">"Online sorting of surface defective walnuts based on deep learning"</a></p><p class="authors">Jingwei Wang, <span class="corr-author">Xiaopeng Bai</span>, <span class="corr-author">Daochun Xu</span>, Wenbin Li, Siyuan Tong, <span class="me"><b>Jiaming Zhang</b></span></p><p class="pub-venue">Journal of Food Engineering</p></li>
+          <li class="pub-card"><div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div><p class="pub-title"><a href="https://doi.org/10.1016/j.jclepro.2024.142038" target="_blank" rel="noopener noreferrer">"Development of a 3D Point Cloud Reconstruction-Based Apple Canopy Liquid Sedimentation Model"</a></p><p class="authors">Chongchong Chen, Yalan Jia, <span class="me"><b>Jiaming Zhang</b></span>, Linsen Yang, Feng Kang, <span class="corr-author">Yaxiong Wang</span></p><p class="pub-venue">Journal of Cleaner Production</p></li>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
             <p class="pub-title"><a href="https://doi.org/10.1016/j.compag.2023.108606" target="_blank" rel="noopener noreferrer">"A Novel Forestry Information-collecting Mobile System"</a></p>
