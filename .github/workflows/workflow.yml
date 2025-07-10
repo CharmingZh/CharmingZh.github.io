@@ -1,52 +1,82 @@
-# 部署到 GitHub Pages 的最终工作流程 (适用于子目录项目)
-name: Deploy GitHub Pages
+name: Deploy vue_liquid_glass to Pages
+
+permissions:
+  contents: write
 
 on:
   push:
-    branches: ["main"]
+    branches: [ main ]
+    paths:
+      - 'archive/vue_liquid_glass/**'
+      - '.github/workflows/workflow.yml'
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build-and-deploy:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
-      - name: Set up Node
+    defaults:
+      run:
+        working-directory: archive/vue_liquid_glass
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          # 关键修改：移除了 cache: 'npm'，因为它无法在子目录中正确找到锁文件
+          node-version: 20
+          cache: npm
+          cache-dependency-path: archive/vue_liquid_glass/package-lock.json
 
       - name: Install dependencies
-        run: npm install
-        working-directory: ./archive/vue_liquid_glass
+        run: npm ci
 
-      - name: Build
+      # 1️⃣ 清旧产物，但保留模板
+      - name: Clean previous build output
+        run: |
+          rm -rf assets index.html
+
+      # 2️⃣ 用模板恢复入口
+      - name: Restore dev index.html from template
+        run: |
+          cp index.template.html index.html
+
+      # 3️⃣ 复制缺失的 shader-worker
+      - name: Copy shader workers to public/assets
+        run: |
+          mkdir -p public/assets
+          cp node_modules/@wxperia/liquid-glass-vue/dist/assets/*.js public/assets/ || true
+
+      # 4️⃣ 构建
+      - name: Build project
         run: npm run build
-        working-directory: ./archive/vue_liquid_glass
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      # 5️⃣ 部署：把 dist 覆盖到当前目录
+      - name: Replace source with build output
+        run: |
+          cp -r dist/* .
+          rm -rf dist
+          touch .nojekyll
+          # 再次确保模板文件仍在
+          git restore --staged index.template.html || true
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './archive/vue_liquid_glass/dist'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # 6️⃣ 推回 main（仅文件有变动时）
+      - name: Commit & push if changed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "ci: auto-deploy vue_liquid_glass [skip ci]"
+            git push origin main
+          fi
