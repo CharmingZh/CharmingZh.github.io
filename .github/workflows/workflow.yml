@@ -53,13 +53,6 @@ jobs:
       # ───── 4. 复制 dist → docs/archive/vue_liquid_glass ─────
       - name: Copy build to docs
         run: |
-#          DEST="../../docs/archive/vue_liquid_glass"
-#          rm -rf "$DEST"
-#          mkdir -p "$DEST"
-#          # -a 复制所有文件（含隐藏文件），保留权限/时间戳
-#          cp -a dist/. "$DEST/"
-#          # 关闭 GitHub Pages 的 Jekyll 处理
-#          touch ../../docs/.nojekyll
           DEST="../../docs/"
           rm -rf "$DEST"
           mkdir -p "$DEST"
