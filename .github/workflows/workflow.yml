@@ -1,42 +1,46 @@
-name: Deploy vue_liquid_glass to GitHub Pages
+name: Deploy vue_liquid_glass to Pages
 
 on:
+  # ❶ 只有 main 分支且修改了 vue_liquid_glass 目录时触发
   push:
-    branches: [main]             # 你的默认分支
+    branches: [ main ]
     paths:
-      - 'archive/vue_liquid_glass/**'   # 只有改动这个子目录才触发
-  workflow_dispatch:             # 手动触发也行
+      - 'archive/vue_liquid_glass/**'
+  # ❷ 允许手动触发
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
-    if: github.actor != 'github-actions[bot]'   # 避免自触发死循环
+    # 防止机器人自己的 commit 再次触发
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
+    # 所有 shell 命令默认在子目录执行
     defaults:
       run:
-        working-directory: archive/vue_liquid_glass  # 以后所有 run 都在这里执行
+        working-directory: archive/vue_liquid_glass
 
     steps:
-      # 1. 拉仓库
+      # 1. 克隆仓库
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0                    # 让 git 能推回 main
+          fetch-depth: 0            # 能推回 main
 
-      # 2. Node 环境 + 缓存
+      # 2. Node 环境 + 依赖缓存
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20                 # 与本地一样即可
+          node-version: 20
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: archive/vue_liquid_glass/package-lock.json
 
       # 3. 安装依赖
       - name: Install dependencies
         run: npm ci
 
-      # 4. 拷贝缺失的 Worker（你之前手动做的）
-      - name: Copy shader workers to public
+      # 4. 复制缺失的 shader-worker 到 public/assets
+      - name: Copy shader workers to public/assets
         run: |
           mkdir -p public/assets
           cp node_modules/@wxperia/liquid-glass-vue/dist/assets/*.js public/assets/ || true
@@ -45,18 +49,18 @@ jobs:
       - name: Build project
         run: npm run build
 
-      # 6. 用构建产物覆盖当前目录
+      # 6. 用构建产物覆盖源码目录（仅子目录）
       - name: Replace source with build output
         run: |
-          rm -rf assets index.html           # 清掉旧静态文件
-          cp -r dist/* .                     # 把 dist 内容平铺
-          rm -rf dist                        # 不再需要 dist 目录
-          touch .nojekyll                    # 禁用 Jekyll
+          rm -rf assets index.html          # 清旧文件
+          cp -r dist/* .                    # 平铺新文件
+          rm -rf dist                       # 删除 dist
+          touch .nojekyll                   # 禁用 Jekyll
 
-      # 7. 提交并推送（只要确实有改动）
+      # 7. 提交并推回 main（如果有改动）
       - name: Commit & push if changed
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # 自动注入
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -64,6 +68,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "ci: deploy vue_liquid_glass [skip ci]"
+            git commit -m "ci: auto-deploy vue_liquid_glass [skip ci]"
             git push origin main
           fi
