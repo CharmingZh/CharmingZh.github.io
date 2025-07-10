@@ -21,37 +21,40 @@ jobs:
         working-directory: archive/vue_liquid_glass
 
     steps:
-      # ───── 1. 拉代码 ─────
-      - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+      # 1) Checkout
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      # ───── 2. Node 环境 ─────
-      - uses: actions/setup-node@v4
+      # 2) Node
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
           cache-dependency-path: archive/vue_liquid_glass/package-lock.json
 
-      # ───── 3. 安装依赖 & 构建 ─────
-      - run: npm ci
-      - run: npm run build
+      # 3) Install & build
+      - name: Install dependencies
+        run: npm ci
 
-      # ───── 4. 把 dist 移到 docs/archive/vue_liquid_glass ─────
+      - name: Build project
+        run: npm run build
+
+      # 4) Move dist → docs/archive/vue_liquid_glass
       - name: Move build to docs
         run: |
-          # 目标目录
-          DEST=../../docs/archive/vue_liquid_glass
-          # 清理旧文件
+          DEST="../../docs/archive/vue_liquid_glass"
           rm -rf "$DEST"
           mkdir -p "$DEST"
-          # 拷贝新的产物
           mv dist/* "$DEST"
-          # GitHub Pages 关闭 Jekyll
           touch ../../docs/.nojekyll
 
-      # ───── 5. 提交变更 ─────
-      - name: Commit & push if docs changed
-        env: { GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} }
+      # 5) Commit & push if docs changed
+      - name: Commit & push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd ../..
           git config user.name  "github-actions[bot]"
