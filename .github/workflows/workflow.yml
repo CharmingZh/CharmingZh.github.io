@@ -1,7 +1,7 @@
 name: Deploy vue_liquid_glass to Pages
 
 permissions:
-  contents: write
+  contents: write     # 只需要往仓库里推 docs/ 目录
 
 on:
   push:
@@ -18,65 +18,44 @@ jobs:
 
     defaults:
       run:
-        working-directory: archive/vue_liquid_glass
+        working-directory: archive/vue_liquid_glass   # 只在子目录里操作
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      # 1) 拉代码
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      # 2) Node 环境
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
           cache-dependency-path: archive/vue_liquid_glass/package-lock.json
 
-      - name: Install dependencies
-        run: npm ci
+      # 3) 安装依赖并构建
+      - run: npm ci
+      - run: npm run build
 
-      # 1️⃣ 清旧产物，但保留模板
-      - name: Clean previous build output
+      # 4) 把 dist 产物移动到 docs/
+      - name: Move build to docs
         run: |
-          rm -rf assets index.html
+          rm -rf ../../docs          # 删除旧的 docs/
+          mv dist ../../docs         # 把新的 dist 变成 docs
+          touch ../../docs/.nojekyll # 关掉 Jekyll 处理
 
-      # 2️⃣ 用模板恢复入口
-      - name: Restore dev index.html from template
-        run: |
-          cp index.template.html index.html
-
-      # 3️⃣ 复制缺失的 shader-worker
-      - name: Copy shader workers to public/assets
-        run: |
-          mkdir -p public/assets
-          cp node_modules/@wxperia/liquid-glass-vue/dist/assets/*.js public/assets/ || true
-
-      # 4️⃣ 构建
-      - name: Build project
-        run: npm run build
-
-      # 5️⃣ 部署：把 dist 覆盖到当前目录
-      - name: Replace source with build output
-        run: |
-          cp -r dist/* .
-          rm -rf dist
-          touch .nojekyll
-          # 再次确保模板文件仍在
-          git restore --staged index.template.html || true
-
-      # 6️⃣ 推回 main（仅文件有变动时）
-      - name: Commit & push if changed
+      # 5) 提交到 main（docs 目录有变化时才推）
+      - name: Commit & push if docs changed
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          cd ../..
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
+          git add docs
           if git diff --cached --quiet; then
-            echo "No changes to commit."
+            echo "No docs changes."
           else
-            git commit -m "ci: auto-deploy vue_liquid_glass [skip ci]"
+            git commit -m "ci: update Pages docs [skip ci]"
             git push origin main
           fi
