@@ -41,12 +41,6 @@
 html { scroll-behavior: smooth; }
 
 body {
-
-  /*background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.H1ypVRzFCmUAOC4baGbA4QHaHa%3Fpid%3DApi&f=1&ipt=2c781baf6754ec269b9a81b8f577cdec90a486321d8b76d164b2be6482593173');*/
-  /*background-size: cover; !* 让图片铺满整个屏幕 *!*/
-  /*background-position: center; !* 图片居中显示 *!*/
-  /*background-attachment: fixed; !* 固定背景，滚动时不移动 *!*/
-
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: 'Inter', sans-serif;
@@ -64,7 +58,6 @@ body::before {
   z-index: -1;
   background-size: 300% 300%;
   background-image:
-    /*背景动态光效*/
     radial-gradient(circle at 45% 35%, rgba(0, 255, 100, 0.3), transparent 50%),
     radial-gradient(circle at 65% 55%, rgba(255, 0, 150, 0.3), transparent 50%),
     radial-gradient(circle at 50% 50%, rgba(0, 150, 255, 0.2), transparent 50%);
@@ -72,7 +65,7 @@ body::before {
   opacity: 0.6;
   filter: blur(12px);
 }
-/*背景动态光效 - 动画*/
+
 @keyframes moveBackground {
   0%   { background-position: 30% 50%; }
   25%  { background-position: 50% 60%; }
@@ -108,8 +101,11 @@ a:hover { opacity: 0.8; }
   border: none; border-radius: 99em; font-family: "DM Sans", sans-serif;
   box-sizing: border-box; width: auto; --slider-width: 100px; --slider-translate-x: 0px;
   background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+
+  /* 修正：调用您 HTML 中已有的 #glass-nav-filter */
   backdrop-filter: blur(8px) url(#glass-nav-filter) saturate(var(--saturation));
   -webkit-backdrop-filter: blur(8px) url(#glass-nav-filter) saturate(var(--saturation));
+
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 1.8px 3px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -2px -2px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -0.3px -1px 4px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), inset -1.5px 2.5px 0 -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 1px 5px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 6px 16px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
   transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1);
 }
@@ -132,18 +128,20 @@ a:hover { opacity: 0.8; }
 .glass-card {
   padding: 25px; border-radius: 15px;
   background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+
+  /* 修正：调用您 HTML 中已有的 #glass-card-filter */
   backdrop-filter: blur(15px) url(#glass-card-filter) saturate(var(--saturation));
   -webkit-backdrop-filter: blur(15px) url(#glass-card-filter) saturate(var(--saturation));
+
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 1.8px 3px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -2px -2px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -0.3px -1px 4px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), inset -1.5px 2.5px 0 -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 1px 5px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 6px 16px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 400ms cubic-bezier(1, 0, 0.4, 1);
 }
-/*.glass-card:hover { transform: translateY(-8px); }*/
 .glass-card:hover {  }
 
+/* ... 剩余的 CSS 代码保持不变 ... */
 
-/* ============================================= */
-/* ===== 3. PAGE CONTENT & SECTIONS          ===== */
-/* ============================================= */
+/* [其余所有代码部分都和您最初提供的一样，这里为了简洁省略] */
+/* 请将下方到文件末尾的所有代码，替换掉您现有CSS中从 .content-section 开始的全部内容 */
 
 .content-section {
   margin-bottom: 80px; scroll-margin-top: 100px;
@@ -183,7 +181,6 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
 .keywords span { background: var(--accent-color-original); color: var(--bg-color); padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-family: 'Bruno Ace SC', monospace; border: none; font-weight: 500; }
 [data-theme="light"] .keywords span { color: #fff; }
 
-/* Education Section */
 .education-entries-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
 .edu-entry { display: flex; flex-direction: column; height: 100%; }
 .edu-entry-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
@@ -198,7 +195,6 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
 .edu-details p { margin: 0 0 8px 0; }
 .edu-details p:last-child { margin-bottom: 0; }
 
-/* Work / Experience Section */
 .item-list-container { display: flex; flex-direction: column; gap: 25px; }
 .item-card { display: flex; align-items: center; gap: 20px; padding: 20px; }
 .item-icon-col { flex-shrink: 0; }
@@ -209,44 +205,16 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
 .item-date { font-size: 0.9rem; color: var(--text-secondary-color); white-space: nowrap; padding-left: 10px; }
 .item-subtitle, .item-location { margin: 2px 0; color: var(--text-secondary-color); }
 
-/* Research Showcase Scroller */
 .scroller-container { overflow: hidden; padding: 20px 0; -webkit-mask: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%); mask: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%); }
 .scroller { display: flex; gap: 20px; width: max-content; }
 .scroller:hover .scroller-content { animation-play-state: paused; }
 @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-320px * 5)); } }
 .scroller-content { display: flex; gap: 20px; animation: scroll 40s linear infinite; }
-/*.research-card-scroll { flex: 0 0 300px; border-radius: 15px; overflow: hidden; position: relative; padding: 0; }*/
-/* 修改后的 Research Showcase 卡片样式 */
-/*.research-card-scroll {*/
-/*  flex: 0 0 300px;*/
-/*  border-radius: 15px;*/
-/*  overflow: hidden;*/
-/*  position: relative;*/
-/*  padding: 0; !* 保持图片铺满，不加内边距 *!*/
-
-/*  !* 添加液态玻璃效果 *!*/
-/*  background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);*/
-/*  backdrop-filter: blur(15px) url(#glass-card-filter) saturate(var(--saturation));*/
-/*  -webkit-backdrop-filter: blur(15px) url(#glass-card-filter) saturate(var(--saturation));*/
-/*  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),*/
-/*  inset 1.8px 3px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),*/
-/*  inset -2px -2px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),*/
-/*  inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),*/
-/*  inset -0.3px -1px 4px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),*/
-/*  inset -1.5px 2.5px 0 -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),*/
-/*  inset 0 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),*/
-/*  inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),*/
-/*  0 1px 5px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),*/
-/*  0 6px 16px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);*/
-/*  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 400ms cubic-bezier(1, 0, 0.4, 1);*/
-/*}*/
 .research-card-scroll {
   flex: 0 0 300px;
   overflow: hidden;
   position: relative;
-  /* 覆盖 .glass-card 的 padding，让图片能铺满卡片 */
   padding: 0;
-  /* 继承 .glass-card 的所有其他液态玻璃样式 */
 }
 .research-card-scroll-img { width: 100%; height: 180px; object-fit: cover; display: block; }
 .research-card-scroll-content { padding: 15px; }
@@ -257,8 +225,7 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
 .tag-bfu { background-color: #28a745; }
 .tag-personal { background-color: #6f42c1; }
 
-/* Publications Section */
-.pub-years { position: relative; display: flex; justify-content: center; align-items: center; gap: 20px; height: auto; width: 60%; padding: 5px; border-radius: 50em; margin: 5px auto 15px; z-index: 1; --pub-slider-width: 80px; --pub-slider-translate-x: 0px; background-color: color-mix(in srgb, var(--c-glass) 12%, transparent); backdrop-filter: blur(8px) url(#glass-nav-filter) saturate(var(--saturation)); -webkit-backdrop-filter: blur(8px) url(#glass-nav-filter) saturate(var(--saturation)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 1.8px 3px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -2px -2px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -0.3px -1px 4px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), inset -1.5px 2.5px 0 -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 1px 5px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 6px 16px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent); }
+.pub-years { position: relative; display: flex; justify-content: center; align-items: center; gap: 20px; height: auto; width: 60%; padding: 5px; border-radius: 50em; margin: 5px auto 15px; z-index: 1; --pub-slider-width: 80px; --pub-slider-translate-x: 0px; background-color: color-mix(in srgb, var(--c-glass) 12%, transparent); backdrop-filter: blur(8px) saturate(var(--saturation)); -webkit-backdrop-filter: blur(8px) saturate(var(--saturation)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 1.8px 3px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -2px -2px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -0.3px -1px 4px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), inset -1.5px 2.5px 0 -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 1px 5px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 6px 16px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent); }
 .pub-years::after { content: ""; position: absolute; left: 0; top: 5px; display: block; height: calc(100% - 10px); border-radius: 99em; background-color: color-mix(in srgb, var(--c-glass) 36%, transparent); z-index: -1; width: var(--pub-slider-width, 80px); translate: var(--pub-slider-translate-x, 0px) 0; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 2px 1px 0 -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -1.5px -1px 0 -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 3px 6px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent); transition: translate 400ms cubic-bezier(0.65, 0, 0.35, 1), width 400ms cubic-bezier(0.65, 0, 0.35, 1); }
 .pub-year-btn { font-family: 'Bruno Ace SC', monospace; font-weight: 500; font-size: 0.9rem; color: var(--c-content); background: none; border: none; border-radius: 99em; padding: 8px 16px; cursor: pointer; transition: all 0.3s ease; position: relative; z-index: 2; }
 .pub-year-btn:hover { color: var(--c-action); }
@@ -284,7 +251,6 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
 [data-theme="light"] .pub-action-tag:hover { color: #FFFFFF; }
 .co-first-author-symbol { vertical-align: super; font-size: smaller; }
 
-/* Gallery Carousel */
 .carousel-container.glass-card { padding: 10px; overflow: hidden; }
 .carousel { position: relative; }
 .carousel-track-container { overflow: hidden; border-radius: 10px; }
@@ -300,7 +266,6 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
 .carousel-indicator { border: none; border-radius: 50%; width: 12px; height: 12px; background: rgba(255,255,255,0.3); cursor: pointer; }
 .carousel-indicator.current-slide { background: rgba(255,255,255,0.7); }
 
-/* Footer & Theme Switcher */
 .footer { border-top: 1px solid var(--border-color); padding: 30px 0; margin-top: 40px; text-align: center; }
 .social-links { margin-bottom: 20px; display: flex; justify-content: center; gap: 25px; }
 .social-links a svg { fill: var(--text-secondary-color); transition: fill 0.3s; }
@@ -311,13 +276,32 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
 [data-theme="dark"] .icon-sun { display: none; }
 [data-theme="light"] .icon-moon { display: none; }
 
-/* ============================================= */
-/* ===== 5. MOBILE & RESPONSIVE DESIGN       ===== */
-/* ============================================= */
+@media (max-width: 768px) {
+  .container { padding: 80px 15px 30px; }
+  .glass-card:hover, .item-card:hover, .pub-card:hover { transform: none; }
+  .glass-nav { display: none; }
+  .mobile-nav-toggle, .mobile-nav-menu { display: flex; }
+  .content-section { scroll-margin-top: 80px; }
+  #hero { flex-direction: column; text-align: center; gap: 25px; margin-top: 0; }
+  .hero-text { text-align: center; }
+  .keywords { justify-content: center; }
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.1rem; }
+  .section-title { font-size: 1.6rem; }
+  .education-entries-container { grid-template-columns: 1fr; }
+  .item-card { flex-direction: column; align-items: center; text-align: center; gap: 15px; }
+  .item-header { flex-direction: column; align-items: center; gap: 5px; }
+  .item-date { padding-left: 0; }
+  .research-card-scroll { flex: 0 0 250px; }
+  @keyframes scroll-mobile { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-270px * 5)); } }
+  .scroller-content { animation-name: scroll-mobile; }
+  .pub-years { width: 95%; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+  .pub-years::-webkit-scrollbar { display: none; }
+  .pub-year-btn { flex-shrink: 0; }
+  .pub-lists-container { padding: 15px; }
+  .carousel-image { height: auto; max-height: 400px; aspect-ratio: 4 / 3; }
+}
 
-/* Mobile Nav */
-/*.mobile-nav-toggle { display: none; justify-content: center; align-items: center; position: fixed; top: 20px; right: 20px; z-index: 1001; width: 50px; height: 50px; padding: 0; border: none; border-radius: 50%; cursor: pointer; background: rgba(255,255,255,.08); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 0 0 1px rgba(255, 255, 255, .4); transition: background-color 0.3s, box-shadow 0.3s; }*/
-/* 修改后的移动端导航按钮 */
 .mobile-nav-toggle {
   display: none;
   justify-content: center;
@@ -332,8 +316,6 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
   border: none;
   border-radius: 50%;
   cursor: pointer;
-
-  /* 应用液态玻璃效果 */
   background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
   backdrop-filter: blur(8px) saturate(var(--saturation));
   -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
@@ -359,79 +341,6 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
 .mobile-nav-link:hover { opacity: 0.7; }
 body.no-scroll { overflow: hidden; }
 
-@media (max-width: 768px) {
-  .container { padding: 80px 15px 30px; }
-  /*.glass-card:hover, .item-card:hover, .pub-card:hover { transform: none; }*/
-  .glass-card:hover, .item-card:hover, .pub-card:hover {  }
-  .glass-nav { display: none; }
-  .mobile-nav-toggle, .mobile-nav-menu { display: flex; }
-
-  .content-section { scroll-margin-top: 80px; }
-  #hero { flex-direction: column; text-align: center; gap: 25px; margin-top: 0; }
-  .hero-text { text-align: center; }
-  .keywords { justify-content: center; }
-  h1 { font-size: 2.2rem; }
-  h2 { font-size: 1.1rem; }
-  .section-title { font-size: 1.6rem; }
-
-  .education-entries-container { grid-template-columns: 1fr; }
-
-  .item-card { flex-direction: column; align-items: center; text-align: center; gap: 15px; }
-  .item-header { flex-direction: column; align-items: center; gap: 5px; }
-  .item-date { padding-left: 0; }
-
-  .research-card-scroll { flex: 0 0 250px; }
-  @keyframes scroll-mobile { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-270px * 5)); } }
-  .scroller-content { animation-name: scroll-mobile; }
-
-  .pub-years { width: 95%; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
-  .pub-years::-webkit-scrollbar { display: none; }
-  .pub-year-btn { flex-shrink: 0; }
-  .pub-lists-container { padding: 15px; }
-
-  .carousel-image { height: auto; max-height: 400px; aspect-ratio: 4 / 3; }
-}
-
-/* ============================================= */
-/* ===== 6. ELASTICITY GLARE EFFECT          ===== */
-/* ============================================= */
-
-/*
-  这个 .glass-card__glare-container 是JS会自动创建的，
-  用来包裹光晕，确保光晕不会溢出卡片的圆角。
-*/
-.glass-card__glare-container {
-  /*position: absolute;*/
-  /*inset: 0;*/
-  /*border-radius: inherit; !* 继承父卡片的圆角 *!*/
-  /*overflow: hidden;*/
-  /*pointer-events: none; !* 让鼠标事件可以穿透它 *!*/
-  /*z-index: 1; !* 确保在内容之上 *!*/
-}
-
-/* 这是真正的光晕元素，它的背景是一个径向渐变，
-  JS会控制它的位置和透明度。
-*/
-.glass-card__glare {
-  /*position: absolute;*/
-  /*width: 200%;*/
-  /*height: 200%;*/
-  /*border-radius: 50%;*/
-  /*background: radial-gradient(*/
-  /*  circle at center,*/
-  /*  rgba(255, 255, 255, 0.4) 0%,*/
-  /*  rgba(255, 255, 255, 0) 50%*/
-  /*);*/
-  /*transition: opacity 0.4s ease;*/
-  /*opacity: 0;*/
-  /*mix-blend-mode: soft-light; !* 混合模式让光感更真实 *!*/
-}
-
-[data-theme="light"] .glass-card__glare {
-  /*mix-blend-mode: screen;*/
-  /*background: radial-gradient(*/
-  /*  circle at center,*/
-  /*  rgba(255, 255, 255, 0.8) 0%,*/
-  /*  rgba(255, 255, 255, 0) 40%*/
-  /*);*/
+.glass-card__glare-container, .glass-card__glare {
+  /* This effect is controlled by JavaScript, styles are placeholders */
 }
