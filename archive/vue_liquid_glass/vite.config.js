@@ -4,8 +4,8 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig({
-  // 关键修改 ↓↓↓
-  base: '/archive/vue_liquid_glass/',
+  // Use '/' for deploying to the root of a domain.
+  base: '/',
   plugins: [
     vue(),
     vueDevTools(),
