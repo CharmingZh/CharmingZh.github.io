@@ -10,7 +10,7 @@
               <div class="carousel-caption"><h3>2024, School of Engineering</h3><p>Master's Graduation at Beijing Forestry University.</p></div>
             </li>
             <li class="carousel-slide">
-              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Gallery/photo_02.png" alt="Deploying sensors in a corn field">
+              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/refs/heads/main/src/Gallery/photo_02.png" alt="Deploying sensors in a corn field">
               <div class="carousel-caption"><h3>Master's Thesis Defense</h3><p>Beijing Forestry University.</p></div>
             </li>
             <li class="carousel-slide">
