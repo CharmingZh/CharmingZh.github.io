@@ -51,15 +51,25 @@ jobs:
           stat -c%s dist/index.html || true
 
       # ───── 4. 复制 dist → docs/archive/vue_liquid_glass ─────
-      - name: Copy build to docs
+#      - name: Copy build to docs
+#        run: |
+#          DEST="../../docs/archive/vue_liquid_glass"
+#          rm -rf "$DEST"
+#          mkdir -p "$DEST"
+#          # -a 复制所有文件（含隐藏文件），保留权限/时间戳
+#          cp -a dist/. "$DEST/"
+#          # 关闭 GitHub Pages 的 Jekyll 处理
+#          touch ../../docs/.nojekyll
+      - name: Copy build to docs root
         run: |
-          DEST="../../docs/archive/vue_liquid_glass"
+          DEST="../../docs"
+          # 删除旧的整个 docs 目录（小心：如果里面有你不想删的东西，请先备份）
           rm -rf "$DEST"
           mkdir -p "$DEST"
-          # -a 复制所有文件（含隐藏文件），保留权限/时间戳
+          # 把 dist 下所有文件复制进 docs 根目录
           cp -a dist/. "$DEST/"
-          # 关闭 GitHub Pages 的 Jekyll 处理
-          touch ../../docs/.nojekyll
+          # 关掉 Jekyll
+          touch "$DEST/.nojekyll"
 
       # ───── 5. 提交并推送（仅当 docs 有变动） ─────
       - name: Commit & push docs
