@@ -6,23 +6,23 @@
         <div class="carousel-track-container">
           <ul class="carousel-track">
             <li class="carousel-slide current-slide">
-              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Gallery/photo_01.png" alt="My research setup with a 3D scanner">
+              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Gallery/photo_01.png" alt="1">
               <div class="carousel-caption"><h3>2024, School of Engineering</h3><p>Master's Graduation at Beijing Forestry University.</p></div>
             </li>
             <li class="carousel-slide">
-              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/refs/heads/main/src/Gallery/photo_02.png" alt="Deploying sensors in a corn field">
+              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/refs/heads/main/src/Gallery/photo_02.png" alt="2">
               <div class="carousel-caption"><h3>Master's Thesis Defense</h3><p>Beijing Forestry University.</p></div>
             </li>
             <li class="carousel-slide">
-              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Gallery/photo_03.png" alt="Presenting a poster at a conference">
+              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Gallery/photo_03.png" alt="3">
               <div class="carousel-caption"><h3>Nanjing, 2018</h3><p>Nanjing, 2018</p></div>
             </li>
             <li class="carousel-slide">
-              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Gallery/photo_04.png" alt="Group photo with lab members">
+              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Gallery/photo_04.png" alt="4">
               <div class="carousel-caption"><h3>Workspace in the U.S.</h3><p>Enjoying a beautiful day.</p></div>
             </li>
             <li class="carousel-slide">
-              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Gallery/photo_05.png" alt="View of Beaumont Tower on MSU campus">
+              <img class="carousel-image" src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Gallery/photo_05.png" alt="5">
               <div class="carousel-caption"><h3>Beidahu Ski Resort, Jilin</h3><p>Snowboarding is not only a beloved sport, but also a way to connect with nature and find clarity.</p></div>
             </li>
           </ul>

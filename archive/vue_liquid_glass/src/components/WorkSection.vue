@@ -32,6 +32,19 @@
           <p class="item-location">Beijing, China</p>
         </div>
       </div>
+
+      <div class="item-card glass-card">
+        <div class="item-icon-col"><img src="https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Work/logo_starbucks.png" alt="Starbucks Logo" class="item-logo"></div>
+        <div class="item-content-col">
+          <div class="item-header">
+            <h3 class="item-title">Barista (Part Time)</h3><span class="item-date">2018 – 2020</span>
+          </div>
+          <h4 class="item-subtitle">Starbucks</h4>
+          <p class="item-location">Beijing, China</p>
+        </div>
+      </div>
     </div>
   </section>
 </template>
+<script setup lang="ts">
+</script>
