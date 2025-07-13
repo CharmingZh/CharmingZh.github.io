@@ -20,6 +20,12 @@
   --glass-reflex-light: 0.3;
   --saturation: 150%;
   --card-bg-color: rgba(18, 18, 22, 0.25);
+
+  --map-ocean-color: #00ca9b;
+  --map-land-color: #1A0A33;
+  --map-past-visitors-color: #FF00FF;
+  --map-recent-visitors-color: #6a0000;/* 霓虹青色 */
+  --map-text-color: #00FFFF; /* 霓虹青色 */
 }
 
 [data-theme="light"] {
@@ -36,6 +42,12 @@
   --glass-reflex-dark: 1;
   --glass-reflex-light: 1;
   --card-bg-color: rgba(255, 255, 255, 0.3);
+
+  --map-ocean-color: #000000;
+  --map-land-color: #e2ebf4;
+  --map-past-visitors-color: #FF00FF;
+  --map-recent-visitors-color: #1b6a00; /* 霓虹洋红色 */
+  --map-text-color: #FF00FF; /* 鲜明蓝色 */
 }
 
 html { scroll-behavior: smooth; }

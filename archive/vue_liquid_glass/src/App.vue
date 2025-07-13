@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, provide } from 'vue';
 import HeroSection from './components/HeroSection.vue';
 import AboutSection from './components/AboutSection.vue';
 import EducationSection from './components/EducationSection.vue';
@@ -9,30 +9,37 @@ import PublicationsSection from './components/PublicationsSection.vue';
 import GallerySection from './components/GallerySection.vue';
 import Footer from './components/Footer.vue';
 
+// ===================================================================
+// 1. 全局玻璃效果配置 (方便统一管理)
+// ===================================================================
+const glassProps = {
+  displacementScale: 200,
+  blurAmount: 0.2,
+  aberrationIntensity: 6,
+  elasticity: 0.25,
+  cornerRadius: 25,
+  mode: 'standard', // <--- 确保这一行是 'standard'
+};
+
+// ===================================================================
+// 2. 动态主题管理 - 核心逻辑
+// ===================================================================
+const currentTheme = ref('dark'); // 默认主题为暗色
+const isLightTheme = computed(() => currentTheme.value === 'light');
+
+const toggleTheme = () => {
+  const newTheme = currentTheme.value === 'dark' ? 'light' : 'dark';
+  currentTheme.value = newTheme;
+  // 更新 HTML 根元素的 data-theme 属性，以应用 CSS 变量
+  document.documentElement.setAttribute('data-theme', newTheme);
+};
+
+// 使用 provide 将 theme-toggle 函数和 currentTheme 响应式变量暴露给所有子组件
+provide('toggleTheme', toggleTheme);
+provide('currentTheme', currentTheme);
+
+
 onMounted(() => {
-  // ===================================================================
-  // 1. 全局玻璃效果配置 (方便统一管理)
-  // ===================================================================
-  const glassProps = {
-    displacementScale: 200,
-    blurAmount: 0.2,
-    aberrationIntensity: 6,
-    elasticity: 0.25,
-    cornerRadius: 25,
-    mode: 'standard', // <--- 确保这一行是 'standard'
-  };
-
-  // ===================================================================
-  // 2. 动态主题管理
-  // ===================================================================
-    const currentTheme = ref('dark');
-    const isLightTheme = computed(() => currentTheme.value === 'light');
-
-    const toggleTheme = () => {
-      currentTheme.value = currentTheme.value === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', currentTheme.value);
-    };
-
   // --- 1. 3D 倾斜特效 (无光晕) ---
   const apply3DTiltEffect = (selector) => {
     const cards = document.querySelectorAll(selector);
@@ -240,17 +247,7 @@ onMounted(() => {
     }
   }
 
-  // --- 7. 主题切换 (亮/暗) ---
-  const themeToggle = document.getElementById('theme-toggle');
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-    });
-  }
-
-  // --- 8. 页面元素滚动淡入 ---
+  // --- 7. 页面元素滚动淡入 ---
   const fadeInObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -265,27 +262,6 @@ onMounted(() => {
 </script>
 
 <template>
-
-<!--  <LiquidGlass-->
-<!--    class="glass-nav"-->
-<!--    :displacement-scale="100"-->
-<!--    :blur-amount="0.1"-->
-<!--    :elasticity="0.1"-->
-<!--    :corner-radius="999"-->
-<!--    padding="8px"-->
-<!--    :over-light="isLightTheme"-->
-<!--  >-->
-<!--&lt;!&ndash;    <div class="glass-nav-content">&ndash;&gt;-->
-<!--&lt;!&ndash;      <a href="#about">About</a>&ndash;&gt;-->
-<!--&lt;!&ndash;      <a href="#education">Education</a>&ndash;&gt;-->
-<!--&lt;!&ndash;      <a href="#work">Work</a>&ndash;&gt;-->
-<!--&lt;!&ndash;      <a href="#research">Research</a>&ndash;&gt;-->
-<!--&lt;!&ndash;      <a href="#publications">Publications</a>&ndash;&gt;-->
-<!--&lt;!&ndash;      <a href="#gallery">Gallery</a>&ndash;&gt;-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
-<!--  </LiquidGlass>-->
-
-
   <fieldset class="glass-nav" id="glass-nav-container">
     <legend class="glass-nav__legend">Main Navigation</legend>
     <label class="glass-nav__option" for="nav-1"><input class="glass-nav__input" type="radio" name="nav" value="about" c-option="1" id="nav-1" checked><a href="#about">About</a></label>
@@ -320,6 +296,12 @@ onMounted(() => {
     <GallerySection />
     <Footer />
   </div>
+
+  <!-- 主题切换按钮，现在直接通过 @click 调用 toggleTheme 方法 -->
+  <button class="theme-switcher" id="theme-toggle" title="Switch Theme" @click="toggleTheme">
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 11-1.06-1.06l1.59-1.59a.75.75 0 011.061 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.836 17.894a.75.75 0 011.06 0l1.591 1.591a.75.75 0 11-1.06 1.06l-1.591-1.59a.75.75 0 010-1.06zM12 21.75a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75-.75zM5.106 17.836a.75.75 0 010-1.06l1.591-1.591a.75.75 0 111.06 1.06l-1.59 1.591a.75.75 0 01-1.061 0zM3 12a.75.75 0 01.75-.75h2.25a.75.75 0 010-1.5H3.75A.75.75 0 013 12zM6.106 5.106a.75.75 0 011.06 0l1.591 1.591a.75.75 0 01-1.06 1.06L6.106 6.167a.75.75 0 010-1.06z"></path></svg>
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.472-.528.75.75 0 01.818.162.75.75 0 01.162.819A10.5 10.5 0 119.528 1.718zM16.5 9a.75.75 0 01.75.75 1.5 1.5 0 001.5 1.5.75.75 0 010 1.5 1.5 1.5 0 00-1.5 1.5.75.75 0 01-1.5 0 1.5 1.5 0 00-1.5-1.5.75.75 0 010-1.5 1.5 1.5 0 001.5-1.5.75.75 0 01.75-.75z" clip-rule="evenodd"></path></svg>
+  </button>
 </template>
 
 <style scoped>
