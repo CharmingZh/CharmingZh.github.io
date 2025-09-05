@@ -5,15 +5,15 @@
       <button class="pub-year-btn active" data-year="2025">2025</button>
       <button class="pub-year-btn" data-year="2024">2024</button>
       <button class="pub-year-btn" data-year="2023">2023</button>
-      <button class="pub-year-btn" data-year="2022">2022</button>
-      <button class="pub-year-btn" data-year="2020">2020</button>
+<!--      <button class="pub-year-btn" data-year="2022">2022</button>-->
+<!--      <button class="pub-year-btn" data-year="2020">2020</button>-->
     </div>
     <div class="pub-lists-container glass-card">
       <div id="publications-list-2025" class="pub-list active" data-year="2025">
         <ul>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-review">Under Review</span></div>
-            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"A New Laser Profiling System for Online, Real-Time Detection of Broiler Breast Fillets with Woody Breast."</a></p>
+            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Proof-of-Concept Evaluation of A 3D Laser Profiling System Prototype for Real-Time Woody Breast Detection in Broiler Breast Fillets."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">Journal of Food Engineering</p>
             <div class="pub-links">
@@ -46,44 +46,79 @@
             <p class="pub-venue">Computers and Electronics in Agriculture</p>
             <p class="pub-footnote"><sup class="co-first-author-symbol">†</sup>: Equal contribution</p>
           </li>
+<!--          <li class="pub-card">-->
+<!--            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-review">Drafting</span></div>-->
+<!--            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Development of a 3D Point Cloud Reconstruction-Based Apple Canopy Liquid Sedimentation Model."</a></p>-->
+<!--            <p class="authors">Chongchong Chen, Yalan Jia, <span class="me"><b>Jiaming Zhang</b></span>, Linsen Yang, Feng Kang, <span class="corr-author">Yaxiong Wang</span></p>-->
+<!--          </li>-->
+<!--          <li class="pub-card">-->
+<!--            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-review">Drafting</span></div>-->
+<!--            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Online sorting of surface defective walnuts based on deep learning."</a></p>-->
+<!--            <p class="authors">Yunhe Zhou, Chunjiang Yu, <span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Jiangming Kan</span>, Yuanhang Liu, <span class="corr-author">Xiangjun Zou</span>, Kang Zhang, Sheng Zhang</p>-->
+<!--          </li>-->
+<!--          <li class="pub-card">-->
+<!--            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-review">Drafting</span></div>-->
+<!--            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Improved YOLOv8-Seg for Litchi Cluster Detection and Secondary Localization of Picking Point."</a></p>-->
+<!--            <p class="authors">Yunhe Zhou, Chunjiang Yu, <span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Jiangming Kan</span>, Yuanhang Liu, <span class="corr-author">Xiangjun Zou</span>, Kang Zhang, Sheng Zhang</p>-->
+<!--          </li>-->
         </ul>
       </div>
       <div id="publications-list-2023" class="pub-list" data-year="2023">
         <ul>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
-            <p class="pub-title"><a href="http://dx.doi.org/10.3390/f14122334" target="_blank" rel="noopener noreferrer">"An Advanced Software Platform and Algorithmic Framework for Mobile DBH Data Acquisition"</a></p>
+            <p class="pub-title"><a href="http://dx.doi.org/10.3390/f14122334" target="_blank" rel="noopener noreferrer">"An Advanced Software Platform and Algorithmic Framework for Mobile DBH Data Acquisition."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, Hanyan Liang, Siyuan Tong, Yunhe Zhou, <span class="corr-author">Jiangming Kan</span></p>
             <p class="pub-venue">Forests</p>
           </li>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
-            <p class="pub-title"><a href="https://doi.org/10.1016/j.biosystemseng.2023.11.006" target="_blank" rel="noopener noreferrer">"An image-based system for locating pruning points in apple trees using instance segmentation and RGB-D images"</a></p>
+            <p class="pub-title"><a href="https://doi.org/10.1016/j.biosystemseng.2023.11.006" target="_blank" rel="noopener noreferrer">"An image-based system for locating pruning points in apple trees using instance segmentation and RGB-D images."</a></p>
             <p class="authors">Siyuan Tong, <span class="me"><b>Jiaming Zhang</b></span>, Wenbin Li, Yaxiong Wang, <span class="corr-author">Feng Kang</span></p>
+            <p class="pub-venue">Biosystems Engineering</p>
+          </li>
+          <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
+            <p class="pub-title"><a href="https://doi.org/10.1016/j.biosystemseng.2023.11.006" target="_blank" rel="noopener noreferrer">"Defocus blur detection based on Transformer and complementary residual learning."</a></p>
+            <p class="authors">Shuyao Chai, Xixuan Zhao, <span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Jiangming Kan</span></p>
+            <p class="pub-venue">Biosystems Engineering</p>
+          </li>
+          <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
+            <p class="pub-title"><a href="https://doi.org/10.1016/j.biosystemseng.2023.11.006" target="_blank" rel="noopener noreferrer">"A Lightweight Forest Scene Image Dehazing Network Based on Joint Image Priors."</a></p>
+            <p class="authors">Xixuan Zhao, Yu Miao, Zihui Jin, <span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Jiangming Kan</span></p>
+            <p class="pub-venue">Biosystems Engineering</p>
+          </li>
+          <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
+            <p class="pub-title"><a href="https://doi.org/10.1016/j.biosystemseng.2023.11.006" target="_blank" rel="noopener noreferrer">"Tea Bud and Picking Point Detection Based on Deep Learning."</a></p>
+            <p class="authors">Junquan Meng, Yaxiong Wang, <span class="me"><b>Jiaming Zhang</b></span>, Siyuan Tong, ..., <span class="corr-author">Feng Kang</span></p>
             <p class="pub-venue">Biosystems Engineering</p>
           </li>
         </ul>
       </div>
-      <div id="publications-list-2022" class="pub-list" data-year="2022">
-        <ul>
-          <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
-            <p class="pub-title"><a href="https://www.atlantis-press.com/proceedings/icfied-22/125971923" target="_blank" rel="noopener noreferrer">"Impact of Weather Insurance on Household Production and Savings"</a></p>
-            <p class="authors">Xiaoling Zhang, <span class="me"><b>Jiaming Zhang</b></span></p>
-            <p class="pub-venue">2022 7th International Conference on Financial Innovation and Economic Development</p>
-          </li>
-        </ul>
-      </div>
-      <div id="publications-list-2020" class="pub-list" data-year="2020">
-        <ul>
-          <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
-            <p class="pub-title"><a href="https://doi.org/10.16660/j.cnki.1674-098X.2020.03.105" target="_blank" rel="noopener noreferrer">"Numerical simulation based on the CIR model and positive comparative analysis of set-up participation"</a></p>
-            <p class="authors">Shilei Gao, Anqi Li, Jialu He, Heng Yuan, <span class="me"><b>Jiaming Zhang</b></span></p>
-            <p class="pub-venue">Science and Technology Innovation Herald (Chinese)</p>
-          </li>
-        </ul>
-      </div>
+<!--      <div id="publications-list-2022" class="pub-list" data-year="2022">-->
+<!--        <ul>-->
+<!--          <li class="pub-card">-->
+<!--            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>-->
+<!--            <p class="pub-title"><a href="https://www.atlantis-press.com/proceedings/icfied-22/125971923" target="_blank" rel="noopener noreferrer">"Impact of Weather Insurance on Household Production and Savings"</a></p>-->
+<!--            <p class="authors">Xiaoling Zhang, <span class="me"><b>Jiaming Zhang</b></span></p>-->
+<!--            <p class="pub-venue">2022 7th International Conference on Financial Innovation and Economic Development</p>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--      <div id="publications-list-2020" class="pub-list" data-year="2020">-->
+<!--        <ul>-->
+<!--          <li class="pub-card">-->
+<!--            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>-->
+<!--            <p class="pub-title"><a href="https://doi.org/10.16660/j.cnki.1674-098X.2020.03.105" target="_blank" rel="noopener noreferrer">"Numerical simulation based on the CIR model and positive comparative analysis of set-up participation"</a></p>-->
+<!--            <p class="authors">Shilei Gao, Anqi Li, Jialu He, Heng Yuan, <span class="me"><b>Jiaming Zhang</b></span></p>-->
+<!--            <p class="pub-venue">Science and Technology Innovation Herald (Chinese)</p>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
     </div>
   </section>
 </template>
+<script setup lang="ts">
+</script>
