@@ -156,10 +156,7 @@ onMounted(() => {
   const pubNavContainer = document.querySelector('.pub-years');
   const pubListsContainer = document.querySelector('.pub-lists-container');
   if (pubNavContainer && pubListsContainer) {
-    const setActiveListHeight = () => {
-      const activeList = pubListsContainer.querySelector('.pub-list.active');
-      if (activeList) pubListsContainer.style.height = `${activeList.scrollHeight}px`;
-    };
+    // 移除 setActiveListHeight 函数及其相关调用，让CSS处理高度变化
     const updatePubSlider = () => {
       const activeButton = pubNavContainer.querySelector('.pub-year-btn.active');
       if (activeButton) {
@@ -167,7 +164,6 @@ onMounted(() => {
         pubNavContainer.style.setProperty('--pub-slider-translate-x', `${activeButton.offsetLeft}px`);
       }
     };
-    setActiveListHeight();
     updatePubSlider();
     pubNavContainer.addEventListener('click', (e) => {
       const button = e.target.closest('.pub-year-btn');
@@ -178,12 +174,10 @@ onMounted(() => {
         pubListsContainer.querySelectorAll('.pub-list').forEach(list => {
           list.classList.toggle('active', list.dataset.year === selectedYear);
         });
-        setActiveListHeight();
         setTimeout(updatePubSlider, 0);
       }
     });
     window.addEventListener('resize', () => {
-      setActiveListHeight();
       updatePubSlider();
     });
   }
@@ -297,7 +291,6 @@ onMounted(() => {
     <Footer />
   </div>
 
-  <!-- 主题切换按钮，现在直接通过 @click 调用 toggleTheme 方法 -->
   <button class="theme-switcher" id="theme-toggle" title="Switch Theme" @click="toggleTheme">
     <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 11-1.06-1.06l1.59-1.59a.75.75 0 011.061 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.836 17.894a.75.75 0 011.06 0l1.591 1.591a.75.75 0 11-1.06 1.06l-1.591-1.59a.75.75 0 010-1.06zM12 21.75a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75-.75zM5.106 17.836a.75.75 0 010-1.06l1.591-1.591a.75.75 0 111.06 1.06l-1.59 1.591a.75.75 0 01-1.061 0zM3 12a.75.75 0 01.75-.75h2.25a.75.75 0 010-1.5H3.75A.75.75 0 013 12zM6.106 5.106a.75.75 0 011.06 0l1.591 1.591a.75.75 0 01-1.06 1.06L6.106 6.167a.75.75 0 010-1.06z"></path></svg>
     <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.472-.528.75.75 0 01.818.162.75.75 0 01.162.819A10.5 10.5 0 119.528 1.718zM16.5 9a.75.75 0 01.75.75 1.5 1.5 0 001.5 1.5.75.75 0 010 1.5 1.5 1.5 0 00-1.5 1.5.75.75 0 01-1.5 0 1.5 1.5 0 00-1.5-1.5.75.75 0 010-1.5 1.5 1.5 0 001.5-1.5.75.75 0 01.75-.75z" clip-rule="evenodd"></path></svg>

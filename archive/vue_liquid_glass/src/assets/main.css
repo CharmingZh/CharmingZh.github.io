@@ -152,7 +152,6 @@ a:hover { opacity: 0.8; }
 
 /* ... 剩余的 CSS 代码保持不变 ... */
 
-/* [其余所有代码部分都和您最初提供的一样，这里为了简洁省略] */
 /* 请将下方到文件末尾的所有代码，替换掉您现有CSS中从 .content-section 开始的全部内容 */
 
 .content-section {
@@ -237,18 +236,44 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
 .tag-bfu { background-color: #28a745; }
 .tag-personal { background-color: #6f42c1; }
 
-.pub-years { position: relative; display: flex; justify-content: center; align-items: center; gap: 20px; height: auto; width: 60%; padding: 5px; border-radius: 50em; margin: 5px auto 15px; z-index: 1; --pub-slider-width: 80px; --pub-slider-translate-x: 0px; background-color: color-mix(in srgb, var(--c-glass) 12%, transparent); backdrop-filter: blur(8px) saturate(var(--saturation)); -webkit-backdrop-filter: blur(8px) saturate(var(--saturation)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 1.8px 3px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -2px -2px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -0.3px -1px 4px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), inset -1.5px 2.5px 0 -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 1px 5px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 6px 16px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent); }
+.pub-years { position: relative; display: flex; justify-content: center; align-items: center; gap: 20px; height: auto; width: 60%; padding: 5px; border-radius: 50em; margin: 5px auto 15px; z-index: 1; --pub-slider-width: 80px; --pub-slider-translate-x: 0px; background-color: color-mix(in srgb, var(--c-glass) 12%, transparent); backdrop-filter: blur(8px) saturate(var(--saturation)); -webkit-backdrop-filter: blur(8px) saturate(var(--saturation)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 1.8px 3px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -2px -2px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -0.3px -1px 4px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), inset -1.5px 2.5px 0 -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 1px 5px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 6px 16px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+  transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1);
+}
 .pub-years::after { content: ""; position: absolute; left: 0; top: 5px; display: block; height: calc(100% - 10px); border-radius: 99em; background-color: color-mix(in srgb, var(--c-glass) 36%, transparent); z-index: -1; width: var(--pub-slider-width, 80px); translate: var(--pub-slider-translate-x, 0px) 0; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 2px 1px 0 -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -1.5px -1px 0 -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 3px 6px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent); transition: translate 400ms cubic-bezier(0.65, 0, 0.35, 1), width 400ms cubic-bezier(0.65, 0, 0.35, 1); }
 .pub-year-btn { font-family: 'Bruno Ace SC', monospace; font-weight: 500; font-size: 0.9rem; color: var(--c-content); background: none; border: none; border-radius: 99em; padding: 8px 16px; cursor: pointer; transition: all 0.3s ease; position: relative; z-index: 2; }
 .pub-year-btn:hover { color: var(--c-action); }
 .pub-year-btn.active { color: var(--c-action); }
-.pub-lists-container { display: grid; padding: 15px 30px; position: relative; overflow: hidden; transition: height 0.4s ease-in-out; }
-.pub-list { grid-area: 1 / 1; opacity: 0; transform: translateY(15px); pointer-events: none; transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; }
-.pub-list.active { opacity: 1; transform: translateY(0); pointer-events: auto; transition-delay: 0.2s; }
+.pub-lists-container {
+  padding: 15px 30px;
+  position: relative;
+  transition: height 0.4s ease-in-out;
+}
+.pub-list {
+  opacity: 0;
+  transform: translateY(15px);
+  pointer-events: none;
+  position: absolute;
+  top: 15px;
+  left: 30px;
+  right: 30px;
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+.pub-list.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 0.2s;
+  position: static;
+}
 .pub-list ul { margin: 0; padding: 0; list-style: none; }
 .pub-card { padding: 15px 5px; border-bottom: 1px solid var(--border-color); transition: all 0.3s ease-in-out; }
 .pub-card:last-child { border-bottom: none; }
-.pub-card:hover { background-color: rgba(128,128,128,0.1); transform: scale(1.02); border-color: transparent; }
+.pub-card:hover {
+  background-color: rgba(128,128,128,0.1);
+  transform: scale(1.02);
+  border-color: transparent;
+  border-radius: 10px;
+}
 .pub-meta { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
 .pub-tag { padding: 3px 10px; font-size: 0.8rem; border-radius: 8px; color: #fff; }
 .tag-journal { background-color: #007bff; } .tag-conference { background-color: #6f42c1; } .tag-review { background-color: #fd7e14; } .tag-drafting { background-color: #6c757d; }
@@ -300,10 +325,19 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
   h1 { font-size: 2.2rem; }
   h2 { font-size: 1.1rem; }
   .section-title { font-size: 1.6rem; }
-  .education-entries-container { grid-template-columns: 1fr; }
+
+  /* 修复：将教育经历容器在移动端明确设置为一列 */
+  .education-entries-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* 优化：调整工作经历卡片在移动端的布局和对齐方式 */
   .item-card { flex-direction: column; align-items: center; text-align: center; gap: 15px; }
   .item-header { flex-direction: column; align-items: center; gap: 5px; }
   .item-date { padding-left: 0; }
+
   .research-card-scroll { flex: 0 0 250px; }
   @keyframes scroll-mobile { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-270px * 5)); } }
   .scroller-content { animation-name: scroll-mobile; }
