@@ -16,7 +16,7 @@
           </div>
           <div class="edu-details">
             <p><strong>Advisor:</strong> <a href="https://www.yuzhenlu.com/">Dr. Yuzhen Lu</a></p>
-            <p><strong>Committee Members:</strong> <a href="https://www.egr.msu.edu/rival/">Dr. Zhaojian Li</a>, <a href="https://www.egr.msu.edu/~dmorris/">Dr. Morris Daniel</a></p>
+            <p><strong>Committee Members:</strong> <a href="https://www.egr.msu.edu/rival/">Dr. Zhaojian Li</a>, <a href="https://www.egr.msu.edu/~dmorris/">Dr. Morris Daniel</a>, <a href="https://www.canr.msu.edu/people/dr_randy_beaudry">Dr. Randy Beaudry</a></p>
             <p><strong>Focus:</strong> AI-powered optical sensing and smart agriculture.</p>
           </div>
         </div>
