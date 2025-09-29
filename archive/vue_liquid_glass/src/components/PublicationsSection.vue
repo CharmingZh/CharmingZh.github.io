@@ -12,7 +12,7 @@
       <div id="publications-list-2025" class="pub-list active" data-year="2025">
         <ul>
           <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-review">Under Review</span></div>
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-revision">In Revision</span></div>
             <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Spatial Mismatch and Inequality between Ecological Pressure and Economic Benefits Embodied in Agricultural Trade."</a></p>
             <p class="authors">Kaige Lei, <span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yan Li</span>, Xinhui Feng, Jiayu Yang, Li Hou, Jianguo Liu</p>
             <p class="pub-venue">Environmental Impact Assessment Review</p>
@@ -23,7 +23,7 @@
 <!--            </div>-->
           </li>
           <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-published">Published</span></div>
             <p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2025.112820" target="_blank" rel="noopener noreferrer">"Proof-of-Concept Evaluation of A 3D Laser Profiling System Prototype for Real-Time Woody Breast Detection in Broiler Breast Fillets."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">Journal of Food Engineering</p>
@@ -36,11 +36,11 @@
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-review">Under Review</span></div>
             <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"An Apple Tree Pruning Robot System based on Branch Segmentation and Decision Making Control."</a></p>
-            <p class="authors">Siyuan Tong, Yaxiong Wang, <span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Feng Kang</span>, Long Liu</p>
-            <p class="pub-venue">Computers and Electronics in Agriculture</p>
+            <p class="authors">Siyuan Tong, Jingwei Wang, <span class="me"><b>Jiaming Zhang</b></span>, Long Liu, Yaxiong Wang, <span class="corr-author">Feng Kang</span></p>
+            <p class="pub-venue">Artificial Intelligence in Agriculture</p>
           </li>
           <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-review">Drafting</span></div>
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-drafting">Drafting</span></div>
             <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Improved YOLOv8-Seg for Litchi Cluster Detection and Secondary Localization of Picking Point."</a></p>
             <p class="authors">Yunhe Zhou, Chunjiang Yu, <span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Jiangming Kan</span>, Yuanhang Liu, <span class="corr-author">Xiangjun Zou</span>, Kang Zhang, Sheng Zhang</p>
           </li>

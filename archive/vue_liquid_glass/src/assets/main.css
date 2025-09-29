@@ -278,8 +278,21 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
   border-radius: 10px;
 }
 .pub-meta { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
-.pub-tag { padding: 3px 10px; font-size: 0.8rem; border-radius: 8px; color: #fff; }
-.tag-journal { background-color: #007bff; } .tag-conference { background-color: #6f42c1; } .tag-review { background-color: #fd7e14; } .tag-drafting { background-color: #6c757d; }
+/*.pub-tag { padding: 3px 10px; font-size: 0.8rem; border-radius: 8px; color: #fff; }*/
+.pub-tag {
+  padding: 3px 10px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  color: #fff;
+}
+.tag-journal { background-color: #007bff; } .tag-conference { background-color: #6f42c1; }
+.tag-drafting { background-color: #6c757d; }     /* 起草中 */
+.tag-submitted { background-color: #20c997; }    /* 已提交 */
+.tag-review { background-color: #fd7e14; }       /* 审稿中 */
+.tag-revision { background-color: #17a2b8; }     /* 返修中 */
+.tag-resubmitted { background-color: #0dcaf0; }  /* 已返修再投 */
+.tag-accepted { background-color: #28a745; }     /* 已接受 */
+.tag-published { background-color: #007bff; }    /* 已发表 */
 .pub-title { font-size: 1.15rem; font-weight: bold; margin: 0 0 8px; }
 .authors { margin: 8px 0; color: var(--text-secondary-color); line-height: 1.6; }
 .authors .me { color: var(--text-color); font-weight: bold; }
