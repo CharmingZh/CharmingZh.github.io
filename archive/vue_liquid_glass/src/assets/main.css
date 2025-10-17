@@ -7,17 +7,17 @@
   /* ===== NAVIGATION BAR CONFIGURATION       ===== */
   /* ============================================= */
   --nav-background-opacity: 10%;
-  --nav-blur-amount: 18px;
-  --nav-saturation: 2.05;
-  --nav-contrast: 1.28;
-  --nav-brightness: 1.10;
-  --nav-shadow-dark-intensity: 15%;
-  --nav-shadow-light-intensity: 12%;
-  --nav-shadow-light-mode-dark-intensity: 25%;
-  --nav-shadow-light-mode-light-intensity: 20%;
+  --nav-blur-amount: 15px;
+  --nav-saturation: 0.5;
+  --nav-contrast: 1.25;
+  --nav-brightness: 2;
+  --nav-shadow-dark-intensity: 5%;
+  --nav-shadow-light-intensity: 100%;
+  --nav-shadow-light-mode-dark-intensity: 100%;
+  --nav-shadow-light-mode-light-intensity: 50%;
 
   /* Publications navigation backdrop */
-  --pub-nav-blur-amount: 18px;
+  --pub-nav-blur-amount: 25px;
 
   /* ============================================= */
   /* ===== COLOR SYSTEM & GLASS VARIABLES     ===== */
@@ -110,8 +110,8 @@
   --glass-reflex-light: 0.7;
   --card-bg-color: rgba(255, 255, 255, 0.58);
   --card-bg-color-hover: color-mix(in srgb, var(--card-bg-color) 75%, rgba(0, 0, 0, 0.08) 25%);
-  --nav-surface-color: rgba(255, 255, 255, 0.78);
-  --nav-slider-color: rgba(255, 255, 255, 0.6);
+  --nav-surface-color: rgba(245,245,245,0.22);
+  --nav-slider-color: rgba(255,255,255,0.26);
   --glass-surface-border: color-mix(in srgb, rgba(0, 0, 0, 0.65) 10%, transparent);
   --glass-surface-border-strong: color-mix(in srgb, rgba(0, 0, 0, 0.65) 25%, transparent);
   --glass-surface-backdrop: blur(18px) saturate(1.9) contrast(1.1) brightness(1.05);
@@ -135,6 +135,13 @@
 
   --nav-shadow-dark-intensity: var(--nav-shadow-light-mode-dark-intensity);
   --nav-shadow-light-intensity: var(--nav-shadow-light-mode-light-intensity);
+
+  --nav-background-opacity: 15%;
+  /* 玻璃效果：别把背景压黑了 */
+  --nav-blur-amount: 8px;
+  --nav-saturation: 1.15;
+  --nav-contrast: 1;  /* 从 0.25 提升到略 > 1 */
+  --nav-brightness: 1.1;/* 从 0.1 改为略提亮 */
 
   --footer-bg: transparent;
   --footer-text: var(--text-color);
@@ -867,9 +874,9 @@ h2 { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 400; colo
 .scroller-container { overflow: hidden; padding: 20px 0; -webkit-mask: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%); mask: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%); }
 .scroller { display: flex; gap: 20px; width: max-content; }
 .scroller:hover .scroller-content { animation-play-state: paused; }
-@keyframes scroll { 
-  0% { transform: translateX(0); } 
-  100% { transform: translateX(calc(-320px * 10 - 20px * 9)); } 
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-320px * 10 - 20px * 9)); }
 }
 .scroller-content { display: flex; gap: 20px; animation: scroll 40s linear infinite; }
 .research-card-scroll {
