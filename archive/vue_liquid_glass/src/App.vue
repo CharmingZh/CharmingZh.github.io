@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed, provide } from 'vue';
+import { ref, onMounted, onUnmounted, provide } from 'vue';
 import HeroSection from './components/HeroSection.vue';
 import AboutSection from './components/AboutSection.vue';
 import EducationSection from './components/EducationSection.vue';
@@ -21,25 +21,42 @@ const glassProps = {
   mode: 'standard', // <--- 确保这一行是 'standard'
 };
 
+// 导航栏布局模式：'flow' 表示随内容滚动，'fixed' 表示悬浮在顶部
+/** @type {'flow' | 'fixed'} */
+const NAV_LAYOUT_MODE = 'flow';
+
 // ===================================================================
 // 2. 动态主题管理 - 核心逻辑
 // ===================================================================
-const currentTheme = ref('dark'); // 默认主题为暗色
-const isLightTheme = computed(() => currentTheme.value === 'light');
+const applyTheme = (theme) => {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.body.setAttribute('data-theme', theme);
+};
 
+const currentTheme = ref(document.documentElement.getAttribute('data-theme') || 'dark');
 const toggleTheme = () => {
   const newTheme = currentTheme.value === 'dark' ? 'light' : 'dark';
   currentTheme.value = newTheme;
-  // 更新 HTML 根元素的 data-theme 属性，以应用 CSS 变量
-  document.documentElement.setAttribute('data-theme', newTheme);
+  applyTheme(newTheme);
 };
 
 // 使用 provide 将 theme-toggle 函数和 currentTheme 响应式变量暴露给所有子组件
 provide('toggleTheme', toggleTheme);
 provide('currentTheme', currentTheme);
 
+const cleanupCallbacks = [];
+
+onUnmounted(() => {
+  cleanupCallbacks.forEach((cleanup) => cleanup());
+  cleanupCallbacks.length = 0;
+});
+
 
 onMounted(() => {
+  applyTheme(currentTheme.value);
+  document.documentElement.setAttribute('data-glass-mode', 'classic');
+  document.documentElement.setAttribute('data-nav-layout', NAV_LAYOUT_MODE);
+
   // --- 1. 3D 倾斜特效 (无光晕) ---
   const apply3DTiltEffect = (selector) => {
     const cards = document.querySelectorAll(selector);
@@ -81,15 +98,22 @@ onMounted(() => {
   if (navContainer) {
     const updateSlider = () => {
       const activeOption = navContainer.querySelector('input:checked')?.parentNode;
-      if (activeOption) {
+      if (activeOption instanceof HTMLElement) {
         navContainer.style.setProperty('--slider-width', `${activeOption.offsetWidth}px`);
         navContainer.style.setProperty('--slider-translate-x', `${activeOption.offsetLeft}px`);
       }
     };
+
+    const handleNavChange = () => {
+      updateSlider();
+    };
+    navContainer.addEventListener('change', handleNavChange);
+    cleanupCallbacks.push(() => navContainer.removeEventListener('change', handleNavChange));
+
     const trackPrevious = () => {
       let previousValue = navContainer.querySelector('input:checked')?.getAttribute("c-option");
       if (previousValue) navContainer.setAttribute("c-previous", previousValue);
-      navContainer.addEventListener("change", () => {
+      const handlePreviousChange = () => {
         const currentChecked = navContainer.querySelector('input:checked');
         if (currentChecked) {
           const currentVal = currentChecked.getAttribute("c-option");
@@ -98,39 +122,129 @@ onMounted(() => {
             previousValue = currentVal;
           }
         }
-      }, true);
+      };
+      navContainer.addEventListener("change", handlePreviousChange, true);
+      cleanupCallbacks.push(() => navContainer.removeEventListener("change", handlePreviousChange, true));
     };
-    updateSlider();
     trackPrevious();
-    navContainer.addEventListener("change", updateSlider);
-    window.addEventListener('resize', updateSlider);
-    navContainer.addEventListener('click', (e) => {
+
+    const navInputs = Array.from(navContainer.querySelectorAll('.glass-nav__input'));
+    const navInputMap = new Map(navInputs.map((input) => [input.value, input]));
+
+    const sectionTargets = Array.from(document.querySelectorAll('.content-section'))
+      .filter((section) => section instanceof HTMLElement && navInputMap.has(section.id));
+    const sectionOrder = sectionTargets.map((section) => section.id);
+
+    let activeSectionId = '';
+
+    const setActiveNav = (sectionId) => {
+      if (!sectionId || activeSectionId === sectionId) return;
+      const targetInput = navInputMap.get(sectionId);
+      if (!targetInput) return;
+      activeSectionId = sectionId;
+      if (!targetInput.checked) {
+        targetInput.checked = true;
+        targetInput.dispatchEvent(new Event('change', { bubbles: true }));
+      } else {
+        updateSlider();
+      }
+    };
+
+    const updateActiveSection = () => {
+      if (!sectionTargets.length) return;
+      const navOffset = (navContainer.offsetHeight || 0) + 24;
+      const viewportPivot = window.scrollY + Math.max(window.innerHeight * 0.3, navOffset);
+      let currentSection = sectionTargets[0];
+      for (const section of sectionTargets) {
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        if (viewportPivot >= sectionTop - navOffset) {
+          currentSection = section;
+        } else {
+          break;
+        }
+      }
+      setActiveNav(currentSection.id);
+    };
+
+    const visibleSections = new Map();
+
+    const pickMostVisibleSection = () => {
+      if (!visibleSections.size) return false;
+      const [bestSectionId] = Array.from(visibleSections.entries())
+        .sort((a, b) => {
+          if (b[1] !== a[1]) return b[1] - a[1];
+          return sectionOrder.indexOf(a[0]) - sectionOrder.indexOf(b[0]);
+        })[0] || [];
+      if (bestSectionId) {
+        setActiveNav(bestSectionId);
+        return true;
+      }
+      return false;
+    };
+
+    let sectionObserver;
+    if ('IntersectionObserver' in window && sectionTargets.length) {
+      sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const { id } = entry.target;
+          if (!id) return;
+          if (entry.isIntersecting) {
+            visibleSections.set(id, entry.intersectionRatio);
+          } else {
+            visibleSections.delete(id);
+          }
+        });
+        if (!pickMostVisibleSection()) {
+          updateActiveSection();
+        }
+      }, {
+        root: null,
+        rootMargin: '-45% 0px -45% 0px',
+        threshold: [0.1, 0.25, 0.5, 0.75],
+      });
+
+      sectionTargets.forEach((section) => sectionObserver.observe(section));
+      cleanupCallbacks.push(() => sectionObserver && sectionObserver.disconnect());
+    }
+
+    const applyActiveSection = () => {
+      if (!pickMostVisibleSection()) {
+        updateActiveSection();
+      }
+    };
+
+    let scrollTicking = false;
+    const handleScroll = () => {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(() => {
+        applyActiveSection();
+        scrollTicking = false;
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    cleanupCallbacks.push(() => window.removeEventListener('scroll', handleScroll));
+
+    const handleResize = () => {
+      updateSlider();
+      applyActiveSection();
+    };
+    window.addEventListener('resize', handleResize);
+    cleanupCallbacks.push(() => window.removeEventListener('resize', handleResize));
+
+    const handleNavClick = (e) => {
       const label = e.target.closest('label');
       if (label) {
         const radio = document.getElementById(label.getAttribute('for'));
         const href = radio?.nextElementSibling?.getAttribute('href');
         if (href) document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
       }
-    });
-    const sections = document.querySelectorAll('.content-section');
-    const scrollObserver = new IntersectionObserver(entries => {
-      let bestMatch = null;
-      let maxRatio = -1;
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-          maxRatio = entry.intersectionRatio;
-          bestMatch = entry.target;
-        }
-      });
-      if (bestMatch) {
-        const correspondingRadio = navContainer.querySelector(`input[value="${bestMatch.id}"]`);
-        if (correspondingRadio && !correspondingRadio.checked) {
-          correspondingRadio.checked = true;
-          correspondingRadio.dispatchEvent(new Event('change', { bubbles: true }));
-        }
-      }
-    }, { threshold: 0.1, rootMargin: "-100px 0px -50% 0px" });
-    sections.forEach(section => scrollObserver.observe(section));
+    };
+    navContainer.addEventListener('click', handleNavClick);
+    cleanupCallbacks.push(() => navContainer.removeEventListener('click', handleNavClick));
+
+    updateSlider();
+    applyActiveSection();
   }
 
   // --- 3. 移动端导航栏开关 ---

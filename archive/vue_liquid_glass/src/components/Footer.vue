@@ -48,7 +48,10 @@ onMounted(() => {
 // 监听 currentTheme 响应式变量的变化
 // 当 currentTheme 改变时（即主题切换时），重新调用 setVisitorMapTheme
 watch(currentTheme, () => {
-  setVisitorMapTheme();
+  // 使用 requestAnimationFrame 确保 CSS 变量已经更新
+  requestAnimationFrame(() => {
+    setVisitorMapTheme();
+  });
 });
 
 </script>

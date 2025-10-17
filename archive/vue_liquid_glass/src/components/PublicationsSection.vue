@@ -153,5 +153,104 @@
     </div>
   </section>
 </template>
-<script setup lang="ts">
+<script setup>
+import { onMounted, onUnmounted } from 'vue';
+
+// 年份导航栏的滑块动画逻辑
+onMounted(() => {
+  const pubYearsContainer = document.querySelector('.pub-years');
+  if (!pubYearsContainer) return;
+
+  const pubYearBtns = pubYearsContainer.querySelectorAll('.pub-year-btn');
+  let activeBtn = pubYearsContainer.querySelector('.pub-year-btn.active');
+
+  // 更新滑块位置和大小
+  const updatePubSlider = () => {
+    if (activeBtn) {
+      const containerRect = pubYearsContainer.getBoundingClientRect();
+      const activeRect = activeBtn.getBoundingClientRect();
+
+      const sliderWidth = activeRect.width;
+      const sliderTranslateX = activeRect.left - containerRect.left;
+
+      pubYearsContainer.style.setProperty('--pub-slider-width', `${sliderWidth}px`);
+      pubYearsContainer.style.setProperty('--pub-slider-translate-x', `${sliderTranslateX}px`);
+    }
+  };
+
+  // 延迟执行初始位置设置，确保DOM完全渲染
+  setTimeout(() => {
+    updatePubSlider();
+  }, 100);
+
+  // 使用ResizeObserver监听容器尺寸变化
+  const resizeObserver = new ResizeObserver(() => {
+    updatePubSlider();
+  });
+  resizeObserver.observe(pubYearsContainer);
+
+  // 处理年份按钮点击
+  const handlePubYearClick = (e) => {
+    const target = e.target;
+    const btn = target.closest('.pub-year-btn');
+    if (!btn) return;
+
+    // 移除所有active类
+    pubYearBtns.forEach(b => b.classList.remove('active'));
+
+    // 添加active类到点击的按钮
+    btn.classList.add('active');
+    activeBtn = btn;
+
+    // 更新滑块
+    updatePubSlider();
+
+    // 切换内容显示
+    const year = btn.getAttribute('data-year');
+    if (year) {
+      const pubLists = document.querySelectorAll('.pub-list');
+      pubLists.forEach(list => {
+        const listYear = list.getAttribute('data-year');
+        if (listYear === year) {
+          list.classList.add('active');
+        } else {
+          list.classList.remove('active');
+        }
+      });
+    }
+  };
+
+  // 绑定事件
+  pubYearBtns.forEach(btn => {
+    btn.addEventListener('click', handlePubYearClick);
+  });
+
+  // 防抖的resize处理
+  const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
+  const debouncedUpdatePubSlider = debounce(updatePubSlider, 100);
+  window.addEventListener('resize', debouncedUpdatePubSlider);
+
+  // 初始化滑块位置
+  updatePubSlider();
+
+  // 清理函数
+  onUnmounted(() => {
+    pubYearBtns.forEach(btn => {
+      btn.removeEventListener('click', handlePubYearClick);
+    });
+    window.removeEventListener('resize', debouncedUpdatePubSlider);
+    resizeObserver.disconnect();
+  });
+});
 </script>
