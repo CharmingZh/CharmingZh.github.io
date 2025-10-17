@@ -29,6 +29,11 @@
   </section>
 </template>
 <script setup>
+import msuLogo from '../assets/education/msu-logo.svg'
+import bjfuLogo from '../assets/education/bjfu-logo.svg'
+import cumtbLogo from '../assets/education/cumtb-logo.svg'
+import nenuLogo from '../assets/education/nenu-logo.png'
+
 const educationData = [
   {
     degree: 'Ph.D.',
@@ -36,7 +41,7 @@ const educationData = [
     duration: '2024 – Present',
     institution: 'Michigan State University',
     location: 'East Lansing, MI',
-    logo: '/src/assets/education/msu-logo.svg',
+    logo: msuLogo,
     details: [
       { label: 'Advisor', value: '<a href="https://www.yuzhenlu.com/">Dr. Yuzhen Lu</a>' },
       { label: 'Committee Members', value: '<a href="https://www.egr.msu.edu/rival/">Dr. Zhaojian Li</a>, <a href="https://www.egr.msu.edu/~dmorris/">Dr. Morris Daniel</a>, <a href="https://www.canr.msu.edu/people/dr_randy_beaudry">Dr. Randy Beaudry</a>' },
@@ -49,7 +54,7 @@ const educationData = [
     duration: '2021 – 2024',
     institution: 'Beijing Forestry University',
     location: 'Beijing, China',
-    logo: '/src/assets/education/bjfu-logo.svg',
+    logo: bjfuLogo,
     details: [
       { label: 'Advisor', value: '<a href="https://gxy.bjfu.edu.cn/jiaozhiyuangong/jiaoshixilie/bssds/k/341310.html">Dr. Jiangming Kan</a>' },
       { label: 'Dissertation', value: '"Computer Vision-Based Automated System for DBH Measurement"' }
@@ -62,7 +67,7 @@ const educationData = [
     duration: '2016 – 2020',
     institution: 'China University of Mining and Technology, Beijing',
     location: 'Beijing, China',
-    logo: '/src/assets/education/cumtb-logo.svg',
+    logo: cumtbLogo,
     details: null,
     achievement: null
   },
@@ -72,7 +77,7 @@ const educationData = [
     duration: '2010 – 2016',
     institution: 'Northeast Normal University Affiliated High School',
     location: 'Changchun, Jilin',
-    logo: '/src/assets/education/nenu-logo.png',
+    logo: nenuLogo,
     details: null,
     achievement: null
   }
