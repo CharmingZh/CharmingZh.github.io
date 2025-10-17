@@ -94,10 +94,7 @@ const getDegreeClass = (degree) => {
 
 const getCardBackgroundStyle = (logoPath) => {
   return {
-    backgroundImage: `url(${logoPath})`,
-    backgroundSize: '200px 200px',
-    backgroundPosition: 'top right',
-    backgroundRepeat: 'no-repeat'
+    '--edu-logo-url': `url(${logoPath})`
   }
 }
 </script>

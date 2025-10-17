@@ -59,32 +59,117 @@ onMounted(() => {
 
   // --- 1. 3D 倾斜特效 (无光晕) ---
   const apply3DTiltEffect = (selector) => {
-    const cards = document.querySelectorAll(selector);
-    const maxRotation = 6; // 倾斜角度
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const coarsePointer = window.matchMedia('(pointer: coarse)');
+    if (reduceMotion.matches || coarsePointer.matches) {
+      return;
+    }
 
-    cards.forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const { left, top, width, height } = card.getBoundingClientRect();
-        const mouseX = e.clientX - left;
-        const mouseY = e.clientY - top;
+    const cards = Array.from(document.querySelectorAll(selector)).filter(
+      (node) => node instanceof HTMLElement && node.dataset.tiltBound !== 'true',
+    );
+    if (!cards.length) return;
 
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
+    const maxRotation = 6;
 
-        const rotateY = maxRotation * xPct * 2;
-        const rotateX = -maxRotation * yPct * 2;
+    cards.forEach((card) => {
+      card.dataset.tiltBound = 'true';
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.04, 1.04, 1.04)`;
-      });
+      let frameId = 0;
+      let rect = card.getBoundingClientRect();
+      let currentX = 0;
+      let currentY = 0;
+      let targetX = 0;
+      let targetY = 0;
 
-      card.addEventListener('mouseenter', () => {
-        card.style.transition = 'transform 0.1s ease';
-      });
+      const updateRect = () => {
+        rect = card.getBoundingClientRect();
+      };
 
-      card.addEventListener('mouseleave', () => {
-        card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-      });
+      const render = () => {
+        const easing = 0.18;
+        currentX += (targetX - currentX) * easing;
+        currentY += (targetY - currentY) * easing;
+
+        const intensity = Math.min(1, (Math.abs(currentX) + Math.abs(currentY)) / (maxRotation * 2));
+        const scale = 1 + 0.02 * intensity;
+
+        card.style.transform = `perspective(900px) rotateX(${currentX.toFixed(2)}deg) rotateY(${currentY.toFixed(2)}deg) scale3d(${scale.toFixed(3)}, ${scale.toFixed(3)}, ${scale.toFixed(3)})`;
+
+        if (Math.abs(targetX - currentX) > 0.01 || Math.abs(targetY - currentY) > 0.01) {
+          frameId = requestAnimationFrame(render);
+        } else {
+          frameId = 0;
+          if (targetX === 0 && targetY === 0) {
+            card.style.transform = '';
+          }
+        }
+      };
+
+      const scheduleRender = () => {
+        if (!frameId) {
+          frameId = requestAnimationFrame(render);
+        }
+      };
+
+      const handlePointerEnter = () => {
+        updateRect();
+        scheduleRender();
+      };
+
+      const handlePointerMove = (event) => {
+        const { left, top, width, height } = rect;
+        if (!width || !height) return;
+        const xRatio = (event.clientX - left) / width - 0.5;
+        const yRatio = (event.clientY - top) / height - 0.5;
+        targetY = maxRotation * xRatio * 2;
+        targetX = -maxRotation * yRatio * 2;
+        scheduleRender();
+      };
+
+      const resetTilt = () => {
+        targetX = 0;
+        targetY = 0;
+        scheduleRender();
+      };
+
+      const handlePointerLeave = () => {
+        resetTilt();
+      };
+
+      let resizeObserver = null;
+      const resizeFallback = () => updateRect();
+      if (typeof ResizeObserver === 'function') {
+        resizeObserver = new ResizeObserver(updateRect);
+        resizeObserver.observe(card);
+      } else {
+        window.addEventListener('resize', resizeFallback, { passive: true });
+      }
+
+      card.addEventListener('pointerenter', handlePointerEnter, { passive: true });
+      card.addEventListener('pointermove', handlePointerMove, { passive: true });
+      card.addEventListener('pointerleave', handlePointerLeave, { passive: true });
+      card.addEventListener('pointercancel', handlePointerLeave, { passive: true });
+
+      const cleanup = () => {
+        if (resizeObserver) {
+          resizeObserver.disconnect();
+        } else {
+          window.removeEventListener('resize', resizeFallback);
+        }
+        card.removeEventListener('pointerenter', handlePointerEnter);
+        card.removeEventListener('pointermove', handlePointerMove);
+        card.removeEventListener('pointerleave', handlePointerLeave);
+        card.removeEventListener('pointercancel', handlePointerLeave);
+        if (frameId) {
+          cancelAnimationFrame(frameId);
+          frameId = 0;
+        }
+        delete card.dataset.tiltBound;
+        card.style.transform = '';
+      };
+
+      cleanupCallbacks.push(cleanup);
     });
   };
 
