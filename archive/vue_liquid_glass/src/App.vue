@@ -8,6 +8,7 @@ import ResearchSection from './components/ResearchSection.vue';
 import PublicationsSection from './components/PublicationsSection.vue';
 import GallerySection from './components/GallerySection.vue';
 import Footer from './components/Footer.vue';
+import GlassEffect from './components/GlassEffect.vue';
 
 // ===================================================================
 // 1. 全局配置 (导航栏布局模式)
@@ -471,15 +472,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <fieldset class="glass-nav" id="glass-nav-container">
-    <legend class="glass-nav__legend">Main Navigation</legend>
-    <label class="glass-nav__option" for="nav-1"><input class="glass-nav__input" type="radio" name="nav" value="about" c-option="1" id="nav-1" checked><a href="#about">About</a></label>
-    <label class="glass-nav__option" for="nav-2"><input class="glass-nav__input" type="radio" name="nav" value="education" c-option="2" id="nav-2"><a href="#education">Education</a></label>
-    <label class="glass-nav__option" for="nav-3"><input class="glass-nav__input" type="radio" name="nav" value="work" c-option="3" id="nav-3"><a href="#work">Work</a></label>
-    <label class="glass-nav__option" for="nav-4"><input class="glass-nav__input" type="radio" name="nav" value="research" c-option="4" id="nav-4"><a href="#research">Research</a></label>
-    <label class="glass-nav__option" for="nav-5"><input class="glass-nav__input" type="radio" name="nav" value="publications" c-option="5" id="nav-5"><a href="#publications">Publications</a></label>
-    <label class="glass-nav__option" for="nav-6"><input class="glass-nav__input" type="radio" name="nav" value="gallery" c-option="6" id="nav-6"><a href="#gallery">Gallery</a></label>
-  </fieldset>
+  <GlassEffect borderRadius="99em" distortion="0.02" padding="0">
+    <fieldset class="glass-nav" id="glass-nav-container">
+      <legend class="glass-nav__legend">Main Navigation</legend>
+      <label class="glass-nav__option" for="nav-1"><input class="glass-nav__input" type="radio" name="nav" value="about" c-option="1" id="nav-1" checked><a href="#about">About</a></label>
+      <label class="glass-nav__option" for="nav-2"><input class="glass-nav__input" type="radio" name="nav" value="education" c-option="2" id="nav-2"><a href="#education">Education</a></label>
+      <label class="glass-nav__option" for="nav-3"><input class="glass-nav__input" type="radio" name="nav" value="work" c-option="3" id="nav-3"><a href="#work">Work</a></label>
+      <label class="glass-nav__option" for="nav-4"><input class="glass-nav__input" type="radio" name="nav" value="research" c-option="4" id="nav-4"><a href="#research">Research</a></label>
+      <label class="glass-nav__option" for="nav-5"><input class="glass-nav__input" type="radio" name="nav" value="publications" c-option="5" id="nav-5"><a href="#publications">Publications</a></label>
+      <label class="glass-nav__option" for="nav-6"><input class="glass-nav__input" type="radio" name="nav" value="gallery" c-option="6" id="nav-6"><a href="#gallery">Gallery</a></label>
+    </fieldset>
+  </GlassEffect>
 
   <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
     <span class="hamburger-box"><span class="hamburger-inner"></span></span>

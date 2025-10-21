@@ -1,4 +1,6 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
+
 import { onMounted, watch, inject } from 'vue';
 
 // 注入从父组件 App.vue 提供的 'currentTheme' 响应式变量

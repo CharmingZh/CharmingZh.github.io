@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { ref, onMounted, onUnmounted, watch, inject } from 'vue';
 import { Renderer, Camera, Transform, Mesh, Plane, Program } from 'ogl';
 
 // 定义组件的 props，允许外部传入圆角和扭曲强度等参数
@@ -44,27 +44,18 @@ const isIOS = () => {
   return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 };
 
-const isSafari = () => {
-  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-};
-
 const supportsWebGL = () => {
   try {
     const canvas = document.createElement('canvas');
     return !!(window.WebGLRenderingContext && canvas.getContext('webgl'));
-  } catch (e) {
+  } catch {
     return false;
   }
 };
 
 // 检查是否应该使用WebGL版本
 const shouldUseWebGL = () => {
-  // 如果是经典模式，强制使用CSS-only
-  if (glassMode?.value === 'classic') {
-    return false;
-  }
-  // 高级模式下，检查WebGL支持和平台兼容性
-  return supportsWebGL() && !isMacOS() && !isIOS();
+  return true; // 强制使用 WebGL
 };
 
 // ===================================================================
@@ -120,59 +111,36 @@ const fragmentShader = /* glsl */ `
   uniform vec2 uMouse;
   uniform float uDistortion;
 
-  // 2D 随机/哈希函数
-  float random(vec2 st) {
-    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-  }
-
-  // 2D 噪声函数 (Value Noise)
-  float noise(vec2 st) {
-    vec2 i = floor(st);
-    vec2 f = fract(st);
-    float a = random(i);
-    float b = random(i + vec2(1.0, 0.0));
-    float c = random(i + vec2(0.0, 1.0));
-    float d = random(i + vec2(1.0, 1.0));
-    vec2 u = f * f * (3.0 - 2.0 * f);
-    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.y * u.x;
-  }
-
   void main() {
-    // 将屏幕像素坐标转换为 [0, 1] 范围
-    vec2 screenUv = gl_FragCoord.xy / uResolution.xy;
+    vec2 uv = gl_FragCoord.xy / uResolution.xy;
 
-    // --- 非均匀散射 (核心) ---
-    // 1. 创建一个动态的、流动的噪声场作为扭曲图
-    vec2 noiseUv = screenUv * vec2(1.0, uResolution.y / uResolution.x) * 5.0;
-    float noiseValue = noise(noiseUv + uTime * 0.1);
+    // 创建液态波浪效果 - 多个波浪叠加
+    float wave1 = sin(uv.x * 6.28 * 2.0 + uTime * 0.5) * 0.05;
+    float wave2 = cos(uv.y * 6.28 * 3.0 + uTime * 0.3) * 0.05;
+    float wave3 = sin((uv.x + uv.y) * 6.28 * 1.5 + uTime * 0.2) * 0.03;
 
-    // 2. 使用噪声来置换 (扭曲) 背景纹理的采样坐标
-    vec2 distortedUv = screenUv + vec2(noiseValue - 0.5) * uDistortion;
+    vec2 distortedUv = uv + vec2(wave1 + wave3, wave2 + wave3) * uDistortion;
 
-    // 3. 采样被扭曲后的背景
     vec4 background = texture2D(tBackground, distortedUv);
 
-    // --- 交互式高光 ---
-    float distToMouse = distance(screenUv, uMouse);
-    float highlight = 0.4 * pow(1.0 - clamp(distToMouse, 0.0, 1.0), 8.0);
+    // 添加鼠标交互高光
+    float distToMouse = distance(uv, uMouse);
+    float highlight = 0.3 * pow(1.0 - clamp(distToMouse, 0.0, 1.0), 4.0);
 
-    // --- 边缘光晕 ---
+    // 边缘光晕
     float edgeFactor = smoothstep(0.0, 0.1, vUv.x) * (1.0 - smoothstep(0.9, 1.0, vUv.x)) *
                      smoothstep(0.0, 0.1, vUv.y) * (1.0 - smoothstep(0.9, 1.0, vUv.y));
-    float edgeHighlight = 0.5 * pow(1.0 - edgeFactor, 10.0);
+    float edgeHighlight = 0.2 * pow(1.0 - edgeFactor, 8.0);
 
-    // 最终颜色混合
     vec3 finalColor = background.rgb + highlight + edgeHighlight;
 
-    gl_FragColor = vec4(finalColor, background.a * 0.95);
+    gl_FragColor = vec4(finalColor, background.a * 0.9);
   }
 `;
 
 // --- WebGL 初始化和渲染循环 ---
 
 onMounted(() => {
-  const container = containerRef.value;
-
   // 根据平台选择渲染方式
   if (shouldUseWebGL()) {
     // WebGL版本 - 为桌面浏览器使用
@@ -208,11 +176,14 @@ const initializeWebGL = () => {
       canvas2d.width = window.innerWidth;
       canvas2d.height = window.innerHeight;
 
-      // 绘制 body 的背景渐变
-      ctx.fillStyle = bodyStyle.backgroundColor;
-      ctx.fillRect(0, 0, canvas2d.width, canvas2d.height);
-
-      const texture = new window.ogl.Texture(gl, { image: canvas2d });
+    // 绘制 body 的背景渐变
+    const bgColor = bodyStyle.backgroundColor;
+    const gradient = ctx.createLinearGradient(0, 0, canvas2d.width, canvas2d.height);
+    gradient.addColorStop(0, bgColor);
+    gradient.addColorStop(0.5, 'rgba(255,255,255,0.1)');
+    gradient.addColorStop(1, bgColor);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas2d.width, canvas2d.height);      const texture = new window.ogl.Texture(gl, { image: canvas2d });
       resolve(texture);
     });
 
@@ -371,8 +342,9 @@ watch(() => props.distortion, (newValue) => {
 
 <style scoped>
 .glass-container {
-  position: relative;
-  overflow: hidden;
+  position: sticky;
+  top: clamp(16px, 4vw, 36px);
+  z-index: 120;
   border-radius: v-bind(borderRadius);
 }
 
@@ -403,31 +375,30 @@ canvas {
    macOS/iOS优化的CSS-only玻璃效果
    =================================================================== */
 .glass-container.glass-effect-css-only {
-  /* 使用现代CSS backdrop-filter创建高质量玻璃效果 */
-  backdrop-filter: blur(20px) saturate(180%) contrast(120%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(120%);
+  /* 移除 backdrop-filter，使用纯渐变 */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 
-  /* 背景渐变 - 模拟液体玻璃的折射效果 */
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 25%,
-    rgba(255, 255, 255, 0.02) 50%,
-    rgba(255, 255, 255, 0.08) 75%,
-    rgba(255, 255, 255, 0.12) 100%
-  );
+  /* 背景渐变 - 匹配原有导航栏样式 */
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 30%, rgba(255, 255, 255, 0.12) 70%, rgba(255, 255, 255, 0.18) 100%),
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+  background-size: 200% 200%, 100% 100%, 100% 100%;
 
   /* 边框效果 */
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  /* 移除 box-shadow，使用导航栏的 */
 
   /* 确保在macOS上正确渲染 */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   will-change: transform;
+}
+
+.glass-container.glass-effect-css-only .content-wrapper .glass-nav {
+  background-color: var(--nav-surface-color);
 }
 
 /* 微妙的闪烁动画 - 模拟液体流动效果 */
@@ -461,15 +432,12 @@ canvas {
 
 /* 深色模式优化 */
 [data-theme="dark"] .glass-container.glass-effect-css-only {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(255, 255, 255, 0.03) 25%,
-    rgba(255, 255, 255, 0.01) 50%,
-    rgba(255, 255, 255, 0.05) 75%,
-    rgba(255, 255, 255, 0.09) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.08) 70%, rgba(255, 255, 255, 0.15) 100%),
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+  background-size: 200% 200%, 100% 100%, 100% 100%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* 浅色模式优化 */
@@ -483,7 +451,7 @@ canvas {
     rgba(0, 0, 0, 0.06) 100%
   );
   border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(16px) saturate(150%) contrast(110%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%) contrast(110%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 </style>
