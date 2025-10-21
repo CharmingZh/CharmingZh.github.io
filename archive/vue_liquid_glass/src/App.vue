@@ -10,16 +10,8 @@ import GallerySection from './components/GallerySection.vue';
 import Footer from './components/Footer.vue';
 
 // ===================================================================
-// 1. 全局玻璃效果配置 (方便统一管理)
+// 1. 全局配置 (导航栏布局模式)
 // ===================================================================
-const glassProps = {
-  displacementScale: 200,
-  blurAmount: 0.2,
-  aberrationIntensity: 6,
-  elasticity: 0.25,
-  cornerRadius: 25,
-  mode: 'standard', // <--- 确保这一行是 'standard'
-};
 
 // 导航栏布局模式：'flow' 表示随内容滚动，'fixed' 表示悬浮在顶部
 /** @type {'flow' | 'fixed'} */
@@ -195,23 +187,28 @@ onMounted(() => {
     navContainer.addEventListener('change', handleNavChange);
     cleanupCallbacks.push(() => navContainer.removeEventListener('change', handleNavChange));
 
-    const trackPrevious = () => {
-      let previousValue = navContainer.querySelector('input:checked')?.getAttribute("c-option");
-      if (previousValue) navContainer.setAttribute("c-previous", previousValue);
-      const handlePreviousChange = () => {
-        const currentChecked = navContainer.querySelector('input:checked');
-        if (currentChecked) {
-          const currentVal = currentChecked.getAttribute("c-option");
-          if (currentVal !== previousValue) {
-            navContainer.setAttribute("c-previous", previousValue ?? "");
-            previousValue = currentVal;
+    // 液体玻璃切换器逻辑
+    const trackPrevious = (el) => {
+      const radios = el.querySelectorAll('input[type="radio"]');
+      let previousValue = null;
+
+      // 初始化时设置当前选中项
+      const initiallyChecked = el.querySelector('input[type="radio"]:checked');
+      if (initiallyChecked) {
+        previousValue = initiallyChecked.getAttribute("c-option");
+        el.setAttribute('c-previous', previousValue);
+      }
+
+      radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          if (radio.checked) {
+            el.setAttribute('c-previous', previousValue ?? "");
+            previousValue = radio.getAttribute("c-option");
           }
-        }
-      };
-      navContainer.addEventListener("change", handlePreviousChange, true);
-      cleanupCallbacks.push(() => navContainer.removeEventListener("change", handlePreviousChange, true));
+        });
+      });
     };
-    trackPrevious();
+    trackPrevious(navContainer);
 
     const navInputs = Array.from(navContainer.querySelectorAll('.glass-nav__input'));
     const navInputMap = new Map(navInputs.map((input) => [input.value, input]));
@@ -364,18 +361,37 @@ onMounted(() => {
       }
     };
     updatePubSlider();
-    pubNavContainer.addEventListener('click', (e) => {
-      const button = e.target.closest('.pub-year-btn');
-      if (button) {
-        const selectedYear = button.dataset.year;
-        pubNavContainer.querySelector('.active')?.classList.remove('active');
-        button.classList.add('active');
-        pubListsContainer.querySelectorAll('.pub-list').forEach(list => {
-          list.classList.toggle('active', list.dataset.year === selectedYear);
-        });
-        setTimeout(updatePubSlider, 0);
+
+    // 液体玻璃切换器逻辑
+    const trackPubPrevious = (el) => {
+      let previousValue = null;
+
+      // 初始化时设置当前激活项
+      const initiallyActive = el.querySelector('.pub-year-btn.active');
+      if (initiallyActive) {
+        previousValue = initiallyActive.getAttribute("c-option");
+        el.setAttribute('c-previous', previousValue);
       }
-    });
+
+      el.addEventListener('click', (e) => {
+        const button = e.target.closest('.pub-year-btn');
+        if (button) {
+          const selectedYear = button.getAttribute("c-option");
+          if (selectedYear !== previousValue) {
+            el.setAttribute('c-previous', previousValue ?? "");
+            previousValue = selectedYear;
+          }
+          pubNavContainer.querySelector('.active')?.classList.remove('active');
+          button.classList.add('active');
+          pubListsContainer.querySelectorAll('.pub-list').forEach(list => {
+            list.classList.toggle('active', list.dataset.year === selectedYear);
+          });
+          setTimeout(updatePubSlider, 0);
+        }
+      });
+    };
+    trackPubPrevious(pubNavContainer);
+
     window.addEventListener('resize', () => {
       updatePubSlider();
     });

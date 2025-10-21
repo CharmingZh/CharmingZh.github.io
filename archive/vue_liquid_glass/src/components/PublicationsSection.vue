@@ -2,12 +2,12 @@
   <section id="publications" class="content-section">
     <h2 class="section-title">Publications</h2>
     <div class="pub-years">
-  <button class="pub-year-btn active" data-year="2026">2026</button>
-  <button class="pub-year-btn" data-year="2025">2025</button>
-      <button class="pub-year-btn" data-year="2024">2024</button>
-      <button class="pub-year-btn" data-year="2023">2023</button>
-<!--      <button class="pub-year-btn" data-year="2022">2022</button>-->
-      <button class="pub-year-btn" data-year="2020">2020</button>
+  <button class="pub-year-btn active" data-year="2026" c-option="2026">2026</button>
+  <button class="pub-year-btn" data-year="2025" c-option="2025">2025</button>
+      <button class="pub-year-btn" data-year="2024" c-option="2024">2024</button>
+      <button class="pub-year-btn" data-year="2023" c-option="2023">2023</button>
+<!--      <button class="pub-year-btn" data-year="2022" c-option="2022">2022</button>-->
+      <button class="pub-year-btn" data-year="2020" c-option="2020">2020</button>
     </div>
     <div class="pub-lists-container glass-card">
   <div id="publications-list-2026" class="pub-list active" data-year="2026">
