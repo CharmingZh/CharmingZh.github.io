@@ -514,6 +514,10 @@ onMounted(() => {
   <!-- 移动端弹出导航窗口 -->
   <div v-if="mobileNavOpen" class="mobile-nav-popup" @click="closeMobileNav">
     <div class="popup-content apple-glass" @click.stop>
+      <div class="popup-header">
+        <div class="popup-title">Navigation</div>
+        <div class="popup-decoration"></div>
+      </div>
       <button @click="navigateTo('about')" class="popup-nav-btn">About</button>
       <button @click="navigateTo('education')" class="popup-nav-btn">Education</button>
       <button @click="navigateTo('work')" class="popup-nav-btn">Work</button>

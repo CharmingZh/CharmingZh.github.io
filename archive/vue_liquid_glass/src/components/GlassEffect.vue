@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch, inject } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { Renderer, Camera, Transform, Mesh, Plane, Program } from 'ogl';
 
 // 定义组件的 props，允许外部传入圆角和扭曲强度等参数
@@ -21,7 +21,7 @@ const props = defineProps({
 });
 
 // 注入全局状态
-const glassMode = inject('glassMode');
+// const glassMode = inject('glassMode');
 
 const containerRef = ref(null);
 const canvasWrapperRef = ref(null);
@@ -34,24 +34,24 @@ let isVisible = true; // 可见性标志
 let cleanupFunctions = []; // 清理函数数组
 
 // ===================================================================
-// macOS/iOS检测和兼容性处理
+// macOS/iOS检测和兼容性处理 (暂时注释掉)
 // ===================================================================
-const isMacOS = () => {
-  return navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-};
+// const isMacOS = () => {
+//   return navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+// };
 
-const isIOS = () => {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-};
+// const isIOS = () => {
+//   return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+// };
 
-const supportsWebGL = () => {
-  try {
-    const canvas = document.createElement('canvas');
-    return !!(window.WebGLRenderingContext && canvas.getContext('webgl'));
-  } catch {
-    return false;
-  }
-};
+// const supportsWebGL = () => {
+//   try {
+//     const canvas = document.createElement('canvas');
+//     return !!(window.WebGLRenderingContext && canvas.getContext('webgl'));
+//   } catch {
+//     return false;
+//   }
+// };
 
 // 检查是否应该使用WebGL版本
 const shouldUseWebGL = () => {
