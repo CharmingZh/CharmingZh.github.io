@@ -19,6 +19,24 @@ import GlassEffect from './components/GlassEffect.vue';
 const NAV_LAYOUT_MODE = 'flow';
 
 // ===================================================================
+// 2. 移动端导航状态
+// ===================================================================
+const mobileNavOpen = ref(false);
+
+const toggleMobileNav = () => {
+  mobileNavOpen.value = !mobileNavOpen.value;
+};
+
+const closeMobileNav = () => {
+  mobileNavOpen.value = false;
+};
+
+const navigateTo = (section) => {
+  closeMobileNav();
+  document.querySelector(`#${section}`)?.scrollIntoView({ behavior: 'smooth' });
+};
+
+// ===================================================================
 // 2. 动态主题管理 - 核心逻辑
 // ===================================================================
 const applyTheme = (theme) => {
@@ -472,7 +490,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <GlassEffect borderRadius="99em" distortion="0.02" padding="0">
+  <GlassEffect class="desktop-nav" borderRadius="99em" distortion="0.02" padding="0">
     <fieldset class="glass-nav" id="glass-nav-container">
       <legend class="glass-nav__legend">Main Navigation</legend>
       <label class="glass-nav__option" for="nav-1"><input class="glass-nav__input" type="radio" name="nav" value="about" c-option="1" id="nav-1" checked><a href="#about">About</a></label>
@@ -484,18 +502,25 @@ onMounted(() => {
     </fieldset>
   </GlassEffect>
 
-  <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-    <span class="hamburger-box"><span class="hamburger-inner"></span></span>
-  </button>
-  <div class="mobile-nav-menu" id="mobile-nav-menu">
-    <nav>
-      <a href="#about" class="mobile-nav-link">About</a>
-      <a href="#education" class="mobile-nav-link">Education</a>
-      <a href="#work" class="mobile-nav-link">Work</a>
-      <a href="#research" class="mobile-nav-link">Research</a>
-      <a href="#publications" class="mobile-nav-link">Publications</a>
-      <a href="#gallery" class="mobile-nav-link">Gallery</a>
-    </nav>
+  <!-- 移动端中央导航按钮 -->
+  <GlassEffect class="mobile-nav-button" borderRadius="20px" distortion="0.02" padding="0">
+    <button @click="toggleMobileNav" class="central-nav-btn" aria-label="Open navigation menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </GlassEffect>
+
+  <!-- 移动端弹出导航窗口 -->
+  <div v-if="mobileNavOpen" class="mobile-nav-popup" @click="closeMobileNav">
+    <div class="popup-content apple-glass" @click.stop>
+      <button @click="navigateTo('about')" class="popup-nav-btn">About</button>
+      <button @click="navigateTo('education')" class="popup-nav-btn">Education</button>
+      <button @click="navigateTo('work')" class="popup-nav-btn">Work</button>
+      <button @click="navigateTo('research')" class="popup-nav-btn">Research</button>
+      <button @click="navigateTo('publications')" class="popup-nav-btn">Publications</button>
+      <button @click="navigateTo('gallery')" class="popup-nav-btn">Gallery</button>
+    </div>
   </div>
 
   <div class="container">
