@@ -271,6 +271,45 @@ a:hover { opacity: 0.8; }
 /* ===== Safari SVG滤镜兼容性修复 ===== */
 /* ============================================= */
 
+/* iOS Safari 特殊检测和优化 */
+@supports (-webkit-touch-callout: none) {
+  .glass-nav,
+  .pub-years,
+  .glass-card,
+  .research-card-scroll,
+  .research-card-scroll .glass-card,
+  .infinite-scroll .glass-card,
+  .gallery-card,
+  .frosted-glass,
+  [data-glass-mode="classic"] .glass-nav,
+  [data-glass-mode="classic"] .pub-years,
+  [data-glass-mode="classic"] .glass-card {
+    /* iOS Safari 强制启用玻璃特效 */
+    backdrop-filter: blur(20px) saturate(180%) contrast(1.2) brightness(1.1) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(1.2) brightness(1.1) !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    /* 确保有可见的背景 */
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* iOS 深色模式优化 */
+  [data-theme="dark"] .glass-nav,
+  [data-theme="dark"] .pub-years,
+  [data-theme="dark"] .glass-card,
+  [data-theme="dark"] .research-card-scroll,
+  [data-theme="dark"] .research-card-scroll .glass-card,
+  [data-theme="dark"] .infinite-scroll .glass-card,
+  [data-theme="dark"] .gallery-card,
+  [data-theme="dark"] .frosted-glass {
+    backdrop-filter: blur(20px) saturate(180%) contrast(1.2) brightness(0.9) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(1.2) brightness(0.9) !important;
+    background: rgba(0, 0, 0, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
 /* Safari检测 - 移除所有SVG滤镜依赖 */
 @supports (-webkit-hyphens: none) and (backdrop-filter: blur(8px)) {
   .glass-nav,
@@ -291,41 +330,48 @@ a:hover { opacity: 0.8; }
   }
 }
 
-/* iOS Safari特殊处理 */
+
+/* iOS Safari 特殊优化 - 改善文字可读性 */
 @supports (-webkit-touch-callout: none) {
-  * {
-    backdrop-filter: blur(16px) saturate(2.2) contrast(1.4) brightness(1.1) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(2.2) contrast(1.4) brightness(1.1) !important;
-    filter: none !important;
-    -webkit-filter: none !important;
+  .glass-card {
+    /* 增强背景对比度 */
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  [data-theme="dark"] .glass-card {
+    background: rgba(0, 0, 0, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* 确保文字有足够的对比度 */
+  .glass-card * {
+    color: var(--c-content) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  [data-theme="dark"] .glass-card * {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* 特别针对标题和重要文字 */
+  .glass-card h1, .glass-card h2, .glass-card h3,
+  .glass-card .section-title,
+  .glass-card .work-title,
+  .glass-card .edu-institution {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+    font-weight: 600 !important;
+  }
+
+  [data-theme="dark"] .glass-card h1,
+  [data-theme="dark"] .glass-card h2,
+  [data-theme="dark"] .glass-card h3,
+  [data-theme="dark"] .glass-card .section-title,
+  [data-theme="dark"] .glass-card .work-title,
+  [data-theme="dark"] .glass-card .edu-institution {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
   }
 }
-
-/* ============================================= */
-/* ===== macOS兼容性优化 - CSS-only液态玻璃 ===== */
-/* ============================================= */
-
-/* Safari检测和回退 - 移除SVG滤镜依赖 */
-/* iOS Safari特殊优化 - 增强的液态玻璃效果 */
-@supports (-webkit-touch-callout: none) {
-  .glass-nav,
-  .pub-years,
-  .glass-card,
-  .research-card-scroll,
-  .research-card-scroll .glass-card,
-  .gallery-card,
-  .frosted-glass,
-  [data-glass-mode="classic"] .glass-nav,
-  [data-glass-mode="classic"] .pub-years,
-  [data-glass-mode="classic"] .glass-card {
-    backdrop-filter: var(--glass-surface-backdrop) !important;
-    -webkit-backdrop-filter: var(--glass-surface-backdrop) !important;
-    filter: none !important;
-    -webkit-filter: none !important;
-  }
-}
-
-/* 如果backdrop-filter完全不支持，则使用纯CSS渐变模拟液态玻璃 */
 @supports not (backdrop-filter: blur(8px)) {
   .glass-nav {
     background:
@@ -561,6 +607,11 @@ a:hover { opacity: 0.8; }
       0 4px 12px rgba(0, 0, 0, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.3),
       inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+    /* iOS Safari 兼容性优化 */
+    appearance: none;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+    z-index: 1;
   }
   
   .popup-nav-btn::before {
@@ -624,6 +675,11 @@ a:hover { opacity: 0.8; }
       0 4px 12px rgba(0, 0, 0, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
       inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+    /* iOS Safari 兼容性优化 */
+    appearance: none;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+    z-index: 1;
   }
   
   [data-theme="dark"] .popup-nav-btn:hover {
