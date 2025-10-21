@@ -11,7 +11,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue';
-import { Renderer, Camera, Transform, Mesh, Plane, Program } from 'ogl';
+import { Renderer, Camera, Transform, Mesh, Plane, Program, Texture } from 'ogl';
 
 // 定义组件的 props，允许外部传入圆角和扭曲强度等参数
 const props = defineProps({
@@ -44,18 +44,28 @@ let cleanupFunctions = []; // 清理函数数组
 //   return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 // };
 
-// const supportsWebGL = () => {
-//   try {
-//     const canvas = document.createElement('canvas');
-//     return !!(window.WebGLRenderingContext && canvas.getContext('webgl'));
-//   } catch {
-//     return false;
-//   }
-// };
+const supportsWebGL = () => {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+  } catch {
+    return false;
+  }
+};
 
-// 检查是否应该使用WebGL版本
+const supportsBackdropFilter = () => {
+  if (typeof CSS === 'undefined' || typeof CSS.supports !== 'function') {
+    return false;
+  }
+  return CSS.supports('backdrop-filter', 'blur(24px)') || CSS.supports('-webkit-backdrop-filter', 'blur(24px)');
+};
+
+// 优先使用原生backdrop-filter效果，缺失时再回退到WebGL
 const shouldUseWebGL = () => {
-  return true; // 强制使用 WebGL
+  if (supportsBackdropFilter()) {
+    return false;
+  }
+  return supportsWebGL();
 };
 
 // ===================================================================
@@ -183,7 +193,8 @@ const initializeWebGL = () => {
     gradient.addColorStop(0.5, 'rgba(255,255,255,0.1)');
     gradient.addColorStop(1, bgColor);
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas2d.width, canvas2d.height);      const texture = new window.ogl.Texture(gl, { image: canvas2d });
+    ctx.fillRect(0, 0, canvas2d.width, canvas2d.height);
+    const texture = new Texture(gl, { image: canvas2d });
       resolve(texture);
     });
 
@@ -346,6 +357,18 @@ watch(() => props.distortion, (newValue) => {
   top: clamp(16px, 4vw, 36px);
   z-index: 120;
   border-radius: v-bind(borderRadius);
+  isolation: isolate;
+}
+
+.glass-container.desktop-nav {
+  width: max-content;
+  margin: 0 auto;
+}
+
+.glass-container.desktop-nav .content-wrapper {
+  display: inline-flex;
+  width: auto;
+  padding: v-bind(padding);
 }
 
 .canvas-wrapper {
@@ -355,6 +378,9 @@ watch(() => props.distortion, (newValue) => {
   width: 100%;
   height: 100%;
   z-index: 1;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
 }
 
 canvas {
@@ -374,31 +400,11 @@ canvas {
 /* ===================================================================
    macOS/iOS优化的CSS-only玻璃效果
    =================================================================== */
+
 .glass-container.glass-effect-css-only {
-  /* 移除 backdrop-filter，使用纯渐变 */
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-
-  /* 背景渐变 - 匹配原有导航栏样式 */
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 30%, rgba(255, 255, 255, 0.12) 70%, rgba(255, 255, 255, 0.18) 100%),
-    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
-  background-size: 200% 200%, 100% 100%, 100% 100%;
-
-  /* 边框效果 */
-  border: 1px solid rgba(255, 255, 255, 0.3);
-
-  /* 移除 box-shadow，使用导航栏的 */
-
-  /* 确保在macOS上正确渲染 */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-.glass-container.glass-effect-css-only .content-wrapper .glass-nav {
-  background-color: var(--nav-surface-color);
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 
 /* 微妙的闪烁动画 - 模拟液体流动效果 */
@@ -422,36 +428,15 @@ canvas {
 }
 
 /* 针对不同macOS版本的优化 */
-@supports (-webkit-backdrop-filter: blur(20px)) {
-  .glass-container.glass-effect-css-only {
-    /* Safari优化的backdrop-filter */
-    backdrop-filter: blur(24px) saturate(200%) contrast(130%) brightness(1.1);
-    -webkit-backdrop-filter: blur(24px) saturate(200%) contrast(130%) brightness(1.1);
-  }
-}
-
 /* 深色模式优化 */
 [data-theme="dark"] .glass-container.glass-effect-css-only {
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.08) 70%, rgba(255, 255, 255, 0.15) 100%),
-    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
-  background-size: 200% 200%, 100% 100%, 100% 100%;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: none;
+  border: none;
 }
 
 /* 浅色模式优化 */
 [data-theme="light"] .glass-container.glass-effect-css-only {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.05) 0%,
-    rgba(0, 0, 0, 0.02) 25%,
-    rgba(0, 0, 0, 0.01) 50%,
-    rgba(0, 0, 0, 0.03) 75%,
-    rgba(0, 0, 0, 0.06) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  background: none;
+  border: none;
 }
 </style>

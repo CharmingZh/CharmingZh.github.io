@@ -19,6 +19,7 @@ export default defineConfig({
     },
   },
   build: {
+    assetsInlineLimit: 0,
     // 启用代码分割
     rollupOptions: {
       output: {

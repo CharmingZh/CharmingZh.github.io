@@ -314,6 +314,19 @@ onMounted(() => {
       }
     };
 
+    const runInitialNavSync = () => {
+      updateSlider();
+      applyActiveSection();
+      requestAnimationFrame(() => {
+        updateSlider();
+        applyActiveSection();
+        requestAnimationFrame(() => {
+          updateSlider();
+          applyActiveSection();
+        });
+      });
+    };
+
     let scrollTicking = false;
     const handleScroll = () => {
       if (scrollTicking) return;
@@ -344,8 +357,12 @@ onMounted(() => {
     navContainer.addEventListener('click', handleNavClick);
     cleanupCallbacks.push(() => navContainer.removeEventListener('click', handleNavClick));
 
-    updateSlider();
-    applyActiveSection();
+    runInitialNavSync();
+    if (document.fonts && 'ready' in document.fonts) {
+      document.fonts.ready.then(runInitialNavSync).catch(() => {});
+    }
+    window.addEventListener('load', runInitialNavSync);
+    cleanupCallbacks.push(() => window.removeEventListener('load', runInitialNavSync));
   }
 
   // --- 3. 移动端导航栏开关 ---
@@ -372,14 +389,56 @@ onMounted(() => {
   const pubListsContainer = document.querySelector('.pub-lists-container');
   if (pubNavContainer && pubListsContainer) {
     // 移除 setActiveListHeight 函数及其相关调用，让CSS处理高度变化
-    const updatePubSlider = () => {
-      const activeButton = pubNavContainer.querySelector('.pub-year-btn.active');
-      if (activeButton) {
-        pubNavContainer.style.setProperty('--pub-slider-width', `${activeButton.offsetWidth}px`);
-        pubNavContainer.style.setProperty('--pub-slider-translate-x', `${activeButton.offsetLeft}px`);
+    let pubSliderState = { width: 0, left: 0 };
+    let pubSliderAnimationTimer = 0;
+
+    const triggerPubSliderBounce = () => {
+      if (pubSliderAnimationTimer) {
+        window.clearTimeout(pubSliderAnimationTimer);
+        pubSliderAnimationTimer = 0;
       }
+      pubNavContainer.classList.remove('is-animating');
+      // 强制重绘以重新触发动画
+      void pubNavContainer.offsetWidth;
+      pubNavContainer.classList.add('is-animating');
+      pubSliderAnimationTimer = window.setTimeout(() => {
+        pubNavContainer.classList.remove('is-animating');
+        pubSliderAnimationTimer = 0;
+      }, 680);
     };
-    updatePubSlider();
+
+    const updatePubSlider = (shouldAnimate = false) => {
+      const activeButton = pubNavContainer.querySelector('.pub-year-btn.active');
+      if (!activeButton) return;
+
+      const nextWidth = activeButton.offsetWidth;
+      const nextLeft = activeButton.offsetLeft;
+      const stateChanged = nextWidth !== pubSliderState.width || nextLeft !== pubSliderState.left;
+
+      if (!stateChanged && pubSliderState.width !== 0) return;
+
+      pubNavContainer.style.setProperty('--pub-slider-width', `${nextWidth}px`);
+      pubNavContainer.style.setProperty('--pub-slider-translate-x', `${nextLeft}px`);
+
+      if (shouldAnimate && pubSliderState.width !== 0) {
+        triggerPubSliderBounce();
+      }
+
+      pubSliderState = { width: nextWidth, left: nextLeft };
+    };
+    const runInitialPubSync = () => {
+      updatePubSlider(false);
+      requestAnimationFrame(() => {
+        updatePubSlider(false);
+        requestAnimationFrame(() => updatePubSlider(false));
+      });
+    };
+    runInitialPubSync();
+
+    if (document.fonts && 'ready' in document.fonts) {
+      document.fonts.ready.then(runInitialPubSync).catch(() => {});
+    }
+    window.addEventListener('load', runInitialPubSync);
 
     // 液体玻璃切换器逻辑
     const trackPubPrevious = (el) => {
@@ -405,14 +464,20 @@ onMounted(() => {
           pubListsContainer.querySelectorAll('.pub-list').forEach(list => {
             list.classList.toggle('active', list.dataset.year === selectedYear);
           });
-          setTimeout(updatePubSlider, 0);
+          setTimeout(() => updatePubSlider(true), 0);
         }
       });
     };
     trackPubPrevious(pubNavContainer);
-
-    window.addEventListener('resize', () => {
-      updatePubSlider();
+    const handlePubResize = () => updatePubSlider();
+    window.addEventListener('resize', handlePubResize);
+    cleanupCallbacks.push(() => {
+      if (pubSliderAnimationTimer) {
+        window.clearTimeout(pubSliderAnimationTimer);
+      }
+      pubNavContainer.classList.remove('is-animating');
+      window.removeEventListener('resize', handlePubResize);
+      window.removeEventListener('load', runInitialPubSync);
     });
   }
 

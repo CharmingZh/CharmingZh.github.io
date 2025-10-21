@@ -44,8 +44,21 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // Initial setup
-        updateSlider();
         trackPrevious();
+
+        const runInitialNavSync = () => {
+            updateSlider();
+            requestAnimationFrame(() => {
+                updateSlider();
+                requestAnimationFrame(updateSlider);
+            });
+        };
+
+        runInitialNavSync();
+        if (document.fonts && 'ready' in document.fonts) {
+            document.fonts.ready.then(runInitialNavSync).catch(() => {});
+        }
+        window.addEventListener('load', runInitialNavSync, { once: true });
 
         // Event listeners for navigation
         navContainer.addEventListener("change", updateSlider);
@@ -65,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Update slider on window resize
-        window.addEventListener('resize', updateSlider);
+    window.addEventListener('resize', updateSlider);
 
         // Intersection observer to update nav based on scroll position
         const sections = document.querySelectorAll('.content-section');
@@ -236,30 +249,64 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 7. SLIDING PILL FOR PUBLICATION TABS ---
     const pubNavContainer = document.querySelector('.pub-years');
     if (pubNavContainer) {
-        const updatePubSlider = () => {
-            const activeButton = pubNavContainer.querySelector('.pub-year-btn.active');
-            if (activeButton) {
-                const width = activeButton.offsetWidth;
-                const translateX = activeButton.offsetLeft;
-                pubNavContainer.style.setProperty('--pub-slider-width', `${width}px`);
-                pubNavContainer.style.setProperty('--pub-slider-translate-x', `${translateX}px`);
+        let pubSliderState = { width: 0, left: 0 };
+        let pubSliderAnimationTimer = null;
+
+        const triggerPubSliderBounce = () => {
+            if (pubSliderAnimationTimer) {
+                clearTimeout(pubSliderAnimationTimer);
+                pubSliderAnimationTimer = null;
             }
+            pubNavContainer.classList.remove('is-animating');
+            void pubNavContainer.offsetWidth;
+            pubNavContainer.classList.add('is-animating');
+            pubSliderAnimationTimer = window.setTimeout(() => {
+                pubNavContainer.classList.remove('is-animating');
+                pubSliderAnimationTimer = null;
+            }, 680);
         };
 
-        // Initial setup for the slider
-        updatePubSlider();
+        const updatePubSlider = (shouldAnimate = false) => {
+            const activeButton = pubNavContainer.querySelector('.pub-year-btn.active');
+            if (!activeButton) return;
+
+            const width = activeButton.offsetWidth;
+            const translateX = activeButton.offsetLeft;
+            const stateChanged = width !== pubSliderState.width || translateX !== pubSliderState.left;
+
+            if (!stateChanged && pubSliderState.width !== 0) return;
+
+            pubNavContainer.style.setProperty('--pub-slider-width', `${width}px`);
+            pubNavContainer.style.setProperty('--pub-slider-translate-x', `${translateX}px`);
+
+            if (shouldAnimate && pubSliderState.width !== 0) {
+                triggerPubSliderBounce();
+            }
+
+            pubSliderState = { width, left: translateX };
+        };
+
+        const runInitialPubSync = () => {
+            updatePubSlider(false);
+            requestAnimationFrame(() => {
+                updatePubSlider(false);
+                requestAnimationFrame(() => updatePubSlider(false));
+            });
+        };
+
+        runInitialPubSync();
+        if (document.fonts && 'ready' in document.fonts) {
+            document.fonts.ready.then(runInitialPubSync).catch(() => {});
+        }
+        window.addEventListener('load', runInitialPubSync, { once: true });
 
         pubNavContainer.addEventListener('click', (e) => {
-            // The filtering logic above already handles the 'active' class change.
-            // We just need to update the slider's position after the click.
-            if (e.target.matches('.pub-year-btn')) {
-                // Use a tiny delay to ensure the .active class has been updated before calculating position
-                setTimeout(updatePubSlider, 0);
-            }
+            const button = e.target.closest('.pub-year-btn');
+            if (!button) return;
+            setTimeout(() => updatePubSlider(true), 0);
         });
 
-        // Update slider on window resize
-        window.addEventListener('resize', updatePubSlider);
+        window.addEventListener('resize', () => updatePubSlider());
     }
 
     /* PASTE THE NEW CODE BLOCK HERE */

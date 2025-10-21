@@ -29,10 +29,10 @@
   </section>
 </template>
 <script setup>
-import msuLogo from '../assets/education/msu-logo.svg'
-import bjfuLogo from '../assets/education/bjfu-logo.svg'
-import cumtbLogo from '../assets/education/cumtb-logo.svg'
-import nenuLogo from '../assets/education/nenu-logo.png'
+const msuLogo = new URL('../assets/education/msu-logo.svg', import.meta.url).href
+const bjfuLogo = new URL('../assets/education/bjfu-logo.svg', import.meta.url).href
+const cumtbLogo = new URL('../assets/education/cumtb-logo.svg', import.meta.url).href
+const nenuLogo = new URL('../assets/education/nenu-logo.png', import.meta.url).href
 
 const educationData = [
   {

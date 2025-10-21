@@ -32,6 +32,12 @@
 
     /* --- Define a separate overlay color for glass cards --- */
     --glass-card-overlay-color: rgba(74, 74, 74, 0.4);
+    --pub-nav-blur-amount: 18px;
+    --pub-slider-transition-duration: 520ms;
+    --pub-slider-transition-ease: cubic-bezier(0.33, 1, 0.68, 1);
+    --pub-slider-bounce-duration: 640ms;
+    --pub-slider-hover-scale-x: 1.03;
+    --pub-slider-hover-scale-y: 1.07;
 }
 
 [data-theme="light"] {
@@ -62,6 +68,7 @@
 
     /* --- Define a separate overlay color for glass cards --- */
     --glass-card-overlay-color: rgba(189, 189, 189, 0.5);
+    --pub-nav-blur-amount: 14px;
 }
 
 /* Basic document setup */
@@ -90,45 +97,10 @@ body::before {
             radial-gradient(circle at 15% 25%, var(--cool-color-1), transparent 50%),
             radial-gradient(circle at 85% 75%, var(--cool-color-2), transparent 50%);
     animation: moveBackground 10s ease-in-out infinite;
-    opacity: 0.6;
-}
-
-/* Keyframes for the background animation */
-@keyframes moveBackground {
-    0%   { background-position: 30% 50%; }
-    50%  { background-position: 70% 50%; }
-    100% { background-position: 30% 50%; }
-}
-
-/* General styles */
-a {
-    color: var(--accent-color-original);
-    text-decoration: none;
-    transition: opacity 0.3s ease;
-}
-a:hover {
-    opacity: 0.8;
-}
-.container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 120px 20px 50px;
-    position: relative;
-    z-index: 1;
-}
-
-
-/* ============================================= */
-/* ===== 2. NAVIGATION BAR STYLES            ===== */
-/* ============================================= */
-
-.glass-nav {
-    position: fixed;
-    z-index: 100;
     top: 20px;
     left: 50%;
     translate: -50% 0;
-    display: flex;
+        font-weight: 600;
     align-items: center;
     gap: 8px;
     height: 60px;
@@ -154,6 +126,12 @@ a:hover {
     position: relative;
     display: flex;
     justify-content: center;
+    @keyframes pubSliderBounce {
+        0% { scale: 1 1; }
+        32% { scale: 1.05 1.08; }
+        58% { scale: 0.985 0.95; }
+        100% { scale: 1 1; }
+    }
     align-items: center;
     height: 100%;
     box-sizing: border-box;
@@ -601,6 +579,7 @@ h2 {
     text-align: left;
 }
 
+
 .pub-years {
     position: relative;
     display: flex;
@@ -615,26 +594,53 @@ h2 {
     z-index: 1;
     --pub-slider-width: 80px;
     --pub-slider-translate-x: 0px;
+    --pub-slider-scale-x: 1;
+    --pub-slider-scale-y: 1;
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    backdrop-filter: blur(8px) url(#glass-nav-filter) saturate(var(--saturation));
-    -webkit-backdrop-filter: blur(8px) url(#glass-nav-filter) saturate(var(--saturation));
+    backdrop-filter: url(#glass-nav-filter) blur(var(--pub-nav-blur-amount)) saturate(var(--saturation));
+    -webkit-backdrop-filter: url(#glass-nav-filter) blur(var(--pub-nav-blur-amount)) saturate(var(--saturation));
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 1.8px 3px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -2px -2px 0 -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -0.3px -1px 4px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), inset -1.5px 2.5px 0 -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 1px 5px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 6px 16px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+    transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1);
 }
 
 .pub-years::after {
     content: "";
     position: absolute;
     left: 0;
-    top: 5px; /* Adjusted to match padding */
+    top: 5px;
     display: block;
-    height: calc(100% - 10px); /* Adjusted to match padding */
+    height: calc(100% - 10px);
     border-radius: 99em;
     background-color: color-mix(in srgb, var(--c-glass) 36%, transparent);
     z-index: -1;
     width: var(--pub-slider-width, 80px);
     translate: var(--pub-slider-translate-x, 0px) 0;
+    scale: var(--pub-slider-scale-x, 1) var(--pub-slider-scale-y, 1);
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent), inset 2px 1px 0 -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), inset -1.5px -1px 0 -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), inset 0 -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 0 3px 6px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    transition: translate 400ms cubic-bezier(0.65, 0, 0.35, 1), width 400ms cubic-bezier(0.65, 0, 0.35, 1);
+    transition:
+        width var(--pub-slider-transition-duration) var(--pub-slider-transition-ease),
+        translate var(--pub-slider-transition-duration) var(--pub-slider-transition-ease),
+        scale var(--pub-slider-transition-duration) var(--pub-slider-transition-ease),
+        box-shadow 380ms ease,
+        background-color 380ms ease;
+    transform-origin: center;
+    will-change: width, translate, scale;
+}
+
+.pub-years:hover::after {
+    scale: var(--pub-slider-hover-scale-x, 1.03) var(--pub-slider-hover-scale-y, 1.07);
+    transition-duration: 320ms;
+}
+
+.pub-years.is-animating::after {
+    animation: pubSliderBounce var(--pub-slider-bounce-duration) var(--pub-slider-transition-ease);
+}
+
+@keyframes pubSliderBounce {
+    0% { scale: 1 1; }
+    32% { scale: 1.05 1.08; }
+    58% { scale: 0.985 0.95; }
+    100% { scale: 1 1; }
 }
 
 .pub-year-btn {
