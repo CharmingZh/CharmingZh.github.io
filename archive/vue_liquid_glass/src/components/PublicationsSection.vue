@@ -2,8 +2,8 @@
   <section id="publications" class="content-section">
     <h2 class="section-title">Publications</h2>
     <div class="pub-years">
-  <button class="pub-year-btn active" data-year="2026" c-option="2026">2026</button>
-  <button class="pub-year-btn" data-year="2025" c-option="2025">2025</button>
+      <button class="pub-year-btn active" data-year="2026" c-option="2026">2026</button>
+      <button class="pub-year-btn active" data-year="2025" c-option="2025">2025</button>
       <button class="pub-year-btn" data-year="2024" c-option="2024">2024</button>
       <button class="pub-year-btn" data-year="2023" c-option="2023">2023</button>
 <!--      <button class="pub-year-btn" data-year="2022" c-option="2022">2022</button>-->
@@ -12,6 +12,18 @@
     <div class="pub-lists-container glass-card">
   <div id="publications-list-2026" class="pub-list active" data-year="2026">
         <ul>
+          <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span><span class="pub-tag tag-review">Under Review</span></div>
+            <p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2025.112820" target="_blank" rel="noopener noreferrer">"Robust Laser-Line Detection for Real-time Woody Breast Assessment Using Synthetic Data and Deep Learning."</a></p>
+            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
+            <p class="pub-venue">AI in Agriculture - 2026 - AI Systems & Integrative Approaches</p>
+          </li>
+          <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span><span class="pub-tag tag-review">Under Review</span></div>
+            <p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2025.112820" target="_blank" rel="noopener noreferrer">"Multiview 3D Geometry Modeling and Deep Feature Fusion for Real-time Postharvest Apple Quality Grading."</a></p>
+            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
+            <p class="pub-venue">AI in Agriculture - 2026 - Food, Postharvest & Supply Chains</p>
+          </li>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span><span class="pub-tag tag-review">Under Review</span></div>
             <p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2025.112820" target="_blank" rel="noopener noreferrer">"A New Dual-Line Laser System for Real-Time 3D Reconstruction and Grading of Woody Breast Chicken Fillets"</a></p>
@@ -31,7 +43,7 @@
           </li>
         </ul>
       </div>
-  <div id="publications-list-2025" class="pub-list" data-year="2025">
+  <div id="publications-list-2025" class="pub-list active" data-year="2025">
         <ul>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-revision">In Revision</span></div>
@@ -68,7 +80,7 @@
           </li>
         </ul>
       </div>
-      <div id="publications-list-2024" class="pub-list" data-year="2024">
+  <div id="publications-list-2024" class="pub-list" data-year="2024">
         <ul>
           <li class="pub-card"><div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div><p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2024.112133" target="_blank" rel="noopener noreferrer">"Online Sorting of Surface Defective Walnuts based on Deep Learning."</a></p><p class="authors">Jingwei Wang, <span class="corr-author">Xiaopeng Bai</span>, <span class="corr-author">Daochun Xu</span>, Wenbin Li, Siyuan Tong, <span class="me"><b>Jiaming Zhang</b></span></p><p class="pub-venue">Journal of Food Engineering</p></li>
           <li class="pub-card"><div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div><p class="pub-title"><a href="https://doi.org/10.1016/j.jclepro.2024.142038" target="_blank" rel="noopener noreferrer">"Development of a 3D Point Cloud Reconstruction-Based Apple Canopy Liquid Sedimentation Model."</a></p><p class="authors">Chongchong Chen, Yalan Jia, <span class="me"><b>Jiaming Zhang</b></span>, Linsen Yang, Feng Kang, <span class="corr-author">Yaxiong Wang</span></p><p class="pub-venue">Journal of Cleaner Production</p></li>
@@ -96,7 +108,7 @@
 <!--          </li>-->
         </ul>
       </div>
-      <div id="publications-list-2023" class="pub-list" data-year="2023">
+  <div id="publications-list-2023" class="pub-list" data-year="2023">
         <ul>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
@@ -140,7 +152,7 @@
 <!--          </li>-->
 <!--        </ul>-->
 <!--      </div>-->
-      <div id="publications-list-2020" class="pub-list" data-year="2020">
+  <div id="publications-list-2020" class="pub-list" data-year="2020">
         <ul>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
