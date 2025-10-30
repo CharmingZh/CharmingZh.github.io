@@ -1,33 +1,32 @@
 name: Deploy vue_liquid_glass to Pages
 
-permissions:
-  contents: write          # 允许向仓库推送 docs/ 目录
-
 on:
   push:
     branches: [ main ]
     paths:
-      - 'archive/vue_liquid_glass/**'        # 子项目有变动时触发
-      - '.github/workflows/workflow.yml'     # 或者工作流文件本身改动
-  workflow_dispatch:                         # 手动触发
+      - 'archive/vue_liquid_glass/**'
+      - '.github/workflows/workflow.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
-    if: github.actor != 'github-actions[bot]'
+  build:
     runs-on: ubuntu-latest
-
     defaults:
       run:
-        working-directory: archive/vue_liquid_glass   # 只在子目录里操作
-
+        working-directory: archive/vue_liquid_glass
     steps:
-      # ───── 1. Checkout 源码 ─────
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      # ───── 2. 设置 Node 环境 ─────
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -35,55 +34,24 @@ jobs:
           cache: npm
           cache-dependency-path: archive/vue_liquid_glass/package-lock.json
 
-      # ───── 3. 安装依赖 & 构建 ─────
       - name: Install dependencies
         run: npm ci
 
       - name: Build project
         run: npm run build
 
-      # （可选）简要输出 dist 体积，方便排错
-      - name: Debug dist listing
-        run: |
-          echo "== dist listing =="
-          ls -l dist
-          echo "index.html size:"
-          stat -c%s dist/index.html || true
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: archive/vue_liquid_glass/dist
 
-      # ───── 4. 复制 dist → docs/archive/vue_liquid_glass ─────
-#      - name: Copy build to docs
-#        run: |
-#          DEST="../../docs/archive/vue_liquid_glass"
-#          rm -rf "$DEST"
-#          mkdir -p "$DEST"
-#          # -a 复制所有文件（含隐藏文件），保留权限/时间戳
-#          cp -a dist/. "$DEST/"
-#          # 关闭 GitHub Pages 的 Jekyll 处理
-#          touch ../../docs/.nojekyll
-      - name: Copy build to docs root
-        run: |
-          DEST="../../docs"
-          # 删除旧的整个 docs 目录（小心：如果里面有你不想删的东西，请先备份）
-          rm -rf "$DEST"
-          mkdir -p "$DEST"
-          # 把 dist 下所有文件复制进 docs 根目录
-          cp -a dist/. "$DEST/"
-          # 关掉 Jekyll
-          touch "$DEST/.nojekyll"
-
-      # ───── 5. 提交并推送（仅当 docs 有变动） ─────
-      - name: Commit & push docs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          cd ../..
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          # -f 强制添加，避免 .gitignore 把构建产物过滤掉
-          git add -f docs
-          if git diff --cached --quiet; then
-            echo "No docs changes."
-          else
-            git commit -m "ci: update vue_liquid_glass docs [skip ci]"
-            git push origin main
-          fi
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
