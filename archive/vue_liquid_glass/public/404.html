@@ -6,13 +6,26 @@
     <script>
       (function () {
         var locationRef = window.location;
-        var target = locationRef.pathname + (locationRef.search || '') + (locationRef.hash || '');
-        if (!target || target === '/' || target === '/index.html') {
+        if (locationRef.search && locationRef.search.indexOf('redirect=') !== -1) {
           return;
         }
-        if (target.charAt(0) !== '/') {
-          target = '/' + target;
+        var path = locationRef.pathname || '/';
+        var search = locationRef.search || '';
+        var hash = locationRef.hash || '';
+
+        if (!path || path === '/' || path === '/index.html') {
+          return;
         }
+
+        if (path.length > 1 && path.endsWith('/')) {
+          path = path.slice(0, -1);
+        }
+
+        var target = path + search + hash;
+        if (target.charAt(0) === '/') {
+          target = target.slice(1);
+        }
+
         var redirectURL = locationRef.protocol + '//' + locationRef.host + '/?redirect=' + encodeURIComponent(target);
         locationRef.replace(redirectURL);
       })();

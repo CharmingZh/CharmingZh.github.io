@@ -9,13 +9,21 @@ if (typeof window !== 'undefined') {
 	const currentUrl = new URL(window.location.href)
 	const redirect = currentUrl.searchParams.get('redirect')
 	if (redirect) {
-		const decoded = decodeURIComponent(redirect)
-		const normalized = decoded.startsWith('/') ? decoded : `/${decoded}`
+		let decoded = decodeURIComponent(redirect)
+		decoded = decoded.trim()
+		if (!decoded.startsWith('/')) {
+			decoded = `/${decoded}`
+		}
+		if (decoded.length > 1 && decoded.endsWith('/')) {
+			decoded = decoded.slice(0, -1)
+		}
+
 		currentUrl.searchParams.delete('redirect')
 		const cleanedSearch = currentUrl.searchParams.toString()
-		const newUrl = `${currentUrl.pathname}${cleanedSearch ? `?${cleanedSearch}` : ''}${currentUrl.hash}`
-		window.history.replaceState(null, '', newUrl)
-		router.replace(normalized).catch(() => {})
+		const nextUrl = `${decoded}${cleanedSearch ? `?${cleanedSearch}` : ''}${currentUrl.hash}`
+
+		window.history.replaceState(null, '', nextUrl)
+		router.replace(decoded).catch(() => {})
 	}
 }
 
