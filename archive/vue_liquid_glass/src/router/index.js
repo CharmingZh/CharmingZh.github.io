@@ -8,9 +8,10 @@ export const router = createRouter({
       name: 'home',
       component: { template: '<div />' }
     },
-    { 
-      path: '/photography', 
-      name: 'photography', 
+    {
+      path: '/photography',
+      name: 'photography',
+      alias: ['/photography/', '/Photography', '/Photography/'],
       component: { template: '<div />' }
     },
   ],

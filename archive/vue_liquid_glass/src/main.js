@@ -17,6 +17,11 @@ if (typeof window !== 'undefined') {
 			decoded = decoded.slice(0, -1)
 		}
 
+		const normalized = decoded.toLowerCase()
+		if (normalized === '/photography') {
+			decoded = '/photography'
+		}
+
 		currentUrl.searchParams.delete('redirect')
 		const cleanedSearch = currentUrl.searchParams.toString()
 
