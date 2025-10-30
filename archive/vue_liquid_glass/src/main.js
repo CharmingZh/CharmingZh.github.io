@@ -5,6 +5,8 @@ import router from './router'
 
 import './assets/main.css'
 
+let pendingRedirect = null
+
 if (typeof window !== 'undefined') {
 	const currentUrl = new URL(window.location.href)
 	const redirect = currentUrl.searchParams.get('redirect')
@@ -31,7 +33,7 @@ if (typeof window !== 'undefined') {
 		} else {
 			const nextUrl = `${decoded}${cleanedSearch ? `?${cleanedSearch}` : ''}${currentUrl.hash}`
 			window.history.replaceState(null, '', nextUrl)
-			router.replace(decoded).catch(() => {})
+			pendingRedirect = decoded
 		}
 	}
 }
@@ -41,6 +43,14 @@ const app = createApp(App)
 app.use(LiquidGlass) // 全局使用
 app.use(router)
 
-router.isReady().then(() => {
+router.isReady().then(async () => {
+	if (pendingRedirect) {
+		try {
+			await router.replace(pendingRedirect)
+		} catch (error) {
+			console.warn('Redirect handling failed:', error)
+		}
+		pendingRedirect = null
+	}
 	app.mount('#app')
 })
