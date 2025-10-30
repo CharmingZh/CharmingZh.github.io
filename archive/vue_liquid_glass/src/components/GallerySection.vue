@@ -1,6 +1,10 @@
 <template>
   <section id="gallery" class="content-section">
     <h2 class="section-title">Gallery</h2>
+    <p class="section-description">
+      A glimpse into my life moments. For my photography portfolio, 
+      <a href="/photography" class="photography-link">explore my photography collection →</a>
+    </p>
     <div class="carousel-container glass-card">
       <div class="carousel">
         <div class="carousel-track-container">
@@ -70,3 +74,24 @@
     </div>
   </section>
 </template>
+
+<style scoped>
+.section-description {
+  margin-bottom: 20px;
+  color: var(--text-secondary-color);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.photography-link {
+  color: var(--accent-color-original);
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+
+.photography-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+</style>

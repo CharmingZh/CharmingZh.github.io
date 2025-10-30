@@ -11,7 +11,7 @@
 
       
 
-      <p>In my free time, I enjoy cooking, photography, and exploring new technologies. I am passionate about leveraging technology to solve real-world problems and am always eager to learn and grow in my field.</p>
+      <p>In my free time, I enjoy cooking, <a href="/photography">photography</a>, and exploring new technologies. I am passionate about leveraging technology to solve real-world problems and am always eager to learn and grow in my field.</p>
 
     </div>
   </section>
