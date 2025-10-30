@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted, provide } from 'vue';
+import { ref, onMounted, onUnmounted, provide, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import HeroSection from './components/HeroSection.vue';
 import AboutSection from './components/AboutSection.vue';
@@ -27,6 +27,9 @@ const mobileNavOpen = ref(false);
 const route = useRoute();
 const router = useRouter();
 
+const isPhotographyRoute = computed(() => route.name === 'photography');
+const isHomeRoute = computed(() => !isPhotographyRoute.value);
+
 const toggleMobileNav = () => {
   mobileNavOpen.value = !mobileNavOpen.value;
 };
@@ -38,12 +41,12 @@ const closeMobileNav = () => {
 const navigateTo = (section) => {
   closeMobileNav();
   if (section === 'photography') {
-    router.push('/photography');
+    router.push({ name: 'photography' });
     return;
   }
   // 如果不在主页，先回到主页
-  if (router.currentRoute.value.path !== '/') {
-    router.push({ path: '/', hash: `#${section}` });
+  if (route.name !== 'home') {
+    router.push({ name: 'home', hash: `#${section}` });
   } else {
     document.querySelector(`#${section}`)?.scrollIntoView({ behavior: 'smooth' });
   }
@@ -367,13 +370,13 @@ onMounted(() => {
         if (href) {
           // 内部锚点：在首页滚动，否则路由跳转到首页+hash
           if (href.startsWith('#')) {
-            if (router.currentRoute.value.path !== '/') {
-              router.push({ path: '/', hash: href });
+            if (route.name !== 'home') {
+              router.push({ name: 'home', hash: href });
             } else {
               document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
             }
           } else if (href.startsWith('/')) {
-            router.push(href);
+            router.push({ path: href });
           }
         }
       }
@@ -617,7 +620,7 @@ onMounted(() => {
   </div>
 
   <!-- 首页内容（默认显示，摄影页隐藏时保留 DOM） -->
-  <div class="container" v-show="route.path !== '/photography'">
+  <div class="container" v-show="isHomeRoute">
     <HeroSection />
     <AboutSection />
     <EducationSection />
@@ -629,7 +632,7 @@ onMounted(() => {
   </div>
 
   <!-- 摄影独立页面 -->
-  <PhotographyPage v-if="route.path === '/photography'" />
+  <PhotographyPage v-if="isPhotographyRoute" />
 
   <button class="theme-switcher" id="theme-toggle" title="Switch Theme" @click="toggleTheme">
     <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 11-1.06-1.06l1.59-1.59a.75.75 0 011.061 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.836 17.894a.75.75 0 011.06 0l1.591 1.591a.75.75 0 11-1.06 1.06l-1.591-1.59a.75.75 0 010-1.06zM12 21.75a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75-.75zM5.106 17.836a.75.75 0 010-1.06l1.591-1.591a.75.75 0 111.06 1.06l-1.59 1.591a.75.75 0 01-1.061 0zM3 12a.75.75 0 01.75-.75h2.25a.75.75 0 010-1.5H3.75A.75.75 0 013 12zM6.106 5.106a.75.75 0 011.06 0l1.591 1.591a.75.75 0 01-1.06 1.06L6.106 6.167a.75.75 0 010-1.06z"></path></svg>
