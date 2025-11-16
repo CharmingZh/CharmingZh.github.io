@@ -64,7 +64,7 @@
 <!--            </div>-->
           </li>
           <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-published">Published</span></div>
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
             <p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2025.112820" target="_blank" rel="noopener noreferrer">"Proof-of-Concept Evaluation of A 3D Laser Profiling System Prototype for Real-Time Woody Breast Detection in Broiler Breast Fillets."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">Journal of Food Engineering</p>
