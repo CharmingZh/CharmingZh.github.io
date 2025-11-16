@@ -2,7 +2,7 @@
   <section id="publications" class="content-section">
     <h2 class="section-title">Publications</h2>
     <div class="pub-years">
-      <button class="pub-year-btn active" data-year="2026" c-option="2026">2026</button>
+      <button class="pub-year-btn" data-year="2026" c-option="2026">2026</button>
       <button class="pub-year-btn active" data-year="2025" c-option="2025">2025</button>
       <button class="pub-year-btn" data-year="2024" c-option="2024">2024</button>
       <button class="pub-year-btn" data-year="2023" c-option="2023">2023</button>
@@ -10,23 +10,23 @@
       <button class="pub-year-btn" data-year="2020" c-option="2020">2020</button>
     </div>
     <div class="pub-lists-container glass-card">
-  <div id="publications-list-2026" class="pub-list active" data-year="2026">
+  <div id="publications-list-2026" class="pub-list" data-year="2026">
         <ul>
           <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span><span class="pub-tag tag-review">Under Review</span></div>
-            <p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2025.112820" target="_blank" rel="noopener noreferrer">"Robust Laser-Line Detection for Real-time Woody Breast Assessment Using Synthetic Data and Deep Learning."</a></p>
+            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
+            <p class="pub-title"><a href="https://harvest.cals.ncsu.edu/2026-ai-ag-conference/" target="_blank" rel="noopener noreferrer">"Robust Laser-Line Detection for Real-time Woody Breast Assessment Using Synthetic Data and Deep Learning."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">AI in Agriculture - 2026 - AI Systems & Integrative Approaches</p>
           </li>
           <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span><span class="pub-tag tag-review">Under Review</span></div>
-            <p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2025.112820" target="_blank" rel="noopener noreferrer">"Multiview 3D Geometry Modeling and Deep Feature Fusion for Real-time Postharvest Apple Quality Grading."</a></p>
+            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
+            <p class="pub-title"><a href="https://harvest.cals.ncsu.edu/2026-ai-ag-conference/" target="_blank" rel="noopener noreferrer">"Multiview 3D Geometry Modeling and Deep Feature Fusion for Real-time Postharvest Apple Quality Grading."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">AI in Agriculture - 2026 - Food, Postharvest & Supply Chains</p>
           </li>
           <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span><span class="pub-tag tag-review">Under Review</span></div>
-            <p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2025.112820" target="_blank" rel="noopener noreferrer">"A New Dual-Line Laser System for Real-Time 3D Reconstruction and Grading of Woody Breast Chicken Fillets"</a></p>
+            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
+            <p class="pub-title"><a href="https://spie.org/conferences-and-exhibitions/defense-and-security" target="_blank" rel="noopener noreferrer">"A New Dual-Line Laser System for Real-Time 3D Reconstruction and Grading of Woody Breast Chicken Fillets"</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">SPIE. Defense + Security - 2026 - Three-Dimensional Imaging, Visualization, and Display (DS116)</p>
             <div class="pub-links">
@@ -36,8 +36,8 @@
             </div>
           </li>
           <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span><span class="pub-tag tag-review">Under Review</span></div>
-            <p class="pub-title"><a href="https://doi.org/10.1016/j.jfoodeng.2025.112820" target="_blank" rel="noopener noreferrer">"A Real-Time Apple Grading and Sorting System Using 3D Image Analysis and Deep Learning."</a></p>
+            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
+            <p class="pub-title"><a href="https://spie.org/conferences-and-exhibitions/defense-and-security" target="_blank" rel="noopener noreferrer">"A Real-Time Apple Grading and Sorting System Using 3D Image Analysis and Deep Learning."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">SPIE. Defense + Security - 2026 - Sensing for Agriculture and Food Quality and Safety XVIII (DS312)</p>
           </li>
@@ -45,6 +45,13 @@
       </div>
   <div id="publications-list-2025" class="pub-list active" data-year="2025">
         <ul>
+          <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
+            <p class="pub-title"><a href="https://glexpo.com/" target="_blank" rel="noopener noreferrer">"Design and Field Evaluation of a Vision-Guided Real-Time Apple Grading Line."</a></p>
+            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
+            <p class="pub-venue">2025 Great Lakes Expo - Harvest or Post-Harvest - December 9-11, 2025</p>
+          </li>
+
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-revision">In Revision</span></div>
             <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Spatial Mismatch and Inequality between Ecological Pressure and Economic Benefits Embodied in Agricultural Trade."</a></p>
@@ -75,8 +82,8 @@
           </li>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-drafting">Drafting</span></div>
-            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Improved YOLOv8-Seg for Litchi Cluster Detection and Secondary Localization of Picking Point."</a></p>
-            <p class="authors">Yunhe Zhou, Chunjiang Yu, <span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Jiangming Kan</span>, Yuanhang Liu, <span class="corr-author">Xiangjun Zou</span>, Kang Zhang, Sheng Zhang</p>
+            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Vision-Based Perception and Execution Decision-Making for Fruit  Picking Robots Using Generative AI Models."</a></p>
+            <p class="authors">Yunhe Zhou, Chunjiang Yu, <span class="me"><b>Jiaming Zhang</b></span>, Yuanhang Liu, Jiangming Kan, Xiangjun Zou, Kang Zhang, Hanyan Liang, Sheng Zhang, <span class="corr-author">Yunchao Tang</span></p>
           </li>
         </ul>
       </div>
