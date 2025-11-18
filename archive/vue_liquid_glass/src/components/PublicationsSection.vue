@@ -47,7 +47,7 @@
         <ul>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-drafting">Drafting</span></div>
-            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Design and Field Evaluation of a Vision-Guided Real-Time Apple Grading Line."</a></p>
+            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Development and Optimization of an Integrated Real-Time RGB Inspection System for Apple Defect Detection, Grading, and Automated Sorting."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span><sup class="co-first-author-symbol">†</sup>, Jiajun Xu<sup class="co-first-author-symbol">†</sup>, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">Postharvest Biology and Technology</p>
             <p class="pub-footnote"><sup class="co-first-author-symbol">†</sup>: Equal contribution</p>
