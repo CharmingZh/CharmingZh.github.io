@@ -46,12 +46,18 @@
   <div id="publications-list-2025" class="pub-list active" data-year="2025">
         <ul>
           <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-drafting">Drafting</span></div>
+            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Design and Field Evaluation of a Vision-Guided Real-Time Apple Grading Line."</a></p>
+            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span><sup class="co-first-author-symbol">†</sup>, Jiajun Xu<sup class="co-first-author-symbol">†</sup>, <span class="corr-author">Yuzhen Lu</span></p>
+            <p class="pub-venue">Postharvest Biology and Technology</p>
+            <p class="pub-footnote"><sup class="co-first-author-symbol">†</sup>: Equal contribution</p>
+          </li>
+          <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
             <p class="pub-title"><a href="https://glexpo.com/" target="_blank" rel="noopener noreferrer">"Design and Field Evaluation of a Vision-Guided Real-Time Apple Grading Line."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">2025 Great Lakes Expo - Harvest or Post-Harvest - December 9-11, 2025</p>
           </li>
-
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-revision">In Revision</span></div>
             <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Spatial Mismatch and Inequality between Ecological Pressure and Economic Benefits Embodied in Agricultural Trade."</a></p>
@@ -81,9 +87,10 @@
             <p class="pub-venue">Artificial Intelligence in Agriculture</p>
           </li>
           <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-drafting">Drafting</span></div>
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-submitted">Under Review</span></div>
             <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Vision-Based Perception and Execution Decision-Making for Fruit  Picking Robots Using Generative AI Models."</a></p>
             <p class="authors">Yunhe Zhou, Chunjiang Yu, <span class="me"><b>Jiaming Zhang</b></span>, Yuanhang Liu, Jiangming Kan, Xiangjun Zou, Kang Zhang, Hanyan Liang, Sheng Zhang, <span class="corr-author">Yunchao Tang</span></p>
+            <p class="pub-venue">Computers and Electronics in Agriculture</p>
           </li>
         </ul>
       </div>
