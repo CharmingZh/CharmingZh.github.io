@@ -2,16 +2,33 @@
   <section id="publications" class="content-section">
     <h2 class="section-title">Publications</h2>
     <div class="pub-years">
-      <button class="pub-year-btn" data-year="2026" c-option="2026">2026</button>
-      <button class="pub-year-btn active" data-year="2025" c-option="2025">2025</button>
+      <button class="pub-year-btn active" data-year="2026" c-option="2026">2026</button>
+      <button class="pub-year-btn" data-year="2025" c-option="2025">2025</button>
       <button class="pub-year-btn" data-year="2024" c-option="2024">2024</button>
       <button class="pub-year-btn" data-year="2023" c-option="2023">2023</button>
 <!--      <button class="pub-year-btn" data-year="2022" c-option="2022">2022</button>-->
       <button class="pub-year-btn" data-year="2020" c-option="2020">2020</button>
     </div>
     <div class="pub-lists-container glass-card">
-  <div id="publications-list-2026" class="pub-list" data-year="2026">
+  <div id="publications-list-2026" class="pub-list active" data-year="2026">
         <ul>
+          <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-drafting">Drafting</span></div>
+            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Development and Optimization of an Integrated Real-Time RGB Inspection System for Apple Defect Detection, Grading, and Automated Sorting."</a></p>
+            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span><sup class="co-first-author-symbol">†</sup>, Jiajun Xu<sup class="co-first-author-symbol">†</sup>, <span class="corr-author">Yuzhen Lu</span></p>
+            <p class="pub-venue">Postharvest Biology and Technology</p>
+            <p class="pub-footnote"><sup class="co-first-author-symbol">†</sup>: Equal contribution</p>
+          </li>
+          <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-journal">Data Article</span><span class="pub-tag tag-reviewing">Under Review</span></div>
+            <p class="pub-title"><a href="" target="_blank" rel="noopener noreferrer">"A Machine Vision Dataset for Automated Quality Inspection and Grading of Sweetpotatoes."</a></p>
+            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, Jiajun Xu, <span class="corr-author">Yuzhen Lu</span></p>
+            <p class="pub-venue">Data in Brief</p>
+            <div class="pub-links">
+              <a href="https://github.com/AgFood-Sensing-and-Intelligence-Lab/Sweetpotato-Grading-Dataset-RGB" class="pub-action-tag" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path></svg><span>Project Homepage</span></a>
+              <a href="https://doi.org/10.5281/zenodo.18100484" class="pub-action-tag" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"></path></svg><span>Dataset</span></a>
+            </div>
+          </li>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
             <p class="pub-title"><a href="https://harvest.cals.ncsu.edu/2026-ai-ag-conference/" target="_blank" rel="noopener noreferrer">"Robust Laser-Line Detection for Real-time Woody Breast Assessment Using Synthetic Data and Deep Learning."</a></p>
@@ -43,15 +60,8 @@
           </li>
         </ul>
       </div>
-  <div id="publications-list-2025" class="pub-list active" data-year="2025">
+  <div id="publications-list-2025" class="pub-list" data-year="2025">
         <ul>
-          <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-drafting">Drafting</span></div>
-            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Development and Optimization of an Integrated Real-Time RGB Inspection System for Apple Defect Detection, Grading, and Automated Sorting."</a></p>
-            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span><sup class="co-first-author-symbol">†</sup>, Jiajun Xu<sup class="co-first-author-symbol">†</sup>, <span class="corr-author">Yuzhen Lu</span></p>
-            <p class="pub-venue">Postharvest Biology and Technology</p>
-            <p class="pub-footnote"><sup class="co-first-author-symbol">†</sup>: Equal contribution</p>
-          </li>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
             <p class="pub-title"><a href="https://glexpo.com/" target="_blank" rel="noopener noreferrer">"Design and Field Evaluation of a Vision-Guided Real-Time Apple Grading Line."</a></p>
