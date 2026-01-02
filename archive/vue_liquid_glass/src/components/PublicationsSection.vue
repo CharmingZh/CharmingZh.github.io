@@ -20,7 +20,7 @@
             <p class="pub-footnote"><sup class="co-first-author-symbol">†</sup>: Equal contribution</p>
           </li>
           <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Data Article</span><span class="pub-tag tag-reviewing">Under Review</span></div>
+            <div class="pub-meta"><span class="pub-tag tag-journal">Data Article</span><span class="pub-tag tag-review">Under Review</span></div>
             <p class="pub-title"><a href="" target="_blank" rel="noopener noreferrer">"A Machine Vision Dataset for Automated Quality Inspection and Grading of Sweetpotatoes."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, Jiajun Xu, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">Data in Brief</p>
