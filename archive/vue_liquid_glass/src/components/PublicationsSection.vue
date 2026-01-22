@@ -13,6 +13,18 @@
   <div id="publications-list-2026" class="pub-list active" data-year="2026">
         <ul>
           <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-journal">Conference</span><span class="pub-tag tag-review">Under Review</span></div>
+            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"A Multispectral Vision System with Laser Profiling for Enhanced Apple Defect Detection and Grading."</a></p>
+            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
+            <p class="pub-venue">ASABE - 2026 - Information Technology, Sensors and Control Systems (ITSC)</p>
+          </li>
+          <li class="pub-card">
+            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
+            <p class="pub-title"><a href="https://www.mdpi.com/2075-1702/14/1/117" target="_blank" rel="noopener noreferrer">"Vision-Based Perception and Execution Decision-Making for Fruit  Picking Robots Using Generative AI Models."</a></p>
+            <p class="authors">Yunhe Zhou, Chunjiang Yu, <span class="me"><b>Jiaming Zhang</b></span>, Yuanhang Liu, Jiangming Kan, Xiangjun Zou, Kang Zhang, Hanyan Liang, Sheng Zhang, <span class="corr-author">Yunchao Tang</span></p>
+            <p class="pub-venue">machines</p>
+          </li>
+          <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-drafting">Drafting</span></div>
             <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Development and Optimization of an Integrated Real-Time RGB Inspection System for Apple Defect Detection, Grading, and Automated Sorting."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span><sup class="co-first-author-symbol">†</sup>, Jiajun Xu<sup class="co-first-author-symbol">†</sup>, <span class="corr-author">Yuzhen Lu</span></p>
@@ -29,7 +41,7 @@
               <a href="https://doi.org/10.5281/zenodo.18100484" class="pub-action-tag" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"></path></svg><span>Dataset</span></a>
             </div>
           </li>
-          <li class="pub-card">
+          <!-- <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
             <p class="pub-title"><a href="https://harvest.cals.ncsu.edu/2026-ai-ag-conference/" target="_blank" rel="noopener noreferrer">"Robust Laser-Line Detection for Real-time Woody Breast Assessment Using Synthetic Data and Deep Learning."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
@@ -40,7 +52,7 @@
             <p class="pub-title"><a href="https://harvest.cals.ncsu.edu/2026-ai-ag-conference/" target="_blank" rel="noopener noreferrer">"Multiview 3D Geometry Modeling and Deep Feature Fusion for Real-time Postharvest Apple Quality Grading."</a></p>
             <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span></p>
             <p class="pub-venue">AI in Agriculture - 2026 - Food, Postharvest & Supply Chains</p>
-          </li>
+          </li> -->
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-conference">Conference</span></div>
             <p class="pub-title"><a href="https://spie.org/conferences-and-exhibitions/defense-and-security" target="_blank" rel="noopener noreferrer">"A New Dual-Line Laser System for Real-Time 3D Reconstruction and Grading of Woody Breast Chicken Fillets"</a></p>
@@ -95,12 +107,6 @@
             <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"An Apple Tree Pruning Robot System based on Branch Segmentation and Decision Making Control."</a></p>
             <p class="authors">Siyuan Tong, Jingwei Wang, <span class="me"><b>Jiaming Zhang</b></span>, Long Liu, Yaxiong Wang, <span class="corr-author">Feng Kang</span></p>
             <p class="pub-venue">Artificial Intelligence in Agriculture</p>
-          </li>
-          <li class="pub-card">
-            <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-submitted">Under Review</span></div>
-            <p class="pub-title"><a href="#" target="_blank" rel="noopener noreferrer">"Vision-Based Perception and Execution Decision-Making for Fruit  Picking Robots Using Generative AI Models."</a></p>
-            <p class="authors">Yunhe Zhou, Chunjiang Yu, <span class="me"><b>Jiaming Zhang</b></span>, Yuanhang Liu, Jiangming Kan, Xiangjun Zou, Kang Zhang, Hanyan Liang, Sheng Zhang, <span class="corr-author">Yunchao Tang</span></p>
-            <p class="pub-venue">Computers and Electronics in Agriculture</p>
           </li>
         </ul>
       </div>
