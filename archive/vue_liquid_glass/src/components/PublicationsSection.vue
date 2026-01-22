@@ -21,8 +21,9 @@
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
             <p class="pub-title"><a href="https://www.mdpi.com/2075-1702/14/1/117" target="_blank" rel="noopener noreferrer">"Vision-Based Perception and Execution Decision-Making for Fruit  Picking Robots Using Generative AI Models."</a></p>
-            <p class="authors">Yunhe Zhou, Chunjiang Yu, <span class="me"><b>Jiaming Zhang</b></span>, Yuanhang Liu, Jiangming Kan, Xiangjun Zou, Kang Zhang, Hanyan Liang, Sheng Zhang, <span class="corr-author">Yunchao Tang</span></p>
-            <p class="pub-venue">machines</p>
+            <p class="authors">Yunhe Zhou<sup class="co-first-author-symbol">†</sup>, Chunjiang Yu<sup class="co-first-author-symbol">†</sup>, <span class="me"><b>Jiaming Zhang</b></span>, Yuanhang Liu, <span class="corr-author">Jiangming Kan<sup class="co-first-author-symbol">‡</sup></span>, Xiangjun Zou, Kang Zhang, Hanyan Liang, Sheng Zhang, <span class="corr-author">Yunchao Tang<sup class="co-first-author-symbol">‡</sup></span></p>
+            <p class="pub-venue">Machines</p>
+            <p class="pub-footnote"><sup class="co-first-author-symbol">†, ‡</sup>: Equal contribution</p>
           </li>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span><span class="pub-tag tag-drafting">Drafting</span></div>
@@ -143,8 +144,9 @@
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
             <p class="pub-title"><a href="http://dx.doi.org/10.3390/f14122334" target="_blank" rel="noopener noreferrer">"An Advanced Software Platform and Algorithmic Framework for Mobile DBH Data Acquisition."</a></p>
-            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, Hanyan Liang, Siyuan Tong, Yunhe Zhou, <span class="corr-author">Jiangming Kan</span></p>
+            <p class="authors"><span class="me"><b>Jiaming Zhang</b><sup class="co-first-author-symbol">†</sup></span>, Hanyan Liang<sup class="co-first-author-symbol">†</sup>, Siyuan Tong, Yunhe Zhou, <span class="corr-author">Jiangming Kan</span></p>
             <p class="pub-venue">Forests</p>
+            <p class="pub-footnote"><sup class="co-first-author-symbol">†</sup>: Equal contribution</p>
           </li>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Journal</span></div>
