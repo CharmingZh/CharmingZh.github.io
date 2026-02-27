@@ -24,8 +24,8 @@
           </li>
           <li class="pub-card">
             <div class="pub-meta"><span class="pub-tag tag-journal">Data Article</span></div>
-            <p class="pub-title"><a href="" target="_blank" rel="noopener noreferrer">"A Machine Vision Dataset for Automated Quality Inspection and Grading of Sweetpotatoes."</a></p>
-            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, Jiajun Xu, <span class="corr-author">Yuzhen Lu</span></p>
+            <p class="pub-title"><a href="https://doi.org/10.1016/j.dib.2026.112628" target="_blank" rel="noopener noreferrer">"A Machine Vision Dataset for Automated Quality Inspection and Grading of Sweetpotatoes."</a></p>
+            <p class="authors"><span class="me"><b>Jiaming Zhang</b></span>, <span class="corr-author">Yuzhen Lu</span>, Jiajun Xu</p>
             <p class="pub-venue">Data in Brief</p>
             <div class="pub-links">
               <a href="https://github.com/AgFood-Sensing-and-Intelligence-Lab/Sweetpotato-Grading-Dataset-RGB" class="pub-action-tag" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path></svg><span>Project Homepage</span></a>
