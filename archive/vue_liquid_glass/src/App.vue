@@ -10,6 +10,7 @@ import PublicationsSection from './components/PublicationsSection.vue';
 import GallerySection from './components/GallerySection.vue';
 import Footer from './components/Footer.vue';
 import GlassEffect from './components/GlassEffect.vue';
+import LineWaves from './components/LineWaves.vue';
 import PhotographyPage from './views/PhotographyPage.vue';
 
 // ===================================================================
@@ -612,6 +613,23 @@ onMounted(() => {
 </script>
 
 <template>
+  <LineWaves
+    class="page-background"
+    :speed="0.3"
+    :innerLineCount="20"
+    :outerLineCount="20"
+    :warpIntensity="1.6"
+    :rotation="-45"
+    :edgeFadeWidth="0.25"
+    :colorCycleSpeed="5"
+    :brightness="0.1"
+    color1="#e900cc"
+    color2="#00ff43"
+    color3="#00edff"
+    :enableMouseInteraction="true"
+    :mouseInfluence="0.1"
+  />
+
   <GlassEffect class="desktop-nav" borderRadius="99em" distortion="0.02" padding="0">
     <fieldset class="glass-nav" id="glass-nav-container">
       <legend class="glass-nav__legend">Main Navigation</legend>

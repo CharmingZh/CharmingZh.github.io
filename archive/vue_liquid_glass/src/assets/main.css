@@ -200,18 +200,21 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-size: 300% 300%;
-  background-image: var(--background-trace-image);
-  opacity: var(--background-trace-opacity);
-  filter: blur(var(--background-trace-blur));
-  mix-blend-mode: var(--background-trace-blend-mode);
-  animation: var(--background-trace-animation);
+  background: transparent;
+  opacity: 0;
+  filter: none;
+  mix-blend-mode: normal;
+  animation: none;
   pointer-events: none;
 }
 
 #app {
   position: relative;
   z-index: 1;
+}
+
+.page-background {
+  z-index: 0;
 }
 
 @keyframes moveBackground {
