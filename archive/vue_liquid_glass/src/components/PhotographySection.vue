@@ -418,15 +418,15 @@ const handleKeydown = (event) => {
 }
 
 .photo-grid {
-  column-width: 260px;
-  column-gap: 24px;
+  column-width: min(100%, 18rem);
+  column-gap: var(--card-inner-gap, 1.25rem);
   width: 100%;
 }
 
 .photo-card {
   display: block;
-  padding: 16px;
-  margin: 0 0 24px;
+  padding: var(--card-padding, 1rem);
+  margin: 0 0 var(--card-inner-gap, 1.25rem);
   break-inside: avoid;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -438,7 +438,7 @@ const handleKeydown = (event) => {
 
 .photo-thumb {
   position: relative;
-  border-radius: 16px;
+  border-radius: var(--surface-radius, 1rem);
   overflow: hidden;
   display: block;
   padding: 0;
@@ -495,17 +495,17 @@ const handleKeydown = (event) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(16px, 4vw, 48px);
+  padding: var(--layout-gutter, 1rem);
 }
 
 .lightbox {
-  width: min(98vw, 1600px);
+  width: min(100%, 100rem);
   max-height: 94vh;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: var(--card-inner-gap, 1rem);
   background: rgba(18,18,23,0.6);
-  border-radius: 22px;
+  border-radius: calc(var(--surface-radius, 1rem) + 0.4rem);
   overflow: hidden;
 }
 
@@ -514,7 +514,7 @@ const handleKeydown = (event) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--card-inner-gap, 1rem);
   overflow: hidden;
 }
 
@@ -532,7 +532,7 @@ const handleKeydown = (event) => {
   max-height: 90vh;
   width: auto;
   height: auto;
-  border-radius: 16px;
+  border-radius: var(--surface-radius, 1rem);
   background: rgba(0,0,0,0.25);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
@@ -551,7 +551,7 @@ const handleKeydown = (event) => {
   background: rgba(12,12,18,0.28);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-radius: 18px;
+  border-radius: var(--surface-radius, 1rem);
 }
 
 .lb-spinner::after {
@@ -600,17 +600,17 @@ const handleKeydown = (event) => {
 .lb-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 0.65rem;
 }
 
 .lb-tag {
-  padding: 6px 12px;
+  padding: 0.4rem 0.75rem;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.24);
   background: rgba(255,255,255,0.08);
   color: #fff;
   font-size: 0.82rem;
-  letter-spacing: 0.015em;
+  letter-spacing: 0;
 }
 
 .lb-tag.muted {
@@ -620,13 +620,13 @@ const handleKeydown = (event) => {
 .lb-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .lb-nav {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
+  width: var(--tap-target-size, 2.75rem);
+  height: var(--tap-target-size, 2.75rem);
+  border-radius: var(--chip-radius, 0.85rem);
   border: 1px solid rgba(255,255,255,0.26);
   background: rgba(255,255,255,0.1);
   color: #fff;
@@ -650,9 +650,9 @@ const handleKeydown = (event) => {
 .lb-btn {
   border: none;
   background: rgba(255,255,255,0.12);
-  border-radius: 12px;
-  width: 40px;
-  height: 40px;
+  border-radius: var(--chip-radius, 0.85rem);
+  width: var(--tap-target-size, 2.75rem);
+  height: var(--tap-target-size, 2.75rem);
   color: #fff;
   cursor: pointer;
   display: grid;
@@ -701,21 +701,34 @@ const handleKeydown = (event) => {
 }
 
 @media (max-width: 768px) {
-  .photo-grid { column-width: 200px; column-gap: 18px; }
-  .photo-card { padding: 14px; margin-bottom: 18px; }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--card-inner-gap, 1rem);
+    column-width: auto;
+    column-gap: 0;
+  }
+  .photo-card {
+    padding: var(--card-padding, 1rem);
+    margin: 0;
+    min-width: 0;
+  }
+  .photo-thumb {
+    width: 100%;
+  }
   .lightbox {
     width: 100%;
-    gap: 12px;
+    gap: var(--card-inner-gap, 1rem);
   }
   .lightbox-header {
-    padding: 16px 18px 0;
+    padding: 1rem 1rem 0;
   }
   .lightbox-footer {
-    padding: 0 18px 18px;
-    gap: 12px;
+    padding: 0 1rem 1rem;
+    gap: 0.75rem;
   }
-  .lb-nav { width: 38px; height: 38px; }
-  .lb-btn { width: 36px; height: 36px; font-size: 1.4rem; }
+  .lb-nav { width: 2.5rem; height: 2.5rem; }
+  .lb-btn { width: 2.4rem; height: 2.4rem; font-size: 1.4rem; }
   .lb-canvas { max-height: 58vh; }
 }
 

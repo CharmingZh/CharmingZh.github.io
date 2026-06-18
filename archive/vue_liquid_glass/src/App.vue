@@ -18,7 +18,7 @@ import PhotographyPage from './views/PhotographyPage.vue';
 
 // 导航栏布局模式：'flow' 表示随内容滚动，'fixed' 表示悬浮在顶部
 /** @type {'flow' | 'fixed'} */
-const NAV_LAYOUT_MODE = 'flow';
+const NAV_LAYOUT_MODE = 'fixed';
 
 // ===================================================================
 // 2. 移动端导航状态
@@ -52,19 +52,47 @@ const navigateTo = (section) => {
   }
 };
 
+const mobileNavItems = [
+  { label: 'About', target: 'about' },
+  { label: 'Education', target: 'education' },
+  { label: 'Work', target: 'work' },
+  { label: 'Research', target: 'research' },
+  { label: 'Publications', target: 'publications' },
+  { label: 'Gallery', target: 'gallery' },
+  { label: 'Photography', target: 'photography' },
+];
+
 // ===================================================================
 // 2. 动态主题管理 - 核心逻辑
 // ===================================================================
+const readPreference = (key, fallback) => {
+  try {
+    return window.localStorage.getItem(key) ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const writePreference = (key, value) => {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    // localStorage may be unavailable in restricted browser modes.
+  }
+};
+
 const applyTheme = (theme) => {
   document.documentElement.setAttribute('data-theme', theme);
   document.body.setAttribute('data-theme', theme);
 };
 
-const currentTheme = ref(document.documentElement.getAttribute('data-theme') || 'dark');
+const currentTheme = ref(readPreference('homepage-theme', document.documentElement.getAttribute('data-theme') || 'dark'));
+
 const toggleTheme = () => {
   const newTheme = currentTheme.value === 'dark' ? 'light' : 'dark';
   currentTheme.value = newTheme;
   applyTheme(newTheme);
+  writePreference('homepage-theme', newTheme);
 };
 
 // 使用 provide 将 theme-toggle 函数和 currentTheme 响应式变量暴露给所有子组件
@@ -211,8 +239,10 @@ onMounted(() => {
     const updateSlider = () => {
       const activeOption = navContainer.querySelector('input:checked')?.parentNode;
       if (activeOption instanceof HTMLElement) {
-        navContainer.style.setProperty('--slider-width', `${activeOption.offsetWidth}px`);
-        navContainer.style.setProperty('--slider-translate-x', `${activeOption.offsetLeft}px`);
+        const navRect = navContainer.getBoundingClientRect();
+        const optionRect = activeOption.getBoundingClientRect();
+        navContainer.style.setProperty('--slider-width', `${optionRect.width}px`);
+        navContainer.style.setProperty('--slider-translate-x', `${optionRect.left - navRect.left}px`);
       }
     };
 
@@ -591,6 +621,7 @@ onMounted(() => {
       <label class="glass-nav__option" for="nav-4"><input class="glass-nav__input" type="radio" name="nav" value="research" c-option="4" id="nav-4"><a href="#research">Research</a></label>
       <label class="glass-nav__option" for="nav-5"><input class="glass-nav__input" type="radio" name="nav" value="publications" c-option="5" id="nav-5"><a href="#publications">Publications</a></label>
       <label class="glass-nav__option" for="nav-6"><input class="glass-nav__input" type="radio" name="nav" value="gallery" c-option="6" id="nav-6"><a href="#gallery">Gallery</a></label>
+      <label class="glass-nav__option" for="nav-7"><input class="glass-nav__input" type="radio" name="nav" value="photography" c-option="7" id="nav-7"><a href="/photography">Photography</a></label>
     </fieldset>
   </GlassEffect>
 
@@ -608,14 +639,21 @@ onMounted(() => {
     <div class="popup-content apple-glass" @click.stop>
       <div class="popup-header">
         <div class="popup-title">Navigation</div>
+        <button class="popup-close-btn" type="button" aria-label="Close navigation menu" @click="closeMobileNav">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.41L10.59 13.41 4.29 19.7 2.88 18.29 9.17 12 2.88 5.71 4.29 4.3l6.3 6.29 6.3-6.29z" />
+          </svg>
+        </button>
         <div class="popup-decoration"></div>
       </div>
-      <button @click="navigateTo('about')" class="popup-nav-btn">About</button>
-      <button @click="navigateTo('education')" class="popup-nav-btn">Education</button>
-      <button @click="navigateTo('work')" class="popup-nav-btn">Work</button>
-      <button @click="navigateTo('research')" class="popup-nav-btn">Research</button>
-      <button @click="navigateTo('publications')" class="popup-nav-btn">Publications</button>
-      <button @click="navigateTo('gallery')" class="popup-nav-btn">Gallery</button>
+      <button
+        v-for="item in mobileNavItems"
+        :key="item.target"
+        @click="navigateTo(item.target)"
+        class="popup-nav-btn"
+      >
+        {{ item.label }}
+      </button>
     </div>
   </div>
 

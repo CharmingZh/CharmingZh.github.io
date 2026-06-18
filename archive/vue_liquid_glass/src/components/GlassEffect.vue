@@ -361,13 +361,19 @@ watch(() => props.distortion, (newValue) => {
 }
 
 .glass-container.desktop-nav {
+  position: fixed;
+  top: clamp(1rem, 2.2svh, 1.35rem);
+  left: 50%;
+  transform: translateX(-50%);
   width: max-content;
-  margin: 0 auto;
+  max-width: calc(100vw - 2rem);
+  margin: 0;
 }
 
 .glass-container.desktop-nav .content-wrapper {
   display: inline-flex;
   width: auto;
+  max-width: 100%;
   padding: v-bind(padding);
 }
 

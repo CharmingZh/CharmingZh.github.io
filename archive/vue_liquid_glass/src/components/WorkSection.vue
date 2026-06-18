@@ -27,7 +27,7 @@ const workExperience = [
     title: 'Computer Vision Engineer',
     company: 'Mech-Mind Technology',
     location: 'Beijing, China',
-    logo: 'https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Work/logo_MechMind.png'
+    logo: '/Work/logo_MechMind.png'
   },
   {
     year: '2022',
@@ -35,7 +35,7 @@ const workExperience = [
     title: 'Research Intern',
     company: 'Bohr Intelligent Manufacturing',
     location: 'Shenzhen, China',
-    logo: 'https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Work/logo_BohrIntelManu.png'
+    logo: '/Work/logo_BohrIntelManu.png'
   },
   {
     year: '2020',
@@ -43,7 +43,7 @@ const workExperience = [
     title: 'System Software Engineer',
     company: 'ByteDance',
     location: 'Beijing, China',
-    logo: 'https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Work/logo_ByteDance.png'
+    logo: '/Work/logo_ByteDance.png'
   },
   {
     year: '2018',
@@ -51,7 +51,7 @@ const workExperience = [
     title: 'Barista (Part Time)',
     company: 'Starbucks',
     location: 'Beijing, China',
-    logo: 'https://raw.githubusercontent.com/CharmingZh/CharmingZh.github.io/main/src/Work/logo_starbucks.png'
+    logo: '/Work/logo_starbucks.png'
   }
 ]
 </script>

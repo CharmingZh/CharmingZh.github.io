@@ -1,35 +1,22 @@
-# vue_liquid_glass
+# CharmingZh Homepage
 
-This template should help get you started developing with Vue 3 in Vite.
+This directory contains the Vue 3 + Vite homepage that GitHub Actions builds
+and deploys to GitHub Pages.
 
-## Recommended IDE Setup
+## Commands
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
+```bash
+npm ci
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
 npm run build
+npm run preview
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## Data
 
-```sh
-npm run lint
-```
+Publication data is stored in `src/data/publications.bib`. The publications
+section groups entries by year. If valid entries are added to
+`src/data/publications.md`, that Markdown source takes priority; otherwise the
+BibTeX file is used.
+
+Static assets that must be served directly by Vite live in `public/`.

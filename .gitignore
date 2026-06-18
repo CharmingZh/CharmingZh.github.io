@@ -1,2 +1,9 @@
+node_modules/
+dist/
 docs/
+.vite/
+.idea/
+.DS_Store
+
+archive/vue_liquid_glass/node_modules/
 archive/vue_liquid_glass/dist/

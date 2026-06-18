@@ -4,7 +4,8 @@
     <div class="education-timeline">
       <div class="timeline-line"></div>
       <div class="edu-item" v-for="(edu, index) in educationData" :key="index" :class="getDegreeClass(edu.degree)">
-        <div class="edu-card glass-card" :class="getDegreeClass(edu.degree)" :style="getCardBackgroundStyle(edu.logo)">
+        <div class="edu-card glass-card" :class="getDegreeClass(edu.degree)">
+          <img class="edu-logo-watermark" :src="edu.logo" alt="" aria-hidden="true">
           <div class="edu-degree-badge">{{ edu.degree }}</div>
           <div class="edu-content">
             <h3 class="edu-institution">{{ edu.institution }}</h3>
@@ -97,9 +98,4 @@ const getDegreeClass = (degree) => {
   }
 }
 
-const getCardBackgroundStyle = (logoPath) => {
-  return {
-    '--edu-logo-url': `url(${logoPath})`
-  }
-}
 </script>
