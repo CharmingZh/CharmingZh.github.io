@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, nextTick, computed } from 'vue';
 import exifr from 'exifr';
+import GridMotion from './GridMotion.vue';
 
 // 配置：水印文本与强度
 const watermarkText = '© CharmingZh';
@@ -10,6 +11,20 @@ const sectionRef = ref(null);
 const images = ref([]);
 const loading = ref(true);
 const error = ref('');
+
+const gridItems = computed(() => {
+  if (!images.value.length) return [];
+
+  return images.value.map((source, index) => ({
+    key: `image-${index}-${source.src}`,
+    kind: 'image',
+    src: source.thumb || source.src,
+    fullSrc: source.src,
+    alt: `Photography frame ${index + 1}`,
+    caption: source.meta?.dateISO ? new Date(source.meta.dateISO).getFullYear().toString() : `Frame ${index + 1}`,
+    sourceIndex: index,
+  }));
+});
 
 // Lightbox 状态
 const showLightbox = ref(false);
@@ -79,6 +94,12 @@ const openLightbox = async (idx) => {
   } finally {
     lightboxBusy.value = false;
   }
+};
+
+const handleGridItemClick = (item) => {
+  if (!images.value.length) return;
+  const nextIndex = typeof item?.sourceIndex === 'number' ? item.sourceIndex : 0;
+  openLightbox(nextIndex);
 };
 
 const closeLightbox = () => {
@@ -312,41 +333,19 @@ const handleKeydown = (event) => {
   <section
     id="photography"
     ref="sectionRef"
-    class="content-section"
+    class="content-section photography-section"
     @contextmenu.prevent="blockContextMenu"
   >
-    <h2 class="section-title">Photography</h2>
-    <div v-if="loading" class="loading">加载中…</div>
-    <div v-else-if="error" class="error">{{ error }}</div>
-    <div v-else class="photo-grid" aria-live="polite">
-      <article
-        v-for="(img, idx) in images"
-        :key="img.src"
-        class="photo-card glass-card"
-        role="group"
-        aria-label="photo"
-      >
-        <button
-          class="photo-thumb no-save"
-          type="button"
-          @click="openLightbox(idx)"
-          @contextmenu.prevent="blockContextMenu"
-        >
-          <img
-            class="thumb-img"
-            :src="img.thumb"
-            :data-full="img.src"
-            alt="photo"
-            loading="lazy"
-            decoding="async"
-            fetchpriority="low"
-            draggable="false"
-            @dragstart="handleDragStart"
-          />
-          <div class="thumb-watermark" aria-hidden="true">{{ watermarkText }}</div>
-        </button>
-      </article>
-    </div>
+    <div v-if="loading" class="photography-state loading">加载中…</div>
+    <div v-else-if="error" class="photography-state error">{{ error }}</div>
+    <GridMotion
+      v-else
+      class="photography-grid-motion"
+      :items="gridItems"
+      gradientColor="rgba(0, 237, 255, 0.18)"
+        :rows="4"
+      @item-click="handleGridItemClick"
+    />
 
     <!-- Lightbox Modal -->
     <Teleport to="body">
@@ -410,6 +409,42 @@ const handleKeydown = (event) => {
 </template>
 
 <style scoped>
+.photography-section {
+  margin-bottom: 0;
+}
+
+.photography-grid-motion {
+  width: min(80vw, 1280px);
+  max-width: 80vw;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.photography-state,
+.error,
+.loading {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+}
+
+.photography-state {
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  backdrop-filter: blur(18px) saturate(1.7);
+  -webkit-backdrop-filter: blur(18px) saturate(1.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(12, 14, 18, 0.55);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.82rem;
+}
+
+.photography-state.error {
+  color: #ff8e8e;
+}
+
 .error { color: #ff6b6b; }
 
 .loading {
@@ -701,35 +736,9 @@ const handleKeydown = (event) => {
 }
 
 @media (max-width: 768px) {
-  .photo-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--card-inner-gap, 1rem);
-    column-width: auto;
-    column-gap: 0;
+  .photography-state {
+    padding: 0.5rem 0.75rem;
   }
-  .photo-card {
-    padding: var(--card-padding, 1rem);
-    margin: 0;
-    min-width: 0;
-  }
-  .photo-thumb {
-    width: 100%;
-  }
-  .lightbox {
-    width: 100%;
-    gap: var(--card-inner-gap, 1rem);
-  }
-  .lightbox-header {
-    padding: 1rem 1rem 0;
-  }
-  .lightbox-footer {
-    padding: 0 1rem 1rem;
-    gap: 0.75rem;
-  }
-  .lb-nav { width: 2.5rem; height: 2.5rem; }
-  .lb-btn { width: 2.4rem; height: 2.4rem; font-size: 1.4rem; }
-  .lb-canvas { max-height: 58vh; }
 }
 
 @media (prefers-reduced-motion: reduce) {

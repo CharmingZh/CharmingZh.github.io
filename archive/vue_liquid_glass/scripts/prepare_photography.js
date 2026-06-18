@@ -11,10 +11,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import exifr from 'exifr';
+import sharp from 'sharp';
 
 const ROOT = path.resolve(process.cwd());
 const SRC_DIR = path.join(ROOT, 'src', 'assets', 'temp_folder');
 const OUT_DIR = path.join(ROOT, 'public', 'Photography');
+const THUMB_DIR = path.join(OUT_DIR, 'thumbs');
 const MANIFEST = path.join(OUT_DIR, 'manifest.json');
 
 const ALLOWED = new Set(['.jpg', '.jpeg', '.png', '.webp', '.JPG', '.JPEG', '.PNG', '.WEBP']);
@@ -52,6 +54,15 @@ async function ensureDir(dir) {
   await fs.mkdir(dir, { recursive: true });
 }
 
+async function directoryExists(dir) {
+  try {
+    await fs.access(dir);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function cleanOldGenerated(dir) {
   try {
     const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -68,10 +79,24 @@ async function cleanOldGenerated(dir) {
   } catch {}
 }
 
+async function cleanThumbDir(dir) {
+  try {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    await Promise.all(entries.map(async (ent) => {
+      if (!ent.isFile()) return;
+      if (ent.name.endsWith('.webp')) {
+        await fs.rm(path.join(dir, ent.name));
+      }
+    }));
+  } catch {}
+}
+
 async function main() {
   await ensureDir(OUT_DIR);
+  await ensureDir(THUMB_DIR);
 
-  const entries = await fs.readdir(SRC_DIR, { withFileTypes: true });
+  const sourceDir = (await directoryExists(SRC_DIR)) ? SRC_DIR : OUT_DIR;
+  const entries = await fs.readdir(sourceDir, { withFileTypes: true });
   const files = entries
     .filter((e) => e.isFile())
     .map((e) => e.name)
@@ -83,7 +108,10 @@ async function main() {
 
   const items = [];
   for (const name of files) {
-    const abs = path.join(SRC_DIR, name);
+    if (sourceDir === OUT_DIR && (name === 'manifest.json' || name === '404.html' || name === 'index.html')) {
+      continue;
+    }
+    const abs = path.join(sourceDir, name);
     const stat = await fs.stat(abs);
     let exif = null;
     try {
@@ -112,7 +140,10 @@ async function main() {
   items.sort((a, b) => a.date - b.date);
 
   // Clean old generated
-  await cleanOldGenerated(OUT_DIR);
+  if (sourceDir !== OUT_DIR) {
+    await cleanOldGenerated(OUT_DIR);
+  }
+  await cleanThumbDir(THUMB_DIR);
 
   const manifest = [];
   for (let i = 0; i < items.length; i++) {
@@ -123,9 +154,17 @@ async function main() {
     const dest = path.join(OUT_DIR, newBase);
     await fs.copyFile(item.abs, dest);
 
+    const thumbBase = `photo_${ts}_${seq}.webp`;
+    const thumbDest = path.join(THUMB_DIR, thumbBase);
+    await sharp(item.abs)
+      .resize({ width: 640, withoutEnlargement: true, fit: 'inside' })
+      .webp({ quality: 72 })
+      .toFile(thumbDest);
+
     manifest.push({
       file: newBase,
       src: `/Photography/${newBase}`,
+      thumb: `/Photography/thumbs/${thumbBase}`,
       ...item.meta,
     });
   }

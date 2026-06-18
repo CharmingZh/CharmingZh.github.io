@@ -630,7 +630,7 @@ onMounted(() => {
     :mouseInfluence="0.1"
   />
 
-  <GlassEffect class="desktop-nav" borderRadius="99em" distortion="0.02" padding="0">
+  <GlassEffect class="desktop-nav" borderRadius="99em" :distortion="0.02" padding="0">
     <fieldset class="glass-nav" id="glass-nav-container">
       <legend class="glass-nav__legend">Main Navigation</legend>
       <label class="glass-nav__option" for="nav-1"><input class="glass-nav__input" type="radio" name="nav" value="about" c-option="1" id="nav-1" checked><a href="#about">About</a></label>
@@ -644,7 +644,7 @@ onMounted(() => {
   </GlassEffect>
 
   <!-- 移动端中央导航按钮 -->
-  <GlassEffect class="mobile-nav-button" borderRadius="20px" distortion="0.02" padding="0">
+  <GlassEffect class="mobile-nav-button" borderRadius="20px" :distortion="0.02" padding="0">
     <button @click="toggleMobileNav" class="central-nav-btn" aria-label="Open navigation menu">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
